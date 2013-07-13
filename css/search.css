@@ -1,5 +1,6 @@
 .content {
   background-color: rgb(218,226,228);
+  overflow: hidden;
 }
 
 .content .sortGroup {
@@ -12,7 +13,7 @@
   margin: 0px 0px 0px 0px;
 }
 
-.content .sortGroup .sortButton{
+.content .sortGroup .sortButton {
   background-color: rgb(44,108,179);
   font-size: 13px;
   margin: 0px 10px 0px 10px;
@@ -25,10 +26,14 @@
   padding: 30px 5px 30px 5px;
 }
 
-.content .resultGroup .result {
+.content .resultGroup .result { 
+  border: 1px solid #000000;
   margin: 0px 0px 15px 0px;
   padding: 8px 0px 5px 5px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(240, 248, 250);
+}
+.content .resultGroup .result:hover { 
+  border: 1px solid #aa66dd;
 }
 
 .content .resultGroup .result .resultTitle {
@@ -58,4 +63,21 @@
 }
 .content .resultGroup .result .LabelFollowed .labelSearched {
   color: rgb(199,0,0);
+}
+
+.content .page {
+  float: right;
+  display: inline-block;
+  margin: 10px 5px 20px 0px;
+}
+
+.content .page .page-counter {
+  font-size: 12px;
+  border: 1px solid #000000;
+  border-radius: 1px;
+  margin: 10px; 
+  padding: 2px 2px 2px 2px;
+  background-color: #ffffff;
+  margin: 0px 2px 0px 2px;
+  text-decoration: none;
 }

@@ -17,7 +17,7 @@
   position: relative;
   font-size: 12px;
   left: 1135px;
-  margin: 5px;
+  margin: 5px 0px 15px 0px;
 }
 .header .userlog .login {
   position: relative;
@@ -29,6 +29,7 @@
 }
 .header .header-content {
   display: inline-block;
+  margin: 5px 0px 20px 0px;
 }
 .header .header-content .title {
   display: inline-block;
