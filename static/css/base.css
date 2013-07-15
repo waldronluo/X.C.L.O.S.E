@@ -1,0 +1,136 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+.wrapper {
+  width: 1200px;
+  margin: 0px 80px 0px 80px;
+  padding: 10px;
+  overflow: hidden;
+}
+.header {
+  overflow: hidden;
+  background-color: rgb(44,108,179);
+}
+.header .userlog {
+  position: relative;
+  font-size: 12px;
+  left: 1135px;
+  margin: 5px 0px 15px 0px;
+}
+.header .userlog .login {
+  position: relative;
+  right: 5px;
+  color: white;
+}
+.header .userlog .signin {
+  color: white;
+}
+.header .header-content {
+  display: inline-block;
+  margin: 5px 0px 20px 0px;
+}
+.header .header-content .title {
+  display: inline-block;
+  position: relative;
+  color: white;
+  left: 40px;
+}
+.header .header-content .search {
+  display: inline-block;
+  position: relative;
+  left: 737px;
+  top: -5px;
+}
+.header .header-content .search .searchInput {
+  background-color: rgb(240, 248, 250);
+}
+.header .dark-blue-filter {
+  padding: 10px 10px 10px 10px;
+  background-color: rgb(33, 84, 127);
+}
+.aButton {
+  font-size: 15px;
+  background: -webkit-linear-gradient(top, #ffbc70 0%, #ff8932 100%);
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0px -1px 0px #1e6e2e;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  padding:5px 10px;
+  box-shadow: inset 0px 1px 0px 0px #afddb8
+  border: 1px solid #525252  
+}
+
+.content {
+  background-color: rgb(218,226,228);
+  overflow: hidden;
+}
+
+.wd25 {
+  width: 25px;
+}
+
+.wd50 {
+  width: 50px;
+}
+
+.wd100 {
+  width: 100px;
+}
+
+.wd120 {
+  width: 120px;
+}
+
+.wd125 {
+  width: 125px;
+}
+.wd150 {
+  width: 150px;
+}
+
+.wd200 {
+  width: 200px;
+}
+
+.wd250 {
+  width: 250px;
+}
+
+.wd450 {
+  width: 450px;
+}
+
+.wd700 {
+  width: 700px;
+}
+
+
+
+.wd1000{
+  width: 1000px;
+}
+
+.hd20 {
+  height: 20px;
+}
+
+.hd25 {
+  height: 25px;
+}
+
+.hd35 {
+  height: 35px;
+}
+.hd50 {
+  height: 50px;
+}
+
+.hd75 {
+  height: 75px;
+}
+
+
