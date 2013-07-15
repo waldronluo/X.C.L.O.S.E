@@ -64,4 +64,73 @@
   border: 1px solid #525252  
 }
 
+.content {
+  background-color: rgb(218,226,228);
+  overflow: hidden;
+}
+
+.wd25 {
+  width: 25px;
+}
+
+.wd50 {
+  width: 50px;
+}
+
+.wd100 {
+  width: 100px;
+}
+
+.wd120 {
+  width: 120px;
+}
+
+.wd125 {
+  width: 125px;
+}
+.wd150 {
+  width: 150px;
+}
+
+.wd200 {
+  width: 200px;
+}
+
+.wd250 {
+  width: 250px;
+}
+
+.wd450 {
+  width: 450px;
+}
+
+.wd700 {
+  width: 700px;
+}
+
+
+
+.wd1000{
+  width: 1000px;
+}
+
+.hd20 {
+  height: 20px;
+}
+
+.hd25 {
+  height: 25px;
+}
+
+.hd35 {
+  height: 35px;
+}
+.hd50 {
+  height: 50px;
+}
+
+.hd75 {
+  height: 75px;
+}
+
 

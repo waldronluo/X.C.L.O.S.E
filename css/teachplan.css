@@ -1,0 +1,53 @@
+.content .teach-plan-title {
+  margin: 20px 0px 20px 550px;
+  font-size: 25px;
+}
+.content .teach-plan-info {
+  border: 1px solid #000000;
+  margin: 20px 100px 20px 100px;
+  padding: 20px 100px 20px 100px;
+  background-color: rgb(240,248,250);
+  overflow: hidden;
+}
+
+.content .teach-plan-info .teach-plan-captain {
+  color: #1111aa;
+}
+.content .teach-plan-info .teach-plan-data {
+  float: left;
+  display: inline-block;
+}
+
+.content .teach-plan-info .teach-plan-label-group {
+  float: right;
+  display: inline-block;
+}
+
+.content .teach-plan-info .teach-plan-captain {
+  margin: 0px 0px 5px 0px;
+}
+
+.content .teach-plan-info .teach-plan-label-group .teach-plan-label-group-tb {
+}
+
+.content .teach-plan-info .teach-plan-label-group .teach-plan-label {
+  margin: 0px 10px 20px 10px;
+  padding:5px 10px 5px 10px;
+  background-color: rgb(248,250,255);
+  border: 1px solid #000000;
+}
+
+.content .teach-plan-self .teach-plan-self-tb-1 {
+ border-collapse: collapse;
+ border: 1px solid #999999;
+}
+
+.content .teach-plan-self .teach-plan-self-tb-2 {
+ border-collapse: collapse;
+ border: 1px solid #999999;
+}
+
+.teach-plan-self {
+  margin: 20px 50px 20px 50px;
+  background: rgb(240,248,250);
+}
