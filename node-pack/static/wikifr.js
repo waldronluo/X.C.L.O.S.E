@@ -6,8 +6,10 @@ $(document).ready(function(){
 	
 	socket.on('connect', function(){
 		// pre condition: user has log , cookie
-		if (getCookie('userName') !== ""){
-			
+		if ((var tempName = getCookie('userName')) !== ""){
+			// change to  Logout Button
+//			$().html = ............
+			console.log("Welcome Back! "+ tempName );
 		}
 	
 		// user operation
@@ -23,6 +25,7 @@ $(document).ready(function(){
 //				$().html = ............
 				console.log("Login Success");
 			} else {
+//				$().html = ............
 				setCookie('userName','', -1);
 				setCookie('userPassword','', -1);
 				console.log("Login Failed");
@@ -36,9 +39,11 @@ $(document).ready(function(){
 		});
 		socket.on('logoutReply', function(isSuccess){
 			if (isSuccess == true){
+//				$().html = ............
 				console.log("Logout Success");
 				clearCookie();
 			} else {
+//				$().html = ............
 				console.log("Logout Failed");
 			}
 			//delete user cookie
@@ -56,9 +61,10 @@ $(document).ready(function(){
 		});
 		socket.on('registerReply', function(isSuccess){
 			if (isSuccess == true){
-				$().html = ............
+//				$().html = ............
 				console.log("Register Success");
 			} else {
+//				$().html = ............
 				setCookie('userName','', -1);
 				setCookie('userPassword','', -1);
 				console.log("Register Failed");
@@ -70,19 +76,27 @@ $(document).ready(function(){
 		$(document).on('click', 'a#newPost', function(){
 			// construct 'post' and trans
 			var newPost = new Post();
-			var postDataArr = [];
 			
-			postDataArr['']
+			newPost.setPostTitlePart();
+			newPost.setPostMiddlePart();
 			
+			newPost.setPostLessonStartPart();
+			newPost.setPostLessonMainPart();
+			newPost.setPostLessonEndPart();
 			
-			newPost.setPostALL()
+			newPost.setPostSummaryAndComment();
+			newPost.setPostTag();
+			newPost.setPostAuthor();
+			newPost.setCreateTime(new Date());
 			
 			socket.emit('newPost',newPost);
 		});
 		socket.on('newPostReply', function(isSuccess){
 			if (isSuccess == true){
+//				$().html = ............
 				console.log("New Post Success");
 			} else {
+//				$().html = ............
 				console.log("New Post Failed");
 			}
 		});
@@ -91,7 +105,7 @@ $(document).ready(function(){
 		$(document).on('click', 'a#changePost', function(){
 			// construct 'post' and trans
 			var changePost = new Post();
-			changePost.post_title = $('title').val();
+			
 			
 			socket.emit('changePost',changePost);
 		});
@@ -199,8 +213,9 @@ Post = function(){
 	}
 	
 	// for Post-page Block 2 : Middle
-	this.setPostMiddlePart = function(background, teaching_resource, teaching_goal){
+	this.setPostMiddlePart = function(background, course_prepare, teaching_resource, teaching_goal){
 		this.background = background;
+		this.course_prepare = course_prepare;
 		this.teaching_resource = teaching_resource;
 		this.teaching_goal = teaching_goal;
 	}
@@ -247,6 +262,10 @@ Post = function(){
 		this.post_author = postAuthor;
 	}	
 
+	// Set ID and count data
+	this.setIDAndCount = function(post_createFrom_id, access_count, post_id){
+		
+	}
 /*
 	// make an Array to Match these pattern
 	this.setPostALL = function (postItemArray){
@@ -258,6 +277,7 @@ Post = function(){
 		this.course_class = postItemArray["course_class"];
 		
 		this.background = postItemArray["background"];
+		this.course_prepare = postItemArray["course_prepare"];
 		this.teaching_resource = postItemArray["teaching_resource"];
 		this.teaching_goal = postItemArray["teaching_goal"];
 		
@@ -297,5 +317,6 @@ Comment = function (){
 	this.post_id = 0;
 	this.content = "";
 }
+
 
 

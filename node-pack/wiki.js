@@ -8,8 +8,8 @@ var url = require("url");
 var fs = require("fs");
 
 // Defaults
-var portNumberDefault = process.env.PORT || 7777;
-var listenAddr = process.env.NW_ADDR || "";    // "" ==> INADDR_ANY
+var portNumberDefault = process.env.PORT || 8089;
+var listenAddr = process.env.NW_ADDR || 127.0.0.1;    // "" ==> INADDR_ANY
 var portNumber = portNumberDefault;
 
 // use connect
@@ -37,6 +37,21 @@ var userArray = [];
 
 // socket.io - on & emit
 io.sockets.on('connection', function (socket){
+	
+	// temp Search Posts
+	var searchPostArray = [];
+	// search mode : LastChange / CreateTime / AccessCount
+	var searchWay = 'LastChange';
+	// temp searchTitle
+	var searchTitle = '';
+	// the counts of one search page
+	var pageLength = 10;
+	
+	// First Page Label Counts
+	socket.on('lables',function(){
+		sock.emit()
+	});
+	
 	// User operation
 	// login
 	socket.on('login',function(name, password){
@@ -101,12 +116,41 @@ io.sockets.on('connection', function (socket){
 		socket.emit('changePostReply',    );
 		console.log();
 	});	
-	// search post
-	socket.on('searchPost',function(title){
-		var postArray = mongoDbSearchPost(title);
-		socket.emit('searchPostReply', postArray);
+	
+	// search post - LastChange Mode
+	socket.on('searchPost_LastChange',function(title){
+	
 	});
 	
+	// search post - CreateTime Mode
+	socket.on('searchPost_CreateTime',function(title){
+	
+	});
+	
+	// search post - AccessCount Mode
+	socket.on('searchPost_AccessCount',function(title, page){
+		if (searchTitle != title){
+			searchPostArray = mongoDbSearchPost(title);	
+			searchPostArray.sort(sortByAccessCount);
+			searchWay = 'AccessCount';
+			searchTitle = title;
+		}
+		
+		var tempPostArr = [];
+		
+		socket.emit('searchPostReply', tempPostArr, page);
+	});
+	
+	
+	// get one post by ID in SearchArr	
+	// post page 	[1,2,3,4,5,......]
+	// post ID 		[0,1,2,3,4,......]
+	socket.on('getOnePost',function(page, id){
+		var postId = (page-1) * pageLength + id;
+		// Add access_count when requested
+		mongoDbUpdatePostCount( searchPostArray[postId].post_id, searchPostArray[postId].access_count );
+		socket.emit('searchPostReply', searchPostArray[postId]);
+	});
 	
 	// if a user disconnects, reinitialise variables
 	socket.on('disconnect', function(){
@@ -120,7 +164,12 @@ io.sockets.on('connection', function (socket){
 	});
 });
 
-
+// For searchPostArray to Sort 
+// 1. By access_count
+function sortByAccessCount(a,b){
+	return b.access_count - a.access_count;
+}
+// 2. By access_count
 
 // new user: return success or failed
 // return: T/F 
@@ -186,7 +235,17 @@ function mongoDbNewPost(newPost){
 						console.log('already have a post');
 						return false;
 					} else {
-						collection.save({course_title, template_title, topic, course_time, volunteer, course_class, background,course_prepare, teaching_resource,teaching_goal,lesson_starting_time,lesson_starting_content,lesson_starting_pattern,lesson_main_time,lesson_main_content,lesson_main_pattern,lesson_ending_time,lesson_ending_content,lesson_ending_pattern,lesson_summary,lesson_comment,post_tag});
+						// only 'tags' needs origin name
+						// count=0, createFrom=-1, post_id=_id (Auto generated)
+						collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
+										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
+										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
+										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
+										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+										'tags':newPost.post_tag,
+										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count});
 						console.log('new post success');
 						return true;
 					}
@@ -198,9 +257,40 @@ function mongoDbNewPost(newPost){
 
 // change post 
 // return: ?????
-function mongoDbChangePost(changePost){
+function mongoDbChangePost(changePost, ){
 	// -------------
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver);
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.find('post_tile':newPost.post_tile , {'name':1,'_id':1},function(err,result){
+				result.toArray(function(err, arr){	
+				
+					if (arr.length !== 0){
+						console.log('already have a post');
+						return false;
+					} else {
+						// only 'tags' needs origin name
+						// count=0, createFrom=-1, post_id=_id (Auto generated)
+						collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
+										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
+										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
+										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
+										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+										'tags':newPost.post_tag,
+										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count});
+						console.log('new post success');
+						return true;
+					}
+				});
+			});
+		});
+	});
 }
+
 // search post by title
 // return: arr Post[] 
 function mongoDbSearchPost(course_title){
@@ -209,7 +299,7 @@ function mongoDbSearchPost(course_title){
 	  
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
-			collection.find({$or:['course_title':{$regex:course_title}, 'tag':course_title ]}, {'_id':0},function(err,result){
+			collection.find({$or:['course_title':{$regex:course_title}, 'tag':course_title ]}, function(err,result){
 				result.toArray(function(err, arr){
 					console.log(arr);
 					var returnPostArray = [];
@@ -224,6 +314,24 @@ function mongoDbSearchPost(course_title){
 		});
 	});
 }
+
+// update one post access_count
+function mongoDbUpdatePostCount(post_id, access_count){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver);
+	
+	var count = access_count+1;
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.update('_id':post_id, {'$set':{'access_count':count}}, function(err){
+				return;
+			});
+		});
+	});
+}
+// update Tags ------
+
+// update Comments -------
 
 // mongoDB initialize
 function mongoDbInit(){
@@ -310,13 +418,16 @@ Post = function(){
 	this.post_createTime = new Date();
 	this.post_author = "";
 	
-	// (stable data)x3 : Only Change In Server
+	// (stable data)x4 : Only Change In Server
 	// This post created from post_id=???		-1 means Origin
 	this.post_createFrom_id = -1;		
 	// hot topic count  						when Access in showpage, count+1
 	this.access_count = 0;
 	// post ID									Only ID for One saved Post
 	this.post_id = 0;
+	// Oringi create time						if (createFrom=_id), then (origin_createTime =  post[_id].origin_createTime)
+	this.origin_createTime = new Date();
+	
 	
 	// for Post-page Block 1 : Title
 	this.setPostTitlePart = function(course_title, template_title,
@@ -331,8 +442,9 @@ Post = function(){
 	}
 	
 	// for Post-page Block 2 : Middle
-	this.setPostMiddlePart = function(background, teaching_resource, teaching_goal){
+	this.setPostMiddlePart = function(background, course_prepare, teaching_resource, teaching_goal){
 		this.background = background;
+		this.course_prepare = course_prepare;
 		this.teaching_resource = teaching_resource;
 		this.teaching_goal = teaching_goal;
 	}
@@ -379,6 +491,10 @@ Post = function(){
 		this.post_author = postAuthor;
 	}	
 
+	// Set ID and count data
+	this.setIDAndCount = function(post_createFrom_id, access_count, post_id){
+		
+	}
 /*
 	// make an Array to Match these pattern
 	this.setPostALL = function (postItemArray){
@@ -390,6 +506,7 @@ Post = function(){
 		this.course_class = postItemArray["course_class"];
 		
 		this.background = postItemArray["background"];
+		this.course_prepare = postItemArray["course_prepare"];
 		this.teaching_resource = postItemArray["teaching_resource"];
 		this.teaching_goal = postItemArray["teaching_goal"];
 		
