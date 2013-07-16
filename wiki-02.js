@@ -19,46 +19,48 @@ var app = connect();
 app.use(connect.logger('dev'));
 app.use(connect.static(__dirname + '/static'));
 
+// default page output setting
+app.use(function(req, res){
+	var pathname = url.parse(req.url).pathname;
+    console.log("Request for " + pathname + " received.");
+	if (pathname == "/")
+		response.end(fs.readFileSync(__dirname + '/static/index.html', 'utf-8'));
+	if (pathname == "/search") 
+		response.end(fs.readFileSync(__dirname + '/static/search.html', 'utf-8'));
+});
 
 // http server
 var server = http.createServer(app);
 server.listen(portNumber, listenAddr);
-var io = socketio.listen(server);
+io = socketio.listen(server);
 io.set('log level', 2);
-console.log("Server Start on: http "+listenAddr +':'+portNumberDefault);
 
 // Login Users : User{name,password}
 var userArray = [];
 
-// for http parameter parser
-var firstPathname = "/";
-var queryStrArray = [];
+console.log("Server Start on: "+listenAddr +':' +portNumberDefault);
 
-// io.socket
+// socket.io - on & emit
 io.sockets.on('connection', function (socket){
-	console.log("firstPathname = " + firstPathname);
 	
-	// deal with page changes
-	if (firstPathname == "/"){
-		mongoDBGetTags(socket);		//input socket to send result after DB finished
-		console.log('tags send');
-	}
-	if (firstPathname == "/search"){
-		// search mode : LastChange / CreateTime / AccessCount
-		// mongoDBSearchPost(socket,
-						// queryStrArray['searchStr'],
-						// queryStrArray['sortWay'],
-						// queryStrArray['page'] );
-		console.log('search send');
-	}
-	if (firstPathname == "/teach-plan"){
-		
-	}
-	if (firstPathname == "/teach-plan-edit"){
+	// temp Search Posts
+	var searchPostArray = [];
+	// search mode : LastChange / CreateTime / AccessCount
+	var searchWay = 'LastChange';
+	// temp searchTitle
+	var searchTitle = '';
+	// the counts of one search page
+	var pageLength = 10;
 	
+	// First Page Label Counts
+	socket.on('Labels',function(){
+		var TagsArr = [];
+		var 
 		
-	}
-			
+		socket.emit('LabelsReply', TagsArr);
+	});
+	
+	// User operation
 	// login
 	socket.on('login',function(name, password){
 		if (mongoDbCheckUser(name, password)){
@@ -67,7 +69,6 @@ io.sockets.on('connection', function (socket){
 			var count = userArray.length;
 			userArray[count] = new User();
 			userArray[count].setUserBasic(name, password);
-			//userArray[count] = name;
 			console.log(userArray);
 		}else {
 			socket.emit('loginReply', false);
@@ -78,10 +79,6 @@ io.sockets.on('connection', function (socket){
 		var hasUser = false;
 		var i;
 		for (i=0; i<userArray.length; i++){
-			// if (userArray[i] == name){
-				// hasUser = true;
-				// break;
-			// }
 			if (userArray[i].name == name){
 				hasUser = true;
 				break;
@@ -94,77 +91,20 @@ io.sockets.on('connection', function (socket){
 		else socket.emit('logoutReply',false);
 		
 		console.log(userArray);
+
 	});	
 	// register
-	socket.on('register',function(name, password, passwordCon, email){
-		if ((passwordCon == password) && mongoDbNewUser(name, password, email)){
+	socket.on('register',function(name, password){
+		if (mongoDbNewUser(name, password)){
 			socket.emit('registerReply',true);
 			var count = userArray.length;
 			userArray[count] = new User();
-			userArray[count].setUserBasic(name, password, email);
-			
-			//	userArray[count] = name;
+			userArray[count].setUserBasic(name, password);
 		} else {
 			socket.emit('registerReply',false);
 		}
 		console.log(userArray);
 	});
-	
-	
-});
-
-// default page output setting
-app.use(function(req, res){
-	var pathname = url.parse(req.url).pathname;
-	firstPathname = "/"
-	console.log("Request for " + pathname + " received.");
-	
-	if (pathname == "/" || pathname == ""){
-		res.writeHead(200, {"Content-Type": "text/html"});
-		res.write(fs.readFileSync(__dirname + '/static/index.html', 'utf-8'));
-		res.end();
-		firstPathname = "/";
-	}
-	if (pathname == "/search"){
-		res.writeHead(200, {"Content-Type": "text/html"});
-		res.write(fs.readFileSync(__dirname + '/static/search.html', 'utf-8'));
-		res.end();
-		firstPathname = "/search";
-		
-		//	url sample:		http://127.0.0.1:8089/search?method=123&searchStr=hello&page=1&sortWay=LastChange
-		
-	//	queryStrArray['method'] = querystring.parse(url.parse(req.url).query)['method'];
-		queryStrArray['searchStr'] = querystring.parse(url.parse(req.url).query)['searchStr'];
-		queryStrArray['sortWay'] = querystring.parse(url.parse(req.url).query)['sortWay'];
-		queryStrArray['page'] = querystring.parse(url.parse(req.url).query)['page'];
-		
-		console.log(queryStrArray);
-	}
-	if (pathname == "/teach-plan"){
-		res.writeHead(200, {"Content-Type": "text/html"});
-		res.write(fs.readFileSync(__dirname + '/static/teach-plan.html', 'utf-8'));
-		res.end();
-		firstPathname = "/teach-plan";
-	}
-	if (pathname == "/teach-plan-edit"){
-		res.writeHead(200, {"Content-Type": "text/html"});
-		res.write(fs.readFileSync(__dirname + '/static/teach-plan-edit.html', 'utf-8'));
-		res.end();
-		firstPathname = "/teach-plan-edit";
-	}
-	if (pathname == "/favicon.ico"){res.end();}
-});
-
-
-
-
-
-/*		-- socket.io     origin
-{
-	
-	// search mode : LastChange / CreateTime / AccessCount
-	var searchWay = 'LastChange';
-
 	
 	
 	// Post operation
@@ -184,7 +124,17 @@ app.use(function(req, res){
 		socket.emit('changePostReply'    );
 		console.log();
 	});	
-		
+	
+	// search post - LastChange Mode
+	socket.on('searchPost_LastChange',function(title){
+	
+	});
+	
+	// search post - CreateTime Mode
+	socket.on('searchPost_CreateTime',function(title){
+	
+	});
+	
 	// search post - AccessCount Mode
 	socket.on('searchPost_AccessCount',function(title, page){
 		if (searchTitle != title){
@@ -220,139 +170,23 @@ app.use(function(req, res){
 	});
 });
 
-*/
-
-
-/*	about DB data structure:
-	db:	test
-		collection:	userlist:
-						[_id,  name, password, email]
-					postlist:
-						[_id,  course_title, .... , tags:['x','1', ... ,'n']]
-					tagslist:
-						[_id,  name, count, category]
-					commentlist:
-						[_id,  userName, comment_createTime, post_id, content]
-*/
-
-// get tags for first access
-function mongoDBGetTags(socket){
-	var TagsArr = new Array();
-
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver);
+// For searchPostArray to Sort 
+// 1. By last change time
+function sortByLastChange(a,b){
 	
-	mgconnect.open(function (err, db) {	  
-		db.collection('tagslist', function (err, collection) {
-			collection.find().sort({'category':1}, function(err,result){
-				result.toArray(function(err,arr){
-					//console.log('Arr = ');
-					//console.log(arr);
-					var countCat = -1;
-					var countTag = 0;
-					var nowCat = '';
-					for (var i=0; i<arr.length; i++){
-						if (nowCat != arr[i].category){
-							nowCat = arr[i].category;
-							countCat++;
-							countTag = 0;
-							TagsArr[countCat] = [arr[i].category, []];
-						}
-						//console.log('-- '+ i + ','+countCat+ ','+ countTag);
-						TagsArr[countCat][1][countTag] = arr[i].name;
-						countTag++;
-					}
-					//console.log(TagsArr.length);
-
-					socket.emit('labelsReply', TagsArr);
-					return TagsArr;
-				});
-			});
-		});
-	});
 }
-
-// search post by title
-function mongoDbSearchPost(socket, searchStr, sortWay, page){
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver);
-	  
-	mgconnect.open(function (err, db) {	  
-		db.collection('postlist', function (err, collection) {
-			switch (sortWay){
-				case 'LastChange' :{
-					collection.find({'most_recent':1, $or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}}, {'tag':searchStr}]},
-									{'_id':1, 'course_title':1, 'teaching_goal':1, 'origin_createTime':1, 
-									'post_createTime':1, 'post_tag':1}).sort({'post_createTime':-1}, function(err,result){
-						result.toArray(function(err,arr){
-							var sendArr = new Array(10);
-							for (var i=0; i<10; i++){
-								if (arr[(page-1)*10+i] == null)
-									break;
-								else sendArr[i] = arr[(page-1)*10+i];
-							}
-							socket.emit('searchPostReply', sendArr);
-						});
-					});
-					break;
-				}
-				case 'CreateTime' :{
-					collection.find({'most_recent':1, $or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}},{'tag':searchStr}]},
-									{'_id':1, 'course_title':1, 'teaching_goal':1, 'origin_createTime':1, 
-									'post_createTime':1, 'post_tag':1}).sort({'origin_createTime':-1}, function(err,result){
-						result.toArray(function(err,arr){
-							var sendArr = new Array(10);
-							for (var i=0; i<10; i++){
-								if (arr[(page-1)*10+i] == null)
-									break;
-								else sendArr[i] = arr[(page-1)*10+i];
-							}
-							socket.emit('searchPostReply', sendArr);
-						});
-					});
-					break;
-				}
-				case 'AccessCount' :{
-					collection.find({'most_recent':1, $or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}},{'tag':searchStr}]},
-									{'_id':1, 'course_title':1, 'teaching_goal':1, 'origin_createTime':1, 
-									'post_createTime':1, 'post_tag':1}).sort({'access_count':-1}, function(err,result){
-						result.toArray(function(err,arr){
-							var sendArr = new Array(10);
-							for (var i=0; i<10; i++){
-								if (arr[(page-1)*10+i] == null)
-									break;
-								else sendArr[i] = arr[(page-1)*10+i];
-							}
-							socket.emit('searchPostReply', sendArr);
-						});
-					});
-					break;
-				}
-				default :{
-					collection.find({'most_recent':1, $or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}},{'tag':searchStr}]},
-									{'_id':1, 'course_title':1, 'teaching_goal':1, 'origin_createTime':1, 
-									'post_createTime':1, 'post_tag':1}).sort({'post_createTime':-1}, function(err,result){
-						result.toArray(function(err,arr){
-							var sendArr = new Array(10);
-							for (var i=0; i<10; i++){
-								if (arr[(page-1)*10+i] == null)
-									break;
-								else sendArr[i] = arr[(page-1)*10+i];
-							}
-							socket.emit('searchPostReply', sendArr);
-						});
-					});
-					break;
-				}
-			}
-		});
-	});
+// 2. By origin create time
+function sortByCreateTime(a,b){
+	
 }
-
+// 3. By access_count
+function sortByAccessCount(a,b){
+	return b.access_count - a.access_count;
+}
 
 // new user: return success or failed
 // return: T/F 
-function mongoDbNewUser(name, password, email){
+function mongoDbNewUser(name, password){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver);
 	  
@@ -367,7 +201,7 @@ function mongoDbNewUser(name, password, email){
 					}
 				});
 			});
-			collection.save({'name':name, 'password':password, 'email':email});
+			collection.save({'name':name, 'password':password});
 			console.log('user register success');
 			return true;
 		});
@@ -400,7 +234,7 @@ function mongoDbCheckUser(name, password){
 
 
 // new post by {name, post}
-// return: T/F----------------------------
+// return: T/F
 function mongoDbNewPost(newPost){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver);
@@ -409,11 +243,13 @@ function mongoDbNewPost(newPost){
 		db.collection('postlist', function (err, collection) {
 			collection.find({'course_title': (newPost.course_title)} , {'name':1,'_id':1},function(err,result){
 				result.toArray(function(err, arr){	
+				
 					if (arr.length !== 0){
 						console.log('already have a post');
+						return false;
 					} else {
 						// only 'tags' needs origin name
-						// count=0, createFrom=-1, post_id=_id (Auto generated), 
+						// count=0, createFrom=-1, post_id=_id (Auto generated)
 						collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
 										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
@@ -424,6 +260,7 @@ function mongoDbNewPost(newPost){
 										'tags':newPost.post_tag,
 										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count});
 						console.log('new post success');
+						return true;
 					}
 				});
 			});
@@ -437,7 +274,29 @@ function mongoDbChangePost(changePost ){
 	// -------------
 }
 
-
+// search post by title
+// return: arr Post[] 
+function mongoDbSearchPost(course_title){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver);
+	  
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.find({$or:[ {'course_title':{$regex:course_title}}, {'tag':course_title} ]}, function(err,result){
+				result.toArray(function(err, arr){
+					console.log(arr);
+					var returnPostArray = [];
+					for (var i=0; i<arr.length; i++){
+						var tempPost = new Post();
+						tempPost.set
+						returnPostArray.push(tempPost);
+					}
+					return returnPostArray;
+				});
+			});
+		});
+	});
+}
 
 // update one post access_count
 function mongoDbUpdatePostCount(post_id){
@@ -452,27 +311,60 @@ function mongoDbUpdatePostCount(post_id){
 		});
 	});
 }
-
 // update Tags ------
 
 // update Comments -------
 
+// mongoDB initialize
+function mongoDbInit(){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver);
+	  
+	mgconnect.open(function (err, db) {
+		if (db != undefined){
+			//user list
+			db.createCollection('userlist');
+			db.collection('userlist', function (err, collection) {
+				collection.save({'name':'aaa', 'password':'111'});
+				collection.save({'name':'bbb', 'password':'222'});
+			});
+			//post list : easy
+			db.createCollection('postlist');
+			db.collection('postlist', function (err, collection) {
+				collection.save({'course_title':'atest', 'post_author':'aaa'});
+				collection.save({'course_title':'btest', 'post_author':'aaa'});
+			});
+		}
+	});
+}
+
+// mongoDB clear all data
+function mongoDbClear(){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver);
+	  
+	mgconnect.open(function (err, db) {
+		if (db != undefined){
+			db.dropCollection('userlist');
+			db.dropCollection('postlist');
+		}
+	});
+}
 
 
-// User struct -- for user construct
+// User struct:
 User = function(){
-	this.name = "";				//key
+	this.name = "";
 	this.password = "";
-	this.email = "";
 	
-	this.setUserBasic = function(name,password,email){
+	this.setUserBasic = function(name,password){
 		this.name = name;
 		this.password = password;
-		this.email = email;
 	}
 }
 
-// post struct -- for post present
+// post struct : 
+// 
 Post = function(){
 	// base entry
 	this.course_title = "";
@@ -505,6 +397,7 @@ Post = function(){
 	this.post_tag = [];
 	
 	// other entry
+	this.post_createTime = new Date();
 	this.post_author = "";
 	
 	// (stable data)x4 : Only Change In Server
@@ -513,13 +406,9 @@ Post = function(){
 	// hot topic count  						when Access in showpage, count+1
 	this.access_count = 0;
 	// post ID									Only ID for One saved Post
-	this.post_id = 0;		//key
+	this.post_id = 0;
 	// Oringi create time						if (createFrom=_id), then (origin_createTime =  post[_id].origin_createTime)
 	this.origin_createTime = new Date();
-	
-	this.post_createTime = new Date();
-	// most recent 								1 means newest / 0 means not
-	this.most_recent = 1;
 	
 	
 	// for Post-page Block 1 : Title
@@ -590,26 +479,13 @@ Post = function(){
 	}
 }
 
-// Comment struct -- for comment saving
+
+// Comment struct 
 Comment = function (){
 	this.userName = "";
 	this.comment_createTime = new Date();
 	this.post_id = 0;
 	this.content = "";
-	
-	//key -> _id
 }
 
-// Tags struct -- only for tag count and divide
-Tags = function (){
-	this.name = "";		//key
-	this.count = 0;
-	this.category = "";
-	
-	this.setTagsALL = function(name, count, category){
-		this.name = name;
-		this.count = count;
-		this.category = category;
-	}
-}
 
