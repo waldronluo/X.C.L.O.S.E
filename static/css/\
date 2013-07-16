@@ -23,25 +23,19 @@
 }
 
 .index-content .labelGroup .labelClass .labelClassTitle {
-  font-size: 20px;
   color: rgb(44,108,179);
-  margin: 0px 0px 15px 0px;
 }
 
-.index-content .labelGroup .labelClass .label {
+.label-content .labelGroup .labelClass .label {
   display: inline-block;
-  margin: 0px 65px 10px 0px;
+  margin: 0px 10px 0px 0px;
 }
-
 .index-content .labelGroup .labelClass .label .labelSelf {
-  font-size: 20px;
-  text-decoration: none;
-  color: #222222;
+  color: #000000;
 }
 
 .index-content .labelGroup .labelClass .label .labelSelf:hover {
   color: rgb(44,108,179);
-  text-decoration: underline;
 }
 .introduction {
   float: right;
