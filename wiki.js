@@ -53,7 +53,18 @@ io.sockets.on('connection', function (socket){
 //	socket.on('labels',function(){
 //		var TagsArr = [];
 		
-    var TagsArr		= "one";
+    var TagsArr		= [];
+    var TagsArrSon1 = [];
+    var TagsArrSpringDouble = [
+        "乡土认同","陪伴成长","服务学习",
+        "乡土认同","陪伴成长","服务学习",
+        "乡土认同","陪伴成长","服务学习",
+        "乡土认同","陪伴成长","服务学习",
+        "乡土认同","陪伴成长","服务学习",
+        ];
+    TagsArrSon1.push("灯塔理念");
+    TagsArrSon1.push(TagsArrSpringDouble);
+    TagsArr.push (TagsArrSon1);
 	socket.emit('labelsReply', TagsArr);
 //	});
 	
@@ -159,10 +170,10 @@ io.sockets.on('connection', function (socket){
 	
 	// if a user disconnects, reinitialise variables
 	socket.on('disconnect', function(){
-		var currentPath = process.cwd() + '/';
-		refreshDir();
-		var links = getDir.parseLinks(dir);
-		var directoryDepth = 0;
+		//var currentPath = process.cwd() + '/';
+		//refreshDir();
+		//var links = getDir.parseLinks(dir);
+		//var directoryDepth = 0;
 		
 		// set -  connect.cookie -> null
 		

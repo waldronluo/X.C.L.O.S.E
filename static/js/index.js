@@ -39,6 +39,7 @@
             var a = document.createElement("a");
             a.className = "labelSelf";
             a.href = "/search?searchStr=" + labelgroups[i][j];
+            a.target = "_blank";
             a.innerHTML = labelgroups[i][j];
             
             div.appendChild(a);
