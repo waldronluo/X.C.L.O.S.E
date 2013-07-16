@@ -4,17 +4,6 @@
     //console.log("index.js");
     var socket = io.connect('http://127.0.0.1:8089');
     socket.on('labelsReply', function (TagsArr){
-        /*
-        for ( var i=0 ; i < TagsArr.length; i++ )
-        {
-            console.log(TagsArr[i][0]+ " : ");
-            for ( var j=0; j<TagsArr[i][1].length; j++)
-                console.log (TagsArr[i][1][j]);
-        }*/
-
-    //pre-define
-    //precondition: TagsArr[a][b][c], a was the serial number of label group
-    //when b=0, TagsArr[a][0] was the name of the label group
     var labelgroups = [];
     var labelgroupName = [];
     for ( var i=0 ; i < TagsArr.length ; i++ ) {
@@ -47,7 +36,6 @@
         }
         labelList.appendChild(li);
     }
-    //console.log(labelList);
         
     });
 })();

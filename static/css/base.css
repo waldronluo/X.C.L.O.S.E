@@ -9,47 +9,131 @@
   padding: 10px;
   overflow: hidden;
 }
+
+#signin {
+  position: absolute;
+  top : 250;
+  left : 500;
+  height : 300;
+  width : 400;
+  background : #ffffff;
+  visibility: hidden;
+  z-index:2;
+}
+
+#login {
+  position: absolute;
+  top : 250;
+  left : 500;
+  height : 300;
+  width : 400;
+  background : #ffffff;
+  visibility: hidden;
+  z-index: 2;
+}
+
+#blockEverything {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1000px;
+  width: 1360px;
+  background: #000000;
+  opacity: 0.5;
+  visibility: hidden;
+  z-index:1;
+}
+
+.popup-form {
+  margin: 40px 0px 0px 100px;
+}
+
+.input-pair {
+  font-size: 18px;
+  display: block;
+  margin: 30px 0px 30px 0px;
+}
+
+.blockButton {
+  margin: 0px 30px 10px 150px;
+}
+
 .header {
   overflow: hidden;
   background-color: rgb(44,108,179);
 }
+
 .header .userlog {
   position: relative;
   font-size: 12px;
   left: 1135px;
   margin: 5px 0px 15px 0px;
 }
+
 .header .userlog .login {
   position: relative;
   right: 5px;
   color: white;
 }
+
 .header .userlog .signin {
   color: white;
 }
+
 .header .header-content {
   display: inline-block;
   margin: 5px 0px 20px 0px;
 }
+
 .header .header-content .title {
   display: inline-block;
   position: relative;
   color: white;
   left: 40px;
 }
+
 .header .header-content .search {
   display: inline-block;
   position: relative;
   left: 737px;
   top: -5px;
 }
+
 .header .header-content .search .searchInput {
   background-color: rgb(240, 248, 250);
 }
-.header .dark-blue-filter {
+
+.dark-blue-filter {
   padding: 10px 10px 10px 10px;
   background-color: rgb(33, 84, 127);
 }
+
+.light-blue-bar{
+  padding: 10px 30px 10px 30px;
+  color: white;
+  font-size: 16px;
+  background-color: rgb(44, 108, 179);
+  overflow: hidden;
+}
+
+.light-blue-bar-word {
+  float: left;
+}
+
+.light-blue-bar-X {
+  padding: 1px 3px 1px 3px;
+  background-color: rgb(33,55,179);
+  float: right;
+}
+
+.pNoAccount {
+  margin: 10px 0px 0px 130px;
+}
+
+.light-blue-bar-X:hover {
+  background-color: rgb(44,108,255);
+}
+
 .aButton {
   font-size: 15px;
   background: -webkit-linear-gradient(top, #ffbc70 0%, #ff8932 100%);
@@ -75,6 +159,10 @@
 
 .wd50 {
   width: 50px;
+}
+
+.wd75 {
+  width: 75px;
 }
 
 .wd100 {
@@ -133,4 +221,6 @@
   height: 75px;
 }
 
-
+.small {
+  padding: 1px 1px 1px 1px;
+} 
