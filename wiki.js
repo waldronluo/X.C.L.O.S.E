@@ -50,12 +50,12 @@ io.sockets.on('connection', function (socket){
 	var pageLength = 10;
 	
 	// First Page Label Counts
-	socket.on('labels',function(){
-		var TagsArr = [];
+//	socket.on('labels',function(){
+//		var TagsArr = [];
 		
-		
-		socket.emit('labelsReply', TagsArr);
-	});
+    var TagsArr		= "one";
+	socket.emit('labelsReply', TagsArr);
+//	});
 	
 	// User operation
 	// login
