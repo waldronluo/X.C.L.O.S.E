@@ -9,7 +9,7 @@ var fs = require("fs");
 
 // Defaults
 var portNumberDefault = process.env.PORT || 8089;
-var listenAddr = process.env.NW_ADDR || 127.0.0.1;    // "" ==> INADDR_ANY
+var listenAddr = process.env.NW_ADDR || '127.0.0.1';    // "" ==> INADDR_ANY
 var portNumber = portNumberDefault;
 
 // use connect
@@ -35,6 +35,8 @@ io.set('log level', 2);
 // Login Users : User{name,password}
 var userArray = [];
 
+console.log("Server Start on: "+listenAddr +':' +portNumberDefault);
+
 // socket.io - on & emit
 io.sockets.on('connection', function (socket){
 	
@@ -48,8 +50,11 @@ io.sockets.on('connection', function (socket){
 	var pageLength = 10;
 	
 	// First Page Label Counts
-	socket.on('lables',function(){
-		sock.emit()
+	socket.on('labels',function(){
+		var TagsArr = [];
+		
+		
+		socket.emit('labelsReply', TagsArr);
 	});
 	
 	// User operation
@@ -113,7 +118,7 @@ io.sockets.on('connection', function (socket){
 	// change post
 	socket.on('changePost',function(changePost){
 		(changePost)
-		socket.emit('changePostReply',    );
+		socket.emit('changePostReply'    );
 		console.log();
 	});	
 	
@@ -148,7 +153,7 @@ io.sockets.on('connection', function (socket){
 	socket.on('getOnePost',function(page, id){
 		var postId = (page-1) * pageLength + id;
 		// Add access_count when requested
-		mongoDbUpdatePostCount( searchPostArray[postId].post_id, searchPostArray[postId].access_count );
+		mongoDbUpdatePostCount( searchPostArray[postId].post_id );
 		socket.emit('searchPostReply', searchPostArray[postId]);
 	});
 	
@@ -165,11 +170,14 @@ io.sockets.on('connection', function (socket){
 });
 
 // For searchPostArray to Sort 
-// 1. By access_count
+// 1. By last change time
+function sortByLastChange(a,b){}
+// 2. By origin create time
+function sortByCreateTime(a,b){}
+// 3. By access_count
 function sortByAccessCount(a,b){
 	return b.access_count - a.access_count;
 }
-// 2. By access_count
 
 // new user: return success or failed
 // return: T/F 
@@ -228,7 +236,7 @@ function mongoDbNewPost(newPost){
 	
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
-			collection.find('post_tile':newPost.post_tile , {'name':1,'_id':1},function(err,result){
+			collection.find({'course_title': (newPost.course_title)} , {'name':1,'_id':1},function(err,result){
 				result.toArray(function(err, arr){	
 				
 					if (arr.length !== 0){
@@ -257,38 +265,8 @@ function mongoDbNewPost(newPost){
 
 // change post 
 // return: ?????
-function mongoDbChangePost(changePost, ){
+function mongoDbChangePost(changePost ){
 	// -------------
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver);
-	
-	mgconnect.open(function (err, db) {	  
-		db.collection('postlist', function (err, collection) {
-			collection.find('post_tile':newPost.post_tile , {'name':1,'_id':1},function(err,result){
-				result.toArray(function(err, arr){	
-				
-					if (arr.length !== 0){
-						console.log('already have a post');
-						return false;
-					} else {
-						// only 'tags' needs origin name
-						// count=0, createFrom=-1, post_id=_id (Auto generated)
-						collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count});
-						console.log('new post success');
-						return true;
-					}
-				});
-			});
-		});
-	});
 }
 
 // search post by title
@@ -299,7 +277,7 @@ function mongoDbSearchPost(course_title){
 	  
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
-			collection.find({$or:['course_title':{$regex:course_title}, 'tag':course_title ]}, function(err,result){
+			collection.find({$or:[ {'course_title':{$regex:course_title}}, {'tag':course_title} ]}, function(err,result){
 				result.toArray(function(err, arr){
 					console.log(arr);
 					var returnPostArray = [];
@@ -316,14 +294,13 @@ function mongoDbSearchPost(course_title){
 }
 
 // update one post access_count
-function mongoDbUpdatePostCount(post_id, access_count){
+function mongoDbUpdatePostCount(post_id){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver);
 	
-	var count = access_count+1;
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
-			collection.update('_id':post_id, {'$set':{'access_count':count}}, function(err){
+			collection.update({'_id':post_id}, {'$inc':{'access_count':1}}, function(err){
 				return;
 			});
 		});
