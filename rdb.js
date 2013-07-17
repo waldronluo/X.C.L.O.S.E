@@ -128,8 +128,8 @@ Post = function(){
 	  
 mgconnect.open(function (err, db) {	 
 	// init user		x 4
-	db.createCollection('userlist_test'); 
-	db.collection('userlist_test', function (err, collection) {
+	db.createCollection('userlist'); 
+	db.collection('userlist', function (err, collection) {
 		collection.save({'name':'aaa', 'password':'111', 'email':'aaa@qq.com'});
 		collection.save({'name':'bbb', 'password':'222', 'email':'bbb@niubi.com'});
 		collection.save({'name':'zhang', 'password':'123456', 'email':'hey@qq.com'});
@@ -139,8 +139,8 @@ mgconnect.open(function (err, db) {
 	console.log('main 1');
 	
 	//init post			x 20
-	db.createCollection('postlist_test');
-	db.collection('postlist_test', function (err, collection) {
+	db.createCollection('postlist');
+	db.collection('postlist', function (err, collection) {
 	
 		var counter = 100;
 var tempDate = new Date();
@@ -317,7 +317,7 @@ for (var i=0; i<4; i++)
 	console.log('main 2');
 	 
 	////init tags			x 16
-	db.collection('tagslist_test', function (err, collection) {
+	db.collection('tagslist', function (err, collection) {
 		
 var arr = ['灯塔理念',['乡土认同', '陪伴成长', '服务学习']];
 for (var i=0;i<3; i++){

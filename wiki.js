@@ -45,10 +45,10 @@ io.sockets.on('connection', function (socket){
 	}
 	if (firstPathname == "/search"){
 		// search mode : LastChange / CreateTime / AccessCount
-		// mongoDBSearchPost(socket,
-						// queryStrArray['searchStr'],
-						// queryStrArray['sortWay'],
-						// queryStrArray['page'] );
+		mongoDBSearchPost(socket,
+						queryStrArray['searchStr'],
+						queryStrArray['sortWay'],
+						queryStrArray['page'] );
 		console.log('search send');
 	}
 	if (firstPathname == "/teach-plan"){
@@ -262,7 +262,7 @@ function mongoDBGetTags(socket){
 						TagsArr[countCat][1][countTag] = arr[i].name;
 						countTag++;
 					}
-					//console.log(TagsArr.length);
+					console.log(TagsArr);
 
 					socket.emit('labelsReply', TagsArr);
 					return TagsArr;
@@ -286,8 +286,9 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 									'post_createTime':1, 'post_tag':1}).sort({'post_createTime':-1}, function(err,result){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(10);
+							var len = arr.length;
 							for (var i=0; i<10; i++){
-								if (arr[(page-1)*10+i] == null)
+								if ((page-1)*10+i >= len)
 									break;
 								else sendArr[i] = arr[(page-1)*10+i];
 							}
@@ -302,8 +303,9 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 									'post_createTime':1, 'post_tag':1}).sort({'origin_createTime':-1}, function(err,result){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(10);
+							var len = arr.length;
 							for (var i=0; i<10; i++){
-								if (arr[(page-1)*10+i] == null)
+								if ((page-1)*10+i >= len)
 									break;
 								else sendArr[i] = arr[(page-1)*10+i];
 							}
@@ -318,8 +320,9 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 									'post_createTime':1, 'post_tag':1}).sort({'access_count':-1}, function(err,result){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(10);
+							var len = arr.length;
 							for (var i=0; i<10; i++){
-								if (arr[(page-1)*10+i] == null)
+								if ((page-1)*10+i >= len)
 									break;
 								else sendArr[i] = arr[(page-1)*10+i];
 							}
@@ -334,8 +337,9 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 									'post_createTime':1, 'post_tag':1}).sort({'post_createTime':-1}, function(err,result){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(10);
+							var len = arr.length;
 							for (var i=0; i<10; i++){
-								if (arr[(page-1)*10+i] == null)
+								if ((page-1)*10+i >= len)
 									break;
 								else sendArr[i] = arr[(page-1)*10+i];
 							}
