@@ -9,6 +9,7 @@ var querystring = require("querystring");
 var url = require("url");
 var fs = require("fs");
 
+
 // Defaults
 var portNumberDefault = process.env.PORT || 8089;
 var listenAddr = process.env.NW_ADDR || '127.0.0.1';    // "" ==> INADDR_ANY
@@ -39,9 +40,20 @@ var queryStrArray = [];
 iolisten.sockets.on('connection', function (socket){
 	console.log('start connect');
 
-	// send Tags FIRST
-	mongoDBGetTags(socket);	
+	if (firstPathname == '/' || firstPathname == ""){
+		mongoDBGetTags(socket);	
+	}
+	else if (firstPathname == "/search"){
+		console.log('search start');
+		// search mode : LastChange / CreateTime / AccessCount
+		mongoDbSearchPost(socket,
+						queryStrArray['searchStr'],
+						queryStrArray['sortWay'],
+						queryStrArray['page'] );
+	}
 	
+		
+		
 	// login
 	console.log('start socket on login');
 	socket.on('login',function(name, password){
@@ -101,7 +113,7 @@ iolisten.sockets.on('connection', function (socket){
 
 // default page output setting
 
-app.use(function(req, res){
+app.use(function(req, res){	
 	var pathname = url.parse(req.url).pathname;
 	console.log("Request for " + pathname + " received.");
 	console.log("Request for " + firstPathname + " ---received.");
@@ -119,13 +131,6 @@ app.use(function(req, res){
 		queryStrArray['sortWay'] = querystring.parse(url.parse(req.url).query)['sortWay'];
 		queryStrArray['page'] = querystring.parse(url.parse(req.url).query)['page'];
 		console.log(queryStrArray);
-		
-		console.log('search start');
-		// search mode : LastChange / CreateTime / AccessCount
-		mongoDbSearchPost(iolisten.sockets,
-						queryStrArray['searchStr'],
-						queryStrArray['sortWay'],
-						queryStrArray['page'] );
 	}
 	
 	if (pathname == "/teach-plan"){
