@@ -27,7 +27,7 @@
             div.className="label";
             var a = document.createElement("a");
             a.className = "labelSelf";
-            a.href = "/search?searchStr=" + labelgroups[i][j];
+            a.href = "/search?searchStr=" + labelgroups[i][j]+"&sortWay=LastChange&page=1";
             a.target = "_blank";
             a.innerHTML = labelgroups[i][j];
             
