@@ -51,7 +51,7 @@ iolisten.sockets.on('connection', function (socket){
 						queryStrArray['page'] );
 	}
 	else if (firstPathname == "/teach-plan"){
-		model.mongoDbGetOnePost(socket, queryStrArray['post_id'])
+		model.mongoDbGetOnePost(socket, queryStrArray['post_id']);
 	}
 	else if (firstPathname == "teach-plan-edit"){
 	}
@@ -129,7 +129,6 @@ iolisten.sockets.on('connection', function (socket){
 		}
 		console.log(userArray);
 	});
-	
 });
 
 // default page output setting
@@ -142,7 +141,7 @@ app.use(function(req, res){
 	if (pathname == "/" || pathname == ""){
 		firstPathname = "/";
 	}
-	if (pathname == "/search"){		
+	else if (pathname == "/search"){		
 		//	url sample:		http://127.0.0.1:8089/search?method=123&searchStr=hello&page=1&sortWay=LastChange
 		console.log('-- search.html --');
 		firstPathname = "/search";
@@ -157,8 +156,7 @@ app.use(function(req, res){
 		queryStrArray['page'] = querystring.parse(url.parse(req.url).query)['page'];
 		console.log(queryStrArray);
 	}
-	
-	if (pathname == "/teach-plan"){
+	else if (pathname == "/teach-plan"){
 		//	url sample:		http://127.0.0.1:8089/teach-plan?post_id=123
 		firstPathname = "/teach-plan";
 		res.writeHead(200, {"Content-Type": "text/html"});
@@ -169,15 +167,14 @@ app.use(function(req, res){
 		queryStrArray['post_id'] = querystring.parse(url.parse(req.url).query)['post_id'];
 		console.log(queryStrArray);
 	}
-	
-	if (pathname == "/teach-plan-edit"){
+	else if (pathname == "/teach-plan-edit"){
 		//  url sample:
 		firstPathname = "/teach-plan-edit";
 		res.writeHead(200, {"Content-Type": "text/html"});
 		res.write(fs.readFileSync(__dirname + '/static/teach-plan-edit.html', 'utf-8'));
 		res.end();
 	}
-	if (pathname == "/favicon.ico"){res.end();}
+	else if (pathname == "/favicon.ico"){res.end();}
 });
 
 

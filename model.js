@@ -1,6 +1,4 @@
-
 var mongodb = require('mongodb');		//mongoDB for user
-
 /*	about DB data structure:
 	db:	test
 		collection:	userlist:
@@ -82,7 +80,13 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 								}
 							}
-							socket.emit('searchPostReply', sendArr);
+							console.log(sendArr);
+							var backArr = new Array();
+							backArr['searchStr'] = searchStr;
+							backArr['sortWay'] = sortWay;
+							backArr['page'] = page;
+							backArr['pageCount'] = Math.ceil(len/10);
+							socket.emit('searchPostReply', sendArr ,backArr);
 						});
 					});
 					break;
@@ -111,7 +115,12 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 								}
 							}
 							console.log(sendArr);
-							socket.emit('searchPostReply', sendArr);
+							var backArr = new Array();
+							backArr['searchStr'] = searchStr;
+							backArr['sortWay'] = sortWay;
+							backArr['page'] = page;
+							backArr['pageCount'] = Math.ceil(len/10);
+							socket.emit('searchPostReply', sendArr ,backArr);
 						});
 					});
 					break;
@@ -139,7 +148,13 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 								}
 							}
-							socket.emit('searchPostReply', sendArr);
+							console.log(sendArr);
+							var backArr = new Array();
+							backArr['searchStr'] = searchStr;
+							backArr['sortWay'] = sortWay;
+							backArr['page'] = page;
+							backArr['pageCount'] = Math.ceil(len/10);
+							socket.emit('searchPostReply', sendArr ,backArr);
 						});
 					});
 					break;
@@ -167,7 +182,13 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 								}
 							}
-							socket.emit('searchPostReply', sendArr);
+							console.log(sendArr);
+							var backArr = new Array();
+							backArr['searchStr'] = searchStr;
+							backArr['sortWay'] = sortWay;
+							backArr['page'] = page;
+							backArr['pageCount'] = Math.ceil(len/10);
+							socket.emit('searchPostReply', sendArr ,backArr);
 						});
 					});
 					break;
@@ -311,14 +332,13 @@ exports.mongoDbNewPost = function(newPost){
 
 // change post 
 // return: ?????
-exports.mongoDbChangePost = function(changePost ){
+exports.mongoDbChangePost = function(changePost){
 	// -------------
 }
-
-
 // update Tags ------
 
 // update Comments -------
+
 
 // User struct -- for user construct
 User = function(){
