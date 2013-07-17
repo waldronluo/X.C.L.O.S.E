@@ -39,11 +39,8 @@ var queryStrArray = [];
 // io.socket listen
 iolisten.sockets.on('connection', function (socket){
 	console.log('start connect');
-
-	if (firstPathname == '/' || firstPathname == ""){
-		mongoDbGetTags(socket);	
-	}
-	else if (firstPathname == "/search"){
+	
+	if (firstPathname == "/search"){
 		console.log('search start');
 		// searchStr: ????
 		// sortWay  : LastChange / CreateTime / AccessCount
@@ -52,15 +49,6 @@ iolisten.sockets.on('connection', function (socket){
 						queryStrArray['searchStr'],
 						queryStrArray['sortWay'],
 						queryStrArray['page'] );
-		
-		console.log('start socket on searchPost');
-		socket.on('searchPost',function(searchArr){
-			mongoDbSearchPost(socket,
-						searchArr['searchStr'],
-						searchArr['sortWay'],
-						searchArr['page'] );
-		});
-	
 	}
 	else if (firstPathname == "/teach-plan"){
 		mongoDbGetOnePost(socket, queryStrArray['post_id'])
@@ -69,6 +57,22 @@ iolisten.sockets.on('connection', function (socket){
 	}
 	else {
 	}
+	
+	
+	// get labels
+	console.log('start socket on labels');
+	socket.on('labels',function(){
+		mongoDbGetTags(socket);	
+	});
+	
+	// searchPost;
+	console.log('start socket on searchPost');
+	socket.on('searchPost',function(searchArr){
+		mongoDbSearchPost(socket,
+						searchArr['searchStr'],
+						searchArr['sortWay'],
+						searchArr['page'] );
+	});
 		
 	// login
 	console.log('start socket on login');
@@ -134,7 +138,10 @@ app.use(function(req, res){
 	var pathname = url.parse(req.url).pathname;
 	console.log("Request for " + pathname + " received.");
 	console.log("Request for " + firstPathname + " ---received.");
-		
+	
+	if (pathname == "/" || pathname == ""){
+		firstPathname = "/";
+	}
 	if (pathname == "/search"){		
 		//	url sample:		http://127.0.0.1:8089/search?method=123&searchStr=hello&page=1&sortWay=LastChange
 		console.log('-- search.html --');

@@ -156,7 +156,7 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate = tempDate.getDate() + 20;
+	tempDate.setDate(tempDate.getDate() + 20);
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
@@ -164,12 +164,17 @@ for (var i=0; i<4; i++)
 	
 	newPost.post_tag = ['乡土认同', '自然教育', '社会能力', '大麦山'];
 	
-	'让学生明白“家乡”的含义，进而重新认识自己的家乡，进而热爱家乡，树立为家乡贡献自己的力量的感念';
-	'道具、物资、听课义工、入组义工等';
-	'第二节课（“家乡”作品展示）\n1.让完成了作业的学生上台与大家一起分享。每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答：1. 家乡意味着什么？2.我们能为我们的家乡做什么？小组讨论\n3.展示结束，分享学生们的感受（5min）\n4. 总结：我们的家乡是我们永远的根，我们要有一双善于发现美的眼睛，发现它，认识它，爱它。\n作业要求：以“家乡”（瑶族文化）为题写一篇文章。';
 	
+	newPost.template_title = '自然教育';
+	newPost.volunteer = '唯一';
+	newPost.background = '让学生明白“家乡”的含义，进而重新认识自己的家乡，进而热爱家乡，树立为家乡贡献自己的力量的感念';
+	newPost.course_prepare = '道具、物资、听课义工、入组义工等';
 	
-	newPost.lesson_starting_content = '1.家乡，是指自己小时候生长的地方或祖籍，又被称为“故乡”、“老家”、“故园”等。，在英文是“hometown” ，简单解释讲了hometown的组成。家乡的概念，那让我了解一下家乡要素有什么，家乡有什么？（5min 讨论时间，5min的总结，分享）\n（ps：因为是两个班合在一起上课，所以有一个班相对来说会比较积极）\n2.家乡是个比较泛的概念，可以很大可以由大到小。由省，市，县，到镇。\n提问：当别人问你们，你们的老家是哪的时候，你们要怎么回答呢？（是回答清远，连南，还是大麦山呢？）（3min）\n学生反映有广东，清远，连南，大麦山；\n那你们知道唯一姐姐的家乡是哪不？我们其他的义工哥哥姐姐是哪里人不？（鼓励回答）（唯一的家乡是潮汕，在她们回答是“四川”的时候，有一个互动）大概介绍了潮汕的地理位置。引出连南与潮汕的不同之处，瑶族与汉族的区别，为下面引出“瑶族文化”的话题；\n 连南瑶族大麦山vs 潮汕\n要素：衣食住行（三个小组讨论，入主义工进行引导）（15mins的讨论）\n学生都很投入地讨论了关于衣食住行的家乡特点，效果较好\n家乡有特殊的语言，特殊的建筑房屋，特殊的服装，特殊的风俗习惯，让我们一起去发现我们大麦山，连南的资源\nA.让学生们试着找一些瑶族歌曲或本地歌曲，或者用家乡话把《家乡》改编，小组任务。\nB.布置作业，以“家乡”为题，个人或小组皆可，完成“发现家乡大麦山的美”的作业。建议：任选大麦山的任何一个方面，可以是历史，歌舞，建筑，房屋，特产等等的展示，可以通过观察或问家人，亲戚，就地取材等等';
+	newPost.lesson_starting_content = '1.家乡，是指自己小时候生长的地方或祖籍，又被称为“故乡”、“老家”、“故园”等。，在英文是“hometown” ，简单解释讲了hometown的组成。家乡的概念，那让我了解一下家乡要素有什么，家乡有什么？（5min 讨论时间，5min的总结，分享）\n（ps：因为是班相对来说会比较积极）\n2.家乡是个比较泛的概念，可以很大可以由大到小。由省，市，县，到镇。\n提问：当别人问你们，你们的老家是哪的时候，你们要怎么回答呢？（是回答清远，连南，还是大麦山呢？）（3min）\n学生反映有广东，清远，连南，大麦山；\n那你们们大麦山，连南的资源\nA.让学生们试着找一些瑶族歌曲或本地歌曲，或者用家乡话把《家乡》改编，小组任务。\nB.布置作业，以“家乡”为题，个人或小组皆可，完成“发现家乡大麦山的美”的作业。建议：任选大麦山的任何一个方面，可以是历史，歌舞，建筑，房屋，特产等等的展示，可以通过观察或问家人，亲戚，就地取材等等';
+	
+	newPost.lesson_main_content = '第二节课（“家乡”作品展示）\n1.让完成了作业的学生上台与大家一起分享。每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答：1. 家乡意味着什么\n总结：我们的家乡是我们永远的根，我们要有一双善于发现美的眼睛，发现它，认识它，爱它。\n作业要求：以“家乡”（瑶族文化）为题写一篇文章。';
+	newPost.lesson_summary = '自我评价：这堂课以家乡为主，让学生从自己最熟悉的家乡入手；说进行引导（本意是让学生认真发现家乡的美，家乡的文化，发现它，喜欢它，爱上它。';
+	
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -197,13 +202,23 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate = tempDate.getDate() + 20;
+	tempDate.setDate(tempDate.getDate() + 20);
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
 	newPost.post_tag = ['乡土认同', '自然教育', '社会能力', '大麦山'];
+	
+	newPost.template_title = '乡土认同';
+	newPost.volunteer = '唯一';
+	newPost.background = '让学生明白“家乡”的含义，进而重新认识自己的家乡，进而热爱家乡，树立为家乡贡献自己的力量的感念';
+	newPost.course_prepare = '道具、物资、听课义工、入组义工等';
+	
+	newPost.lesson_starting_content = '1.家乡，是指自己小时候生长的地方或祖籍，又被称为“故乡”、“老家”、“故园”等。，在英文是“hometown” ，简单解释讲了hometown的组成。家乡的概念，那让我了解一下家乡要素有什么，家乡有什么？（5min 讨论时间，5min的总结，分享）\n（ps：因为是两个班合在一起上课，所以有一个班相对来说会比较积极）\n2.家乡是个比较泛的概念，可以很大可以由大到小。由省，市，县，到镇。\n提问：当别人问你们，你们的老家是哪的时候，你们要怎么回答呢？（是回答清远，连南，还是大麦山呢？）（3min）\n学生反映有广东，清远，连南，大麦山；\n那你们知道唯一姐姐的家乡是哪不？我们其他的义工哥哥姐姐是哪里人不？（鼓励回答）（唯一的家乡是潮汕，在她们回答是“四川”的时候，有一个互动）大概介绍了潮汕的地理位置。引出连南与潮汕的不同之处，瑶族与汉族的区别，为下面引出“瑶族文化”的话题；\n 连南瑶族大麦山vs 潮汕\n要素：衣食住行（三个小组讨论，入主义工进行引导）（15mins的讨论）\n学生都很投入地讨论了关于衣食住行的家乡特点，效果较好\n家乡有特殊的语言，特殊的建筑房屋，特殊的服装，特殊的风俗习惯，让我们一起去发现我们大麦山，连南的资源\nA.让学生们试着找一些瑶族歌曲或本地歌曲，或者用家乡话把《家乡》改编，小组任务。\nB.布置作业，以“家乡”为题，个人或小组皆可，完成“发现家乡大麦山的美”的作业。建议：任选大麦山的任何一个方面，可以是历史，歌舞，建筑，房屋，特产等等的展示，可以通过观察或问家人，亲戚，就地取材等等';
+	
+	newPost.lesson_main_content = '第二节课（“家乡”作品展示）\n1.让完成了作业的学生上台与大家一起分享。每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答：1. 家乡意味着什么？2.我们能为我们的家乡做什么？小组讨论\n3.展示结束，分享学生们的感受（5min）\n4. 总结：我们的家乡是我们永远的根，我们要有一双善于发现美的眼睛，发现它，认识它，爱它。\n作业要求：以“家乡”（瑶族文化）为题写一篇文章。';
+	newPost.lesson_summary = '自我评价：这堂课以家乡为主，让学生从自己最熟悉的家乡入手；说起瑶族文化，学生们都很快反应；讨论效果较佳；第二节课的成果展示，很多学生由于准备不足，展示效果不佳；由于时间掌握得不是很好，最后没有进行引导（本意是让学生认真发现家乡的美，家乡的文化，发现它，喜欢它，爱上它。';	
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -231,13 +246,24 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate = tempDate.getDate() + 20;
+	tempDate.setDate(tempDate.getDate() + 20);
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
 	newPost.post_tag = ['乡土认同', '互动游戏', '白湾'];
+	
+	
+	newPost.template_title = '乡土认同';
+	newPost.volunteer = '唯一';
+	newPost.background = '让学生明白“家乡特产变身方法，发挥想象,,感念';
+	newPost.course_prepare = '道具、物资、听课义工、入组义工等';
+	
+	newPost.lesson_starting_content = '1家乡特产变身方法，发挥想象    “老家”、“故园”等。，在英文是“hometown” ，简单解释讲了hometown的组成。家乡的概念，那让我了解一下家乡要素有什么，家乡有什么？（5min 讨论时间，5min的总结，分享）\n（ps：因为是两个班合在一起上课，所以有一个班相对来说会比较积极）\n2.家乡是个比较泛的概念，可以很大可以由大到小。由省，市，县，到镇。\n提问：当别人问你们，你们的老家是哪引出“瑶族文化”的话题；\n 连南瑶族大麦山vs 潮汕\n要素：衣食住行（三个小组讨论，入主义工进行引导）（15mins的讨论）\n学生都很投入地讨论了关于衣食住行的家乡特点，效果较好\n家乡有特殊的语言，特殊的建筑房屋，特殊的服装，特殊的风俗习惯，让我们一起去发现我们大麦山，连作业。建议：是历史，歌舞，建筑，房屋，特产等等的展示，可以通过观察或问家人，亲戚，就地取材等等';
+	
+	newPost.lesson_main_content = '第二节课（“）\n1.让完成了作业的学生上台与大家一起分享。每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答：1. 家乡意味着什么？2.我们能为我们的家乡做什么？小组讨论\n3.展示结束，分享学生们的感受（5min）\n4. 总结：我们的家乡是我们永远的根，我们要有一双善于发现美的眼睛，发现它，认识它，爱它。\n作业要求：以“家乡”（瑶族文化）为题写一篇文章。';
+	newPost.lesson_summary = '让学生从自己最熟悉的家乡入手；学生们都很快反应；讨论效果较佳';	
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -265,13 +291,23 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate = tempDate.getDate() + 20;
+	tempDate.setDate(tempDate.getDate() + 20);
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
 	newPost.post_tag = ['数理化', '服务学习'];
+	
+	newPost.template_title = '服务学习';
+	newPost.volunteer = '唯一';
+	newPost.background = '让学生贡献自己的力量的感念';
+	newPost.course_prepare = '道具,入组义工等';
+	
+	newPost.lesson_starting_content = '家乡的概念，那让我了解一下家乡要素有什么，家乡有什么？（5min 讨论时间，5min的总结，分享）\n（ps：因为是两个班合在一起上课，所以有一个班相对来说会比较积极）\n2.家乡是个比较泛的概念，可以很大可以由大到小。由省，市，县，到镇。\n提问：当别';
+	
+	newPost.lesson_main_content = '每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答';
+	newPost.lesson_summary = '自我评价：最后没有进行引导（本意是让。';	
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -299,13 +335,14 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate = tempDate.getDate() + 20;
+	tempDate.setDate(tempDate.getDate() + 20);
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
 	newPost.post_tag = ['陪伴成长', '情感教育', '乡土认同', '自然教育'];
+	
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
