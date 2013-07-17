@@ -1,4 +1,4 @@
-//back + DB
+﻿//back + DB
 
 var http = require("http");
 var connect = require("connect");
@@ -36,16 +36,19 @@ var queryStrArray = [];
 
 // io.socket
 io.sockets.on('connection', function (socket){
+	console.log('start connect');
 	console.log("firstPathname = " + firstPathname);
 	
 	// deal with page changes
+	console.log('tags start');
 	if (firstPathname == "/"){
 		mongoDBGetTags(socket);		//input socket to send result after DB finished
 		console.log('tags send');
 	}
+	console.log('search start');
 	if (firstPathname == "/search"){
 		// search mode : LastChange / CreateTime / AccessCount
-		mongoDBSearchPost(socket,
+		mongoDbSearchPost(socket,
 						queryStrArray['searchStr'],
 						queryStrArray['sortWay'],
 						queryStrArray['page'] );
@@ -120,16 +123,16 @@ app.use(function(req, res){
 	console.log("Request for " + pathname + " received.");
 	
 	if (pathname == "/" || pathname == ""){
+		firstPathname = "/";
 		res.writeHead(200, {"Content-Type": "text/html"});
 		res.write(fs.readFileSync(__dirname + '/static/index.html', 'utf-8'));
 		res.end();
-		firstPathname = "/";
 	}
 	if (pathname == "/search"){
+		firstPathname = "/search";
 		res.writeHead(200, {"Content-Type": "text/html"});
 		res.write(fs.readFileSync(__dirname + '/static/search.html', 'utf-8'));
 		res.end();
-		firstPathname = "/search";
 		
 		//	url sample:		http://127.0.0.1:8089/search?method=123&searchStr=hello&page=1&sortWay=LastChange
 		
@@ -240,7 +243,7 @@ function mongoDBGetTags(socket){
 	var TagsArr = new Array();
 
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver);
+	var mgconnect = new mongodb.Db('test',mgserver, {safe:false});
 	
 	mgconnect.open(function (err, db) {	  
 		db.collection('tagslist', function (err, collection) {
@@ -275,7 +278,7 @@ function mongoDBGetTags(socket){
 // search post by title
 function mongoDbSearchPost(socket, searchStr, sortWay, page){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	  
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
@@ -358,7 +361,7 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 // return: T/F 
 function mongoDbNewUser(name, password, email){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	  
 	mgconnect.open(function (err, db) {	  
 		db.collection('userlist', function (err, collection) {
@@ -382,7 +385,7 @@ function mongoDbNewUser(name, password, email){
 // return: T/F 
 function mongoDbCheckUser(name, password){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	  
 	mgconnect.open(function (err, db) {	  
 		db.collection('userlist', function (err, collection) {
@@ -407,7 +410,7 @@ function mongoDbCheckUser(name, password){
 // return: T/F----------------------------
 function mongoDbNewPost(newPost){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
@@ -418,15 +421,30 @@ function mongoDbNewPost(newPost){
 					} else {
 						// only 'tags' needs origin name
 						// count=0, createFrom=-1, post_id=_id (Auto generated), 
-						collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+						collection.save({'course_title':newPost.course_title, 
+										'template_title':newPost.template_title, 
+										'topic':newPost.topic, 
+										'course_time':newPost.course_time, 
+										'volunteer':newPost.volunteer, 
+										'course_class':newPost.course_class, 
+										'background':newPost.background, 
+										'course_prepare':newPost.course_prepare, 
+										'teaching_resource':newPost.teaching_resource, 
+										'teaching_goal':newPost.teaching_goal, 
+										'lesson_starting_time':newPost.lesson_starting_time, 
+										'lesson_starting_content':newPost.lesson_starting_content, 
+										'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+										'lesson_main_time':newPost.lesson_main_time, 
+										'lesson_main_content':newPost.lesson_main_content, 
+										'lesson_main_pattern':newPost.lesson_main_pattern, 
+										'lesson_ending_time':newPost.lesson_ending_time, 
+										'lesson_ending_content':newPost.lesson_ending_content, 
+										'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+										'lesson_summary':newPost.lesson_summary, 
+										'lesson_comment':newPost.lesson_comment, 
 										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count});
+										'post_createFrom_id':newPost.post_createFrom_id, 
+										'access_count':newPost.access_count});
 						console.log('new post success');
 					}
 				});
@@ -446,7 +464,7 @@ function mongoDbChangePost(changePost ){
 // update one post access_count
 function mongoDbUpdatePostCount(post_id){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
@@ -615,5 +633,143 @@ Tags = function (){
 		this.count = count;
 		this.category = category;
 	}
+}
+
+
+function EncodeUtf8(s1)
+  {
+      var s = escape(s1);
+      var sa = s.split("%");
+      var retV ="";
+      if(sa[0] != "")
+      {
+         retV = sa[0];
+      }
+      for(var i = 1; i < sa.length; i ++)
+      {
+           if(sa[i].substring(0,1) == "u")
+           {
+               retV += Hex2Utf8(Str2Hex(sa[i].substring(1,5)));
+               
+           }
+           else retV += "%" + sa[i];
+      }
+      
+      return retV;
+  }
+function Str2Hex(s)
+  {
+      var c = "";
+      var n;
+      var ss = "0123456789ABCDEF";
+      var digS = "";
+      for(var i = 0; i < s.length; i ++)
+      {
+         c = s.charAt(i);
+         n = ss.indexOf(c);
+         digS += Dec2Dig(eval(n));
+           
+      }
+      //return value;
+      return digS;
+  }
+function Dec2Dig(n1)
+  {
+      var s = "";
+      var n2 = 0;
+      for(var i = 0; i < 4; i++)
+      {
+         n2 = Math.pow(2,3 - i);
+         if(n1 >= n2)
+         {
+            s += '1';
+            n1 = n1 - n2;
+          }
+         else
+          s += '0';
+          
+      }
+      return s;
+      
+  }
+function Dig2Dec(s)
+  {
+      var retV = 0;
+      if(s.length == 4)
+      {
+          for(var i = 0; i < 4; i ++)
+          {
+              retV += eval(s.charAt(i)) * Math.pow(2, 3 - i);
+          }
+          return retV;
+      }
+      return -1;
+  } 
+function Hex2Utf8(s)
+  {
+     var retS = "";
+     var tempS = "";
+     var ss = "";
+     if(s.length == 16)
+     {
+         tempS = "1110" + s.substring(0, 4);
+         tempS += "10" +  s.substring(4, 10); 
+         tempS += "10" + s.substring(10,16); 
+         var sss = "0123456789ABCDEF";
+         for(var i = 0; i < 3; i ++)
+         {
+            retS += "%";
+            ss = tempS.substring(i * 8, (eval(i)+1)*8);
+            
+            
+            
+            retS += sss.charAt(Dig2Dec(ss.substring(0,4)));
+            retS += sss.charAt(Dig2Dec(ss.substring(4,8)));
+         }
+         return retS;
+     }
+     return "";
+  }
+
+function revertUTF8(szInput)
+ {
+    var x,wch,wch1,wch2,uch="",szRet="";
+    for (x=0; x<szInput.length; x++)
+    {
+        if (szInput.charAt(x)=="%")
+        {
+            wch =parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+            if (!wch) {break;}
+            if (!(wch & 0x80))
+            {
+                wch = wch;
+            }
+            else if (!(wch & 0x20))
+            {
+                x++;
+                wch1 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+                wch  = (wch & 0x1F)<< 6;
+                wch1 = wch1 & 0x3F;
+                wch  = wch + wch1;
+            }
+            else
+            {
+                x++;
+                wch1 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+                x++;
+                wch2 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+                wch  = (wch & 0x0F)<< 12;
+                wch1 = (wch1 & 0x3F)<< 6;
+                wch2 = (wch2 & 0x3F);
+                wch  = wch + wch1 + wch2;
+            }
+            szRet += String.fromCharCode(wch);
+        }
+        else
+        {
+            szRet += szInput.charAt(x);
+        }
+    }
+    return(szRet);
 }
 

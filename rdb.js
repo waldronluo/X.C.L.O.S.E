@@ -1,9 +1,9 @@
-// use Node.js to start this 
+ï»¿// use Node.js to start this 
 // 
 
 var mongodb = require('mongodb');
 var mgserver = new mongodb.Server('127.0.0.1',27017);
-var mgconnect = new mongodb.Db('test',mgserver);
+var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	  
 
 // post struct -- for post present
@@ -148,8 +148,8 @@ var staticDate = tempDate;
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
-	newPost.course_title = EncodeUtf8('¼ÒÏç´ó·¢ÏÖ');
-	newPost.teaching_goal = EncodeUtf8('ÈÃÍ¬Ñ§ÃÇÓÃÉÆÓÚ·¢¾òµÄÑÛ¹âÈ¥·¢ÏÖÉí±ßµÄ×ÊÔ´£¬ÀûÓÃÉí±ßµÄ×ÊÔ´£¬ÔöÇ¿Ñ§Éú¶ÔÁ¬ÄÏ´óÂóÉ½ÏçÍÁÈÏÍ¬¡£');
+	newPost.course_title = 'å®¶ä¹¡å¤§å‘çŽ°';
+	newPost.teaching_goal = 'è®©åŒå­¦ä»¬ç”¨å–„äºŽå‘æŽ˜çš„çœ¼å…‰åŽ»å‘çŽ°èº«è¾¹çš„èµ„æºï¼Œåˆ©ç”¨èº«è¾¹çš„èµ„æºï¼Œå¢žå¼ºå­¦ç”Ÿå¯¹è¿žå—å¤§éº¦å±±ä¹¡åœŸè®¤åŒã€‚';
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
@@ -162,7 +162,7 @@ for (var i=0; i<4; i++)
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
-	newPost.post_tag = [EncodeUtf8('ÏçÍÁÈÏÍ¬'), EncodeUtf8('×ÔÈ»½ÌÓý'), EncodeUtf8('Éç»áÄÜÁ¦'), EncodeUtf8('´óÂóÉ½')];
+	newPost.post_tag = ['ä¹¡åœŸè®¤åŒ', 'è‡ªç„¶æ•™è‚²', 'ç¤¾ä¼šèƒ½åŠ›', 'å¤§éº¦å±±'];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -182,8 +182,8 @@ staticDate = tempDate;
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
-	newPost.course_title = EncodeUtf8('¼ÒÏçÌØÉ«');
-	newPost.teaching_goal = EncodeUtf8('ÔöÇ¿ËûÃÇ¶Ô¼ÒÏçµÄÈÏÍ¬¸Ð£¬ÒÔ¼°¶Ô¼ÒÏçµÄÁË½â¡£');
+	newPost.course_title = 'å®¶ä¹¡ç‰¹è‰²';
+	newPost.teaching_goal = 'å¢žå¼ºä»–ä»¬å¯¹å®¶ä¹¡çš„è®¤åŒæ„Ÿï¼Œä»¥åŠå¯¹å®¶ä¹¡çš„äº†è§£ã€‚';
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
@@ -196,7 +196,7 @@ for (var i=0; i<4; i++)
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
-	newPost.post_tag = [EncodeUtf8('ÏçÍÁÈÏÍ¬'), EncodeUtf8('×ÔÈ»½ÌÓý'), EncodeUtf8('Éç»áÄÜÁ¦'), EncodeUtf8('´óÂóÉ½')];
+	newPost.post_tag = ['ä¹¡åœŸè®¤åŒ', 'è‡ªç„¶æ•™è‚²', 'ç¤¾ä¼šèƒ½åŠ›', 'å¤§éº¦å±±'];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -216,8 +216,8 @@ staticDate = tempDate;
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
-	newPost.course_title = EncodeUtf8('ÌØ²ú´ó±äÉí');
-	newPost.teaching_goal = EncodeUtf8('ÈÃÑ§ÉúÁË½â¼ÒÏçÌØ²ú±äÉí·½·¨£¬·¢»ÓÏëÏó');
+	newPost.course_title = 'ç‰¹äº§å¤§å˜èº«';
+	newPost.teaching_goal = 'è®©å­¦ç”Ÿäº†è§£å®¶ä¹¡ç‰¹äº§å˜èº«æ–¹æ³•ï¼Œå‘æŒ¥æƒ³è±¡';
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
@@ -230,7 +230,7 @@ for (var i=0; i<4; i++)
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
-	newPost.post_tag = [EncodeUtf8('ÏçÍÁÈÏÍ¬'), EncodeUtf8('»¥¶¯ÓÎÏ·'), EncodeUtf8('°×Íå')];
+	newPost.post_tag = ['ä¹¡åœŸè®¤åŒ', 'äº’åŠ¨æ¸¸æˆ', 'ç™½æ¹¾'];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -250,8 +250,8 @@ staticDate = tempDate;
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
-	newPost.course_title = EncodeUtf8('»ù´¡ÊýÑ§¿Î½Ì°¸');
-	newPost.teaching_goal = EncodeUtf8('ÈÃÑ§ÉúÁË½â»ù±¾µÄÊýÑ§ËãÊõÖªÊ¶');
+	newPost.course_title = 'åŸºç¡€æ•°å­¦è¯¾æ•™æ¡ˆ';
+	newPost.teaching_goal = 'è®©å­¦ç”Ÿäº†è§£åŸºæœ¬çš„æ•°å­¦ç®—æœ¯çŸ¥è¯†';
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
@@ -264,7 +264,7 @@ for (var i=0; i<4; i++)
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
-	newPost.post_tag = [EncodeUtf8('ÊýÀí»¯'), EncodeUtf8('·þÎñÑ§Ï°')];
+	newPost.post_tag = ['æ•°ç†åŒ–', 'æœåŠ¡å­¦ä¹ '];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -284,8 +284,8 @@ staticDate = tempDate;
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
-	newPost.course_title = EncodeUtf8('ÏçÍÁÈÏÍ¬');
-	newPost.teaching_goal = EncodeUtf8('Ñ§Éú¶Ô×Ô¼º¼ÒÏçÓÐ¾ßÌå¡¢È«Ãæ¡¢ÏµÍ³µÄÁË½âÈÏÖª£»Í¨¹ý²»Í¬ÐÎÊ½µÄ¿Î³Ì»î¶¯£¬ÈÃÑ§ÉúÌåÑé¼ÒÏçµÄÃÀÀö¼°÷ÈÁ¦£¬²úÉú¶Ô¼ÒÏçµÄÈÏÍ¬ºÍÏ²°®Ö®Çé¡£');
+	newPost.course_title = 'ä¹¡åœŸè®¤åŒ';
+	newPost.teaching_goal = 'å­¦ç”Ÿå¯¹è‡ªå·±å®¶ä¹¡æœ‰å…·ä½“ã€å…¨é¢ã€ç³»ç»Ÿçš„äº†è§£è®¤çŸ¥ï¼›é€šè¿‡ä¸åŒå½¢å¼çš„è¯¾ç¨‹æ´»åŠ¨ï¼Œè®©å­¦ç”Ÿä½“éªŒå®¶ä¹¡çš„ç¾Žä¸½åŠé­…åŠ›ï¼Œäº§ç”Ÿå¯¹å®¶ä¹¡çš„è®¤åŒå’Œå–œçˆ±ä¹‹æƒ…ã€‚';
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
@@ -298,9 +298,7 @@ for (var i=0; i<4; i++)
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
-	newPost.post_tag = [EncodeUtf8('Åã°é³É³¤'), EncodeUtf8('Çé¸Ð½ÌÓý'), EncodeUtf8('ÏçÍÁÈÏÍ¬'), EncodeUtf8('×ÔÈ»½ÌÓý')];
-	
-	
+	newPost.post_tag = ['é™ªä¼´æˆé•¿', 'æƒ…æ„Ÿæ•™è‚²', 'ä¹¡åœŸè®¤åŒ', 'è‡ªç„¶æ•™è‚²'];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -321,448 +319,118 @@ for (var i=0; i<4; i++)
 	////init tags			x 16
 	db.collection('tagslist', function (err, collection) {
 		
-var arr = ['µÆËþÀíÄî',['ÏçÍÁÈÏÍ¬', 'Åã°é³É³¤', '·þÎñÑ§Ï°']];
+var arr = ['ç¯å¡”ç†å¿µ',['ä¹¡åœŸè®¤åŒ', 'é™ªä¼´æˆé•¿', 'æœåŠ¡å­¦ä¹ ']];
 for (var i=0;i<3; i++){
-	collection.save({'name': EncodeUtf8(arr[0]), 'count':2*i+1, 'category':EncodeUtf8(arr[1][i])});
+	collection.save({'category': arr[0], 'count':2*i+1, 'name':arr[1][i]})
 }
 
-arr = ['¶àÔª¿Î³Ì',['×ÔÈ»½ÌÓý', '»¥¶¯ÓÎÏ·', '×ÛºÏÐÔ»î¶¯', 'Ï·¾ç½ÌÓý', 'Ñ§Éú¹¤×÷']];
+arr = ['å¤šå…ƒè¯¾ç¨‹',['è‡ªç„¶æ•™è‚²', 'äº’åŠ¨æ¸¸æˆ', 'ç»¼åˆæ€§æ´»åŠ¨', 'æˆå‰§æ•™è‚²', 'å­¦ç”Ÿå·¥ä½œ']];
 for (var i=0;i<5; i++){
-	collection.save({'name': EncodeUtf8(arr[0]), 'count':2*i+1, 'category':EncodeUtf8(arr[1][i])});
+	collection.save({'category': arr[0], 'count':i+1, 'name':arr[1][i]})
 }
 
-arr = ['Ñ§¿Æ½Ì°¸',['ÎÄÊ·ÕÜ', 'ÊýÀí»¯', 'µØÀí', 'ÌåÓý', 'Ó¢Óï']];
+arr = ['å­¦ç§‘æ•™æ¡ˆ',['æ–‡å²å“²', 'æ•°ç†åŒ–', 'åœ°ç†', 'ä½“è‚²', 'è‹±è¯­']];
 for (var i=0;i<5; i++){
-	collection.save({'name': EncodeUtf8(arr[0]), 'count':2*i+1, 'category':EncodeUtf8(arr[1][i])});
+	collection.save({'category': arr[0], 'count':i, 'name':arr[1][i]})
 }
 
-arr = ['ÄÜÁ¦ÌáÉý',['ÇóÖ°ÄÜÁ¦', '±í´ïÄÜÁ¦', 'Éç»áÄÜÁ¦']];
+arr = ['èƒ½åŠ›æå‡',['æ±‚èŒèƒ½åŠ›', 'è¡¨è¾¾èƒ½åŠ›', 'ç¤¾ä¼šèƒ½åŠ›']];
 for (var i=0;i<3; i++){
-	collection.save({'name': EncodeUtf8(arr[0]), 'count':2*i+1, 'category':EncodeUtf8(arr[1][i])});
+	collection.save({'category': arr[0], 'count':5-i, 'name':arr[1][i]})
 }
 
 	});
 	console.log('main 3');
 	 
+	db.collection('postlist_test', function (err, collection) {
+		collection.find(function(err, result){
+			result.toArray(function(err, arr){
+					console.log(arr);
+			});
+		});
+	});
 });
-
-/*
-var counter = 100;
-var tempDate = new Date();
-var staticDate = tempDate;
-for (var i=0; i<4; i++)
-{
-	var newPost = new Post();
-	newPost.course_title = '¼ÒÏç´ó·¢ÏÖ';
-	newPost.teaching_goal = 'ÈÃÍ¬Ñ§ÃÇÓÃÉÆÓÚ·¢¾òµÄÑÛ¹âÈ¥·¢ÏÖÉí±ßµÄ×ÊÔ´£¬ÀûÓÃÉí±ßµÄ×ÊÔ´£¬ÔöÇ¿Ñ§Éú¶ÔÁ¬ÄÏ´óÂóÉ½ÏçÍÁÈÏÍ¬¡£';
-	newPost.post_id = counter + i;
-	
-	if (i==0) newPost.post_createFrom_id = -1;
-	else newPost.post_createFrom_id = counter + i - 1;
-	
-	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + i*2);
-	newPost.origin_createTime = staticDate;
-	
-	if (i==3) newPost.most_recent = 1; 
-	else newPost.most_recent = 0;
-	
-	newPost.post_tag = ['ÏçÍÁÈÏÍ¬', '×ÔÈ»½ÌÓý', 'Éç»áÄÜÁ¦', '´óÂóÉ½'];
-	
-	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-										'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, 'post_id':newPost.post_id});
-}
-
-counter = 222;
-tempDate = new Date();
-staticDate = tempDate;
-for (var i=0; i<4; i++)
-{
-	var newPost = new Post();
-	newPost.course_title = '¼ÒÏçÌØÉ«';
-	newPost.teaching_goal = 'ÔöÇ¿ËûÃÇ¶Ô¼ÒÏçµÄÈÏÍ¬¸Ð£¬ÒÔ¼°¶Ô¼ÒÏçµÄÁË½â¡£';
-	newPost.post_id = counter + i;
-	
-	if (i==0) newPost.post_createFrom_id = -1;
-	else newPost.post_createFrom_id = counter + i - 1;
-	
-	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + i*4);
-	newPost.origin_createTime = staticDate;
-	
-	if (i==3) newPost.most_recent = 1; 
-	else newPost.most_recent = 0;
-	
-	newPost.post_tag = ['ÏçÍÁÈÏÍ¬', '×ÔÈ»½ÌÓý', 'Éç»áÄÜÁ¦', '´óÂóÉ½'];
-	
-	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-										'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, 'post_id':newPost.post_id});
-}
-
-
-counter = 835;
-tempDate = new Date();
-staticDate = tempDate;
-for (var i=0; i<4; i++)
-{
-	var newPost = new Post();
-	newPost.course_title = 'ÌØ²ú´ó±äÉí';
-	newPost.teaching_goal = 'ÈÃÑ§ÉúÁË½â¼ÒÏçÌØ²ú±äÉí·½·¨£¬·¢»ÓÏëÏó';
-	newPost.post_id = counter + i;
-	
-	if (i==0) newPost.post_createFrom_id = -1;
-	else newPost.post_createFrom_id = counter + i - 1;
-	
-	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + i*4);
-	newPost.origin_createTime = staticDate;
-	
-	if (i==3) newPost.most_recent = 1; 
-	else newPost.most_recent = 0;
-	
-	newPost.post_tag = ['ÏçÍÁÈÏÍ¬', '»¥¶¯ÓÎÏ·', '°×Íå'];
-	
-	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-										'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, 'post_id':newPost.post_id});
-}
-
-
-
-counter = 159;
-tempDate = new Date();
-staticDate = tempDate;
-for (var i=0; i<4; i++)
-{
-	var newPost = new Post();
-	newPost.course_title = '»ù´¡ÊýÑ§¿Î½Ì°¸';
-	newPost.teaching_goal = 'ÈÃÑ§ÉúÁË½â»ù±¾µÄÊýÑ§ËãÊõÖªÊ¶';
-	newPost.post_id = counter + i;
-	
-	if (i==0) newPost.post_createFrom_id = -1;
-	else newPost.post_createFrom_id = counter + i - 1;
-	
-	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + 5);
-	newPost.origin_createTime = staticDate;
-	
-	if (i==3) newPost.most_recent = 1; 
-	else newPost.most_recent = 0;
-	
-	newPost.post_tag = ['ÊýÀí»¯', '·þÎñÑ§Ï°'];
-	
-	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-										'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, 'post_id':newPost.post_id});
-}
-
-
-
-counter = 1057;
-tempDate = new Date();
-staticDate = tempDate;
-for (var i=0; i<4; i++)
-{
-	var newPost = new Post();
-	newPost.course_title = 'ÏçÍÁÈÏÍ¬';
-	newPost.teaching_goal = 'Ñ§Éú¶Ô×Ô¼º¼ÒÏçÓÐ¾ßÌå¡¢È«Ãæ¡¢ÏµÍ³µÄÁË½âÈÏÖª£»Í¨¹ý²»Í¬ÐÎÊ½µÄ¿Î³Ì»î¶¯£¬ÈÃÑ§ÉúÌåÑé¼ÒÏçµÄÃÀÀö¼°÷ÈÁ¦£¬²úÉú¶Ô¼ÒÏçµÄÈÏÍ¬ºÍÏ²°®Ö®Çé¡£';
-	newPost.post_id = counter + i;
-	
-	if (i==0) newPost.post_createFrom_id = -1;
-	else newPost.post_createFrom_id = counter + i - 1;
-	
-	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + 5);
-	newPost.origin_createTime = staticDate;
-	
-	if (i==3) newPost.most_recent = 1; 
-	else newPost.most_recent = 0;
-	
-	newPost.post_tag = ['Åã°é³É³¤', 'Çé¸Ð½ÌÓý', 'ÏçÍÁÈÏÍ¬', '×ÔÈ»½ÌÓý'];
-	
-	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-										'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, 'post_id':newPost.post_id});
-}
-
-
-var arr = ['µÆËþÀíÄî',['ÏçÍÁÈÏÍ¬', 'Åã°é³É³¤', '·þÎñÑ§Ï°']];
-for (var i=0;i<3; i++){
-	collection.save({'name': arr[0], 'count':2*i+1, 'category':arr[1][i]})
-}
-
-arr = ['¶àÔª¿Î³Ì',['×ÔÈ»½ÌÓý', '»¥¶¯ÓÎÏ·', '×ÛºÏÐÔ»î¶¯', 'Ï·¾ç½ÌÓý', 'Ñ§Éú¹¤×÷']];
-for (var i=0;i<5; i++){
-	collection.save({'name': arr[0], 'count':i+1, 'category':arr[1][i]})
-}
-
-arr = ['Ñ§¿Æ½Ì°¸',['ÎÄÊ·ÕÜ', 'ÊýÀí»¯', 'µØÀí', 'ÌåÓý', 'Ó¢Óï']];
-for (var i=0;i<5; i++){
-	collection.save({'name': arr[0], 'count':i, 'category':arr[1][i]})
-}
-
-arr = ['ÄÜÁ¦ÌáÉý',['ÇóÖ°ÄÜÁ¦', '±í´ïÄÜÁ¦', 'Éç»áÄÜÁ¦']];
-for (var i=0;i<3; i++){
-	collection.save({'name': arr[0], 'count':5-i, 'category':arr[1][i]})
-}
-*/
 
 /*
 post----------------------------------------
 
-¼ÒÏç´ó·¢ÏÖ
-	ÈÃÍ¬Ñ§ÃÇÓÃÉÆÓÚ·¢¾òµÄÑÛ¹âÈ¥·¢ÏÖÉí±ßµÄ×ÊÔ´£¬ÀûÓÃÉí±ßµÄ×ÊÔ´£¬ÔöÇ¿Ñ§Éú¶ÔÁ¬ÄÏ´óÂóÉ½ÏçÍÁÈÏÍ¬¡£
+å®¶ä¹¡å¤§å‘çŽ°
+	è®©åŒå­¦ä»¬ç”¨å–„äºŽå‘æŽ˜çš„çœ¼å…‰åŽ»å‘çŽ°èº«è¾¹çš„èµ„æºï¼Œåˆ©ç”¨èº«è¾¹çš„èµ„æºï¼Œå¢žå¼ºå­¦ç”Ÿå¯¹è¿žå—å¤§éº¦å±±ä¹¡åœŸè®¤åŒã€‚
 	2011.9.10
 	2012.8.8
 	2013.1.2
 	2013.5.6
-	ÏçÍÁÈÏÍ¬  ×ÔÈ»½ÌÓý  Éç»áÄÜÁ¦  ´óÂóÉ½
+	ä¹¡åœŸè®¤åŒ  è‡ªç„¶æ•™è‚²  ç¤¾ä¼šèƒ½åŠ›  å¤§éº¦å±±
 	
-¼ÒÏçÌØÉ«
-	ÔöÇ¿ËûÃÇ¶Ô¼ÒÏçµÄÈÏÍ¬¸Ð£¬ÒÔ¼°¶Ô¼ÒÏçµÄÁË½â¡£
+å®¶ä¹¡ç‰¹è‰²
+	å¢žå¼ºä»–ä»¬å¯¹å®¶ä¹¡çš„è®¤åŒæ„Ÿï¼Œä»¥åŠå¯¹å®¶ä¹¡çš„äº†è§£ã€‚
 	2011.9.17
 	2012.9.10
 	2013.1.2
 	2013.5.2
-	ÏçÍÁÈÏÍ¬  ×ÔÈ»½ÌÓý  Éç»áÄÜÁ¦  ´óÂóÉ½
+	ä¹¡åœŸè®¤åŒ  è‡ªç„¶æ•™è‚²  ç¤¾ä¼šèƒ½åŠ›  å¤§éº¦å±±
 	
-ÌØ²ú´ó±äÉí
-	ÈÃÑ§ÉúÁË½â¼ÒÏçÌØ²ú±äÉí·½·¨£¬·¢»ÓÏëÏó
+ç‰¹äº§å¤§å˜èº«
+	è®©å­¦ç”Ÿäº†è§£å®¶ä¹¡ç‰¹äº§å˜èº«æ–¹æ³•ï¼Œå‘æŒ¥æƒ³è±¡
 	2011.8.12
 	2012.8.8
 	2012.9.10
 	2013.4.26
-	ÏçÍÁÈÏÍ¬   »¥¶¯ÓÎÏ·   °×Íå
+	ä¹¡åœŸè®¤åŒ   äº’åŠ¨æ¸¸æˆ   ç™½æ¹¾
 	
-ÏçÍÁÈÏÍ¬
-	Ñ§Éú¶Ô×Ô¼º¼ÒÏçÓÐ¾ßÌå¡¢È«Ãæ¡¢ÏµÍ³µÄÁË½âÈÏÖª£»Í¨¹ý²»Í¬ÐÎÊ½µÄ¿Î³Ì»î¶¯£¬ÈÃÑ§ÉúÌåÑé¼ÒÏçµÄÃÀÀö¼°÷ÈÁ¦£¬²úÉú¶Ô¼ÒÏçµÄÈÏÍ¬ºÍÏ²°®Ö®Çé¡£
+ä¹¡åœŸè®¤åŒ
+	å­¦ç”Ÿå¯¹è‡ªå·±å®¶ä¹¡æœ‰å…·ä½“ã€å…¨é¢ã€ç³»ç»Ÿçš„äº†è§£è®¤çŸ¥ï¼›é€šè¿‡ä¸åŒå½¢å¼çš„è¯¾ç¨‹æ´»åŠ¨ï¼Œè®©å­¦ç”Ÿä½“éªŒå®¶ä¹¡çš„ç¾Žä¸½åŠé­…åŠ›ï¼Œäº§ç”Ÿå¯¹å®¶ä¹¡çš„è®¤åŒå’Œå–œçˆ±ä¹‹æƒ…ã€‚
 	2012.1.4
 	2012.8.8
 	2013.1.2
 	2013.4.10
-	ÏçÍÁÈÏÍ¬   ¸ÊÈ÷   ×ÔÈ»½ÌÓý   Åã°é³É³¤   Çé¸Ð½ÌÓý
+	ä¹¡åœŸè®¤åŒ   ç”˜æ´’   è‡ªç„¶æ•™è‚²   é™ªä¼´æˆé•¿   æƒ…æ„Ÿæ•™è‚²
 
-ÎÒµÄÑþ·þÎÒ×öÖ÷Ö®µÚÒ»¿Î¡¾ÏµÁÐ½Ì°¸¡¿
-	ÔöÇ¿ËûÃÇ¶ÔÑþ·þµÄÏ²»¶¶È£¬ÔöÇ¿¼ÒÏçµÄÃñ×åÒâÊ¶
+æˆ‘çš„ç‘¶æœæˆ‘åšä¸»ä¹‹ç¬¬ä¸€è¯¾ã€ç³»åˆ—æ•™æ¡ˆã€‘
+	å¢žå¼ºä»–ä»¬å¯¹ç‘¶æœçš„å–œæ¬¢åº¦ï¼Œå¢žå¼ºå®¶ä¹¡çš„æ°‘æ—æ„è¯†
 	2013.3.1
 	2012.9.10
 	2013.1.2
 	2013.4.2
-	ÏçÍÁÈÏÍ¬  ÇÅÍ·  Çé¸Ð½ÌÓý  Éç»áÄÜÁ¦
+	ä¹¡åœŸè®¤åŒ  æ¡¥å¤´  æƒ…æ„Ÿæ•™è‚²  ç¤¾ä¼šèƒ½åŠ›
 
-»ù´¡ÊýÑ§¿Î½Ì°¸
-	ÈÃÑ§ÉúÁË½â»ù±¾µÄÊýÑ§ËãÊõÖªÊ¶
+åŸºç¡€æ•°å­¦è¯¾æ•™æ¡ˆ
+	è®©å­¦ç”Ÿäº†è§£åŸºæœ¬çš„æ•°å­¦ç®—æœ¯çŸ¥è¯†
 	2013.1.2
 	2013.1.23
 	2013.3.10
 	2013.4.2
-	ÊýÀí»¯  ·þÎñÑ§Ï°
+	æ•°ç†åŒ–  æœåŠ¡å­¦ä¹ 
 	*/
 
 /*
 tags -----------------------------
 
-µÆËþÀíÄî
-ÏçÍÁÈÏÍ¬
-Åã°é³É³¤	
-·þÎñÑ§Ï°
+ç¯å¡”ç†å¿µ
+ä¹¡åœŸè®¤åŒ
+é™ªä¼´æˆé•¿	
+æœåŠ¡å­¦ä¹ 
 
-¶àÔª¿Î³Ì
-×ÔÈ»½ÌÓý
-Ï·¾ç½ÌÓý
-»æ±¾½ÌÓý
-»¥¶¯ÓÎÏ·
-Ñ§Éú¹¤×÷
-×ÛºÏÐÔ»î¶¯
+å¤šå…ƒè¯¾ç¨‹
+è‡ªç„¶æ•™è‚²
+æˆå‰§æ•™è‚²
+ç»˜æœ¬æ•™è‚²
+äº’åŠ¨æ¸¸æˆ
+å­¦ç”Ÿå·¥ä½œ
+ç»¼åˆæ€§æ´»åŠ¨
 
-Ñ§¿Æ½Ì°¸
-ÎÄÊ·ÕÜ
-ÊýÀí»¯
-Ó¢Óï
-ÉúÎï
-µØÀí
-ÃÀÊõ
-ÌåÓý
-»ì´îºÍ¿ç½ç
+å­¦ç§‘æ•™æ¡ˆ
+æ–‡å²å“²
+æ•°ç†åŒ–
+è‹±è¯­
+ç”Ÿç‰©
+åœ°ç†
+ç¾Žæœ¯
+ä½“è‚²
+æ··æ­å’Œè·¨ç•Œ
 
-ÄÜÁ¦ÌáÉý
-ÇóÖ°ÄÜÁ¦
-±í´ïÄÜÁ¦
-Éç»áÄÜÁ¦
+èƒ½åŠ›æå‡
+æ±‚èŒèƒ½åŠ›
+è¡¨è¾¾èƒ½åŠ›
+ç¤¾ä¼šèƒ½åŠ›
 */
-
-
-function EncodeUtf8(s1)
-  {
-      var s = escape(s1);
-      var sa = s.split("%");
-      var retV ="";
-      if(sa[0] != "")
-      {
-         retV = sa[0];
-      }
-      for(var i = 1; i < sa.length; i ++)
-      {
-           if(sa[i].substring(0,1) == "u")
-           {
-               retV += Hex2Utf8(Str2Hex(sa[i].substring(1,5)));
-               
-           }
-           else retV += "%" + sa[i];
-      }
-      
-      return retV;
-  }
-function Str2Hex(s)
-  {
-      var c = "";
-      var n;
-      var ss = "0123456789ABCDEF";
-      var digS = "";
-      for(var i = 0; i < s.length; i ++)
-      {
-         c = s.charAt(i);
-         n = ss.indexOf(c);
-         digS += Dec2Dig(eval(n));
-           
-      }
-      //return value;
-      return digS;
-  }
-function Dec2Dig(n1)
-  {
-      var s = "";
-      var n2 = 0;
-      for(var i = 0; i < 4; i++)
-      {
-         n2 = Math.pow(2,3 - i);
-         if(n1 >= n2)
-         {
-            s += '1';
-            n1 = n1 - n2;
-          }
-         else
-          s += '0';
-          
-      }
-      return s;
-      
-  }
-function Dig2Dec(s)
-  {
-      var retV = 0;
-      if(s.length == 4)
-      {
-          for(var i = 0; i < 4; i ++)
-          {
-              retV += eval(s.charAt(i)) * Math.pow(2, 3 - i);
-          }
-          return retV;
-      }
-      return -1;
-  } 
-function Hex2Utf8(s)
-  {
-     var retS = "";
-     var tempS = "";
-     var ss = "";
-     if(s.length == 16)
-     {
-         tempS = "1110" + s.substring(0, 4);
-         tempS += "10" +  s.substring(4, 10); 
-         tempS += "10" + s.substring(10,16); 
-         var sss = "0123456789ABCDEF";
-         for(var i = 0; i < 3; i ++)
-         {
-            retS += "%";
-            ss = tempS.substring(i * 8, (eval(i)+1)*8);
-            
-            
-            
-            retS += sss.charAt(Dig2Dec(ss.substring(0,4)));
-            retS += sss.charAt(Dig2Dec(ss.substring(4,8)));
-         }
-         return retS;
-     }
-     return "";
-  }
-
-function revertUTF8(szInput)
- {
-    var x,wch,wch1,wch2,uch="",szRet="";
-    for (x=0; x<szInput.length; x++)
-    {
-        if (szInput.charAt(x)=="%")
-        {
-            wch =parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
-            if (!wch) {break;}
-            if (!(wch & 0x80))
-            {
-                wch = wch;
-            }
-            else if (!(wch & 0x20))
-            {
-                x++;
-                wch1 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
-                wch  = (wch & 0x1F)<< 6;
-                wch1 = wch1 & 0x3F;
-                wch  = wch + wch1;
-            }
-            else
-            {
-                x++;
-                wch1 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
-                x++;
-                wch2 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
-                wch  = (wch & 0x0F)<< 12;
-                wch1 = (wch1 & 0x3F)<< 6;
-                wch2 = (wch2 & 0x3F);
-                wch  = wch + wch1 + wch2;
-            }
-            szRet += String.fromCharCode(wch);
-        }
-        else
-        {
-            szRet += szInput.charAt(x);
-        }
-    }
-    return(szRet);
-}
-
