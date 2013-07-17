@@ -156,7 +156,7 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + i*2);
+	tempDate = tempDate.getDate() + 20;
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
@@ -164,7 +164,7 @@ for (var i=0; i<4; i++)
 	
 	newPost.post_tag = ['乡土认同', '自然教育', '社会能力', '大麦山'];
 	
-	newPost.
+	newPost.lesson_starting_content = '1.家乡，是指自己小时候生长的地方或祖籍，又被称为“故乡”、“老家”、“故园”等。，在英文是“hometown” ，简单解释讲了hometown的组成。家乡的概念，那让我了解一下家乡要素有什么，家乡有什么？（5min 讨论时间，5min的总结，分享）\n（ps：因为是两个班合在一起上课，所以有一个班相对来说会比较积极）\n2.家乡是个比较泛的概念，可以很大可以由大到小。由省，市，县，到镇。\n提问：当别人问你们，你们的老家是哪的时候，你们要怎么回答呢？（是回答清远，连南，还是大麦山呢？）（3min）\n学生反映有广东，清远，连南，大麦山；\n那你们知道唯一姐姐的家乡是哪不？我们其他的义工哥哥姐姐是哪里人不？（鼓励回答）（唯一的家乡是潮汕，在她们回答是“四川”的时候，有一个互动）大概介绍了潮汕的地理位置。引出连南与潮汕的不同之处，瑶族与汉族的区别，为下面引出“瑶族文化”的话题；\n 连南瑶族大麦山vs 潮汕\n要素：衣食住行（三个小组讨论，入主义工进行引导）（15mins的讨论）\n学生都很投入地讨论了关于衣食住行的家乡特点，效果较好\n家乡有特殊的语言，特殊的建筑房屋，特殊的服装，特殊的风俗习惯，让我们一起去发现我们大麦山，连南的资源\nA.让学生们试着找一些瑶族歌曲或本地歌曲，或者用家乡话把《家乡》改编，小组任务。\nB.布置作业，以“家乡”为题，个人或小组皆可，完成“发现家乡大麦山的美”的作业。建议：任选大麦山的任何一个方面，可以是历史，歌舞，建筑，房屋，特产等等的展示，可以通过观察或问家人，亲戚，就地取材等等';
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -192,7 +192,7 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + i*4);
+	tempDate = tempDate.getDate() + 20;
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
@@ -226,7 +226,7 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + i*4);
+	tempDate = tempDate.getDate() + 20;
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
@@ -260,7 +260,7 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + 5);
+	tempDate = tempDate.getDate() + 20;
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
@@ -294,7 +294,7 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + 5);
+	tempDate = tempDate.getDate() + 20;
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
