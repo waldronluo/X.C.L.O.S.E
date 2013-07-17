@@ -148,8 +148,8 @@ var staticDate = tempDate;
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
-	newPost.course_title = '家乡大发现';
-	newPost.teaching_goal = '让同学们用善于发掘的眼光去发现身边的资源，利用身边的资源，增强学生对连南大麦山乡土认同。';
+	newPost.course_title = EncodeUtf8('家乡大发现');
+	newPost.teaching_goal = EncodeUtf8('让同学们用善于发掘的眼光去发现身边的资源，利用身边的资源，增强学生对连南大麦山乡土认同。');
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
@@ -162,7 +162,7 @@ for (var i=0; i<4; i++)
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
-	newPost.post_tag = ['乡土认同', '自然教育', '社会能力', '大麦山'];
+	newPost.post_tag = [EncodeUtf8('乡土认同'), EncodeUtf8('自然教育'), EncodeUtf8('社会能力'), EncodeUtf8('大麦山')];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -182,8 +182,8 @@ staticDate = tempDate;
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
-	newPost.course_title = '家乡特色';
-	newPost.teaching_goal = '增强他们对家乡的认同感，以及对家乡的了解。';
+	newPost.course_title = EncodeUtf8('家乡特色');
+	newPost.teaching_goal = EncodeUtf8('增强他们对家乡的认同感，以及对家乡的了解。');
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
@@ -196,7 +196,7 @@ for (var i=0; i<4; i++)
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
-	newPost.post_tag = ['乡土认同', '自然教育', '社会能力', '大麦山'];
+	newPost.post_tag = [EncodeUtf8('乡土认同'), EncodeUtf8('自然教育'), EncodeUtf8('社会能力'), EncodeUtf8('大麦山')];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -216,8 +216,8 @@ staticDate = tempDate;
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
-	newPost.course_title = '特产大变身';
-	newPost.teaching_goal = '让学生了解家乡特产变身方法，发挥想象';
+	newPost.course_title = EncodeUtf8('特产大变身');
+	newPost.teaching_goal = EncodeUtf8('让学生了解家乡特产变身方法，发挥想象');
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
@@ -230,7 +230,7 @@ for (var i=0; i<4; i++)
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
-	newPost.post_tag = ['乡土认同', '互动游戏', '白湾'];
+	newPost.post_tag = [EncodeUtf8('乡土认同'), EncodeUtf8('互动游戏'), EncodeUtf8('白湾')];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -250,8 +250,8 @@ staticDate = tempDate;
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
-	newPost.course_title = '基础数学课教案';
-	newPost.teaching_goal = '让学生了解基本的数学算术知识';
+	newPost.course_title = EncodeUtf8('基础数学课教案');
+	newPost.teaching_goal = EncodeUtf8('让学生了解基本的数学算术知识');
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
@@ -264,7 +264,7 @@ for (var i=0; i<4; i++)
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
-	newPost.post_tag = ['数理化', '服务学习'];
+	newPost.post_tag = [EncodeUtf8('数理化'), EncodeUtf8('服务学习')];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -284,8 +284,8 @@ staticDate = tempDate;
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
-	newPost.course_title = '乡土认同';
-	newPost.teaching_goal = '学生对自己家乡有具体、全面、系统的了解认知；通过不同形式的课程活动，让学生体验家乡的美丽及魅力，产生对家乡的认同和喜爱之情。';
+	newPost.course_title = EncodeUtf8('乡土认同');
+	newPost.teaching_goal = EncodeUtf8('学生对自己家乡有具体、全面、系统的了解认知；通过不同形式的课程活动，让学生体验家乡的美丽及魅力，产生对家乡的认同和喜爱之情。');
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
@@ -298,7 +298,9 @@ for (var i=0; i<4; i++)
 	if (i==3) newPost.most_recent = 1; 
 	else newPost.most_recent = 0;
 	
-	newPost.post_tag = ['陪伴成长', '情感教育', '乡土认同', '自然教育'];
+	newPost.post_tag = [EncodeUtf8('陪伴成长'), EncodeUtf8('情感教育'), EncodeUtf8('乡土认同'), EncodeUtf8('自然教育')];
+	
+	
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
 										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
@@ -321,34 +323,27 @@ for (var i=0; i<4; i++)
 		
 var arr = ['灯塔理念',['乡土认同', '陪伴成长', '服务学习']];
 for (var i=0;i<3; i++){
-	collection.save({'name': arr[0], 'count':2*i+1, 'category':arr[1][i]})
+	collection.save({'name': EncodeUtf8(arr[0]), 'count':2*i+1, 'category':EncodeUtf8(arr[1][i])});
 }
 
 arr = ['多元课程',['自然教育', '互动游戏', '综合性活动', '戏剧教育', '学生工作']];
 for (var i=0;i<5; i++){
-	collection.save({'name': arr[0], 'count':i+1, 'category':arr[1][i]})
+	collection.save({'name': EncodeUtf8(arr[0]), 'count':2*i+1, 'category':EncodeUtf8(arr[1][i])});
 }
 
 arr = ['学科教案',['文史哲', '数理化', '地理', '体育', '英语']];
 for (var i=0;i<5; i++){
-	collection.save({'name': arr[0], 'count':i, 'category':arr[1][i]})
+	collection.save({'name': EncodeUtf8(arr[0]), 'count':2*i+1, 'category':EncodeUtf8(arr[1][i])});
 }
 
 arr = ['能力提升',['求职能力', '表达能力', '社会能力']];
 for (var i=0;i<3; i++){
-	collection.save({'name': arr[0], 'count':5-i, 'category':arr[1][i]})
+	collection.save({'name': EncodeUtf8(arr[0]), 'count':2*i+1, 'category':EncodeUtf8(arr[1][i])});
 }
 
 	});
 	console.log('main 3');
 	 
-	db.collection('postlist_test', function (err, collection) {
-		collection.find(function(err, result){
-			result.toArray(function(err, arr){
-					console.log(arr);
-			});
-		});
-	});
 });
 
 /*
@@ -632,3 +627,142 @@ tags -----------------------------
 表达能力
 社会能力
 */
+
+
+function EncodeUtf8(s1)
+  {
+      var s = escape(s1);
+      var sa = s.split("%");
+      var retV ="";
+      if(sa[0] != "")
+      {
+         retV = sa[0];
+      }
+      for(var i = 1; i < sa.length; i ++)
+      {
+           if(sa[i].substring(0,1) == "u")
+           {
+               retV += Hex2Utf8(Str2Hex(sa[i].substring(1,5)));
+               
+           }
+           else retV += "%" + sa[i];
+      }
+      
+      return retV;
+  }
+function Str2Hex(s)
+  {
+      var c = "";
+      var n;
+      var ss = "0123456789ABCDEF";
+      var digS = "";
+      for(var i = 0; i < s.length; i ++)
+      {
+         c = s.charAt(i);
+         n = ss.indexOf(c);
+         digS += Dec2Dig(eval(n));
+           
+      }
+      //return value;
+      return digS;
+  }
+function Dec2Dig(n1)
+  {
+      var s = "";
+      var n2 = 0;
+      for(var i = 0; i < 4; i++)
+      {
+         n2 = Math.pow(2,3 - i);
+         if(n1 >= n2)
+         {
+            s += '1';
+            n1 = n1 - n2;
+          }
+         else
+          s += '0';
+          
+      }
+      return s;
+      
+  }
+function Dig2Dec(s)
+  {
+      var retV = 0;
+      if(s.length == 4)
+      {
+          for(var i = 0; i < 4; i ++)
+          {
+              retV += eval(s.charAt(i)) * Math.pow(2, 3 - i);
+          }
+          return retV;
+      }
+      return -1;
+  } 
+function Hex2Utf8(s)
+  {
+     var retS = "";
+     var tempS = "";
+     var ss = "";
+     if(s.length == 16)
+     {
+         tempS = "1110" + s.substring(0, 4);
+         tempS += "10" +  s.substring(4, 10); 
+         tempS += "10" + s.substring(10,16); 
+         var sss = "0123456789ABCDEF";
+         for(var i = 0; i < 3; i ++)
+         {
+            retS += "%";
+            ss = tempS.substring(i * 8, (eval(i)+1)*8);
+            
+            
+            
+            retS += sss.charAt(Dig2Dec(ss.substring(0,4)));
+            retS += sss.charAt(Dig2Dec(ss.substring(4,8)));
+         }
+         return retS;
+     }
+     return "";
+  }
+
+function revertUTF8(szInput)
+ {
+    var x,wch,wch1,wch2,uch="",szRet="";
+    for (x=0; x<szInput.length; x++)
+    {
+        if (szInput.charAt(x)=="%")
+        {
+            wch =parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+            if (!wch) {break;}
+            if (!(wch & 0x80))
+            {
+                wch = wch;
+            }
+            else if (!(wch & 0x20))
+            {
+                x++;
+                wch1 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+                wch  = (wch & 0x1F)<< 6;
+                wch1 = wch1 & 0x3F;
+                wch  = wch + wch1;
+            }
+            else
+            {
+                x++;
+                wch1 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+                x++;
+                wch2 = parseInt(szInput.charAt(++x) + szInput.charAt(++x),16);
+                wch  = (wch & 0x0F)<< 12;
+                wch1 = (wch1 & 0x3F)<< 6;
+                wch2 = (wch2 & 0x3F);
+                wch  = wch + wch1 + wch2;
+            }
+            szRet += String.fromCharCode(wch);
+        }
+        else
+        {
+            szRet += szInput.charAt(x);
+        }
+    }
+    return(szRet);
+}
+
