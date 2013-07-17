@@ -247,7 +247,12 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 							for (var i=0; i<10; i++){
 								if ((page-1)*10+i >= len)
 									break;
-								else sendArr[i] = arr[(page-1)*10+i];
+								else {
+									sendArr[i] = arr[(page-1)*10+i];
+									// date format : 2010.03.09
+									sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
+									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+								}
 							}
 							socket.emit('searchPostReply', sendArr);
 						});
@@ -270,8 +275,14 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 							for (var i=0; i<10; i++){
 								if ((page-1)*10+i >= len)
 									break;
-								else sendArr[i] = arr[(page-1)*10+i];
+								else {
+									sendArr[i] = arr[(page-1)*10+i];
+									// date format : 2010.03.09
+									sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
+									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+								}
 							}
+							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
 						});
 					});
@@ -293,7 +304,12 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 							for (var i=0; i<10; i++){
 								if ((page-1)*10+i >= len)
 									break;
-								else sendArr[i] = arr[(page-1)*10+i];
+								else {
+									sendArr[i] = arr[(page-1)*10+i];
+									// date format : 2010.03.09
+									sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
+									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+								}
 							}
 							socket.emit('searchPostReply', sendArr);
 						});
@@ -316,7 +332,12 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 							for (var i=0; i<10; i++){
 								if ((page-1)*10+i >= len)
 									break;
-								else sendArr[i] = arr[(page-1)*10+i];
+								else {
+									sendArr[i] = arr[(page-1)*10+i];
+									// date format : 2010.03.09
+									sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
+									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+								}
 							}
 							socket.emit('searchPostReply', sendArr);
 						});
@@ -336,13 +357,31 @@ function mongoDbGetOnePost(socket, post_id){
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
 			collection.update({'_id':post_id}, {'$inc':{'access_count':1}}, function(err){});
-			collection
+			collection.find({'_id':post_id}, function (err,result){
+				result.toArray(function(err, arr){
+					console.log(arr);
+					socket.emit('getOnePostReply', arr);
+				});
+			});
 		});
 	});
 }
 
 
-
+// function for date format :  Date() --> 2010.03.09
+function dateFormat(date){
+	var str = "";
+	var tempM = date.getMonth() +1;
+	var tempD = date.getDate();
+	
+	str += date.getFullYear()+ ".";
+	if (tempM <10) str += "0"+tempM +".";
+	else str += tempM +".";
+	if (tempD <10) str += "0"+tempD;
+	else str += tempD;
+	
+	return str;
+}
 
 
 

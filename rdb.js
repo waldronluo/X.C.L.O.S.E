@@ -142,7 +142,7 @@ mgconnect.open(function (err, db) {
 	db.createCollection('postlist');
 	db.collection('postlist', function (err, collection) {
 	
-		var counter = 100;
+var counter = 100;
 var tempDate = new Date();
 var staticDate = tempDate;
 for (var i=0; i<4; i++)
@@ -164,16 +164,18 @@ for (var i=0; i<4; i++)
 	
 	newPost.post_tag = ['乡土认同', '自然教育', '社会能力', '大麦山'];
 	
+	newPost.
+	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-										'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
+					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
+					'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
+					'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+					'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
+					'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+					'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+					'tags':newPost.post_tag,
+					'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
+					'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
 }
 
 counter = 222;
@@ -199,15 +201,15 @@ for (var i=0; i<4; i++)
 	newPost.post_tag = ['乡土认同', '自然教育', '社会能力', '大麦山'];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-										'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
+					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
+					'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
+					'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+					'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
+					'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+					'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+					'tags':newPost.post_tag,
+					'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
+					'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
 }
 
 counter = 835;
@@ -233,15 +235,15 @@ for (var i=0; i<4; i++)
 	newPost.post_tag = ['乡土认同', '互动游戏', '白湾'];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-										'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
+					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
+					'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
+					'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+					'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
+					'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+					'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+					'tags':newPost.post_tag,
+					'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
+					'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
 }
 
 counter = 159;
@@ -267,15 +269,15 @@ for (var i=0; i<4; i++)
 	newPost.post_tag = ['数理化', '服务学习'];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-										'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
+					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
+					'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
+					'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+					'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
+					'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+					'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+					'tags':newPost.post_tag,
+					'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
+					'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
 }
 
 counter = 1057;
@@ -301,15 +303,15 @@ for (var i=0; i<4; i++)
 	newPost.post_tag = ['陪伴成长', '情感教育', '乡土认同', '自然教育'];
 	
 	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-										'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-										'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-										'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
+					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
+					'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
+					'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+					'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
+					'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+					'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+					'tags':newPost.post_tag,
+					'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
+					'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
 }
 
 		console.log('keke');
@@ -319,26 +321,26 @@ for (var i=0; i<4; i++)
 	////init tags			x 16
 	db.collection('tagslist', function (err, collection) {
 		
-var arr = ['灯塔理念',['乡土认同', '陪伴成长', '服务学习']];
-for (var i=0;i<3; i++){
-	collection.save({'category': arr[0], 'count':2*i+1, 'name':arr[1][i]})
-}
-
-arr = ['多元课程',['自然教育', '互动游戏', '综合性活动', '戏剧教育', '学生工作']];
-for (var i=0;i<5; i++){
-	collection.save({'category': arr[0], 'count':i+1, 'name':arr[1][i]})
-}
-
-arr = ['学科教案',['文史哲', '数理化', '地理', '体育', '英语']];
-for (var i=0;i<5; i++){
-	collection.save({'category': arr[0], 'count':i, 'name':arr[1][i]})
-}
-
-arr = ['能力提升',['求职能力', '表达能力', '社会能力']];
-for (var i=0;i<3; i++){
-	collection.save({'category': arr[0], 'count':5-i, 'name':arr[1][i]})
-}
-
+		var arr = ['灯塔理念',['乡土认同', '陪伴成长', '服务学习']];
+		for (var i=0;i<3; i++){
+			collection.save({'category': arr[0], 'count':2*i+1, 'name':arr[1][i]})
+		}
+			
+		arr = ['多元课程',['自然教育', '互动游戏', '综合性活动', '戏剧教育', '学生工作']];
+		for (var i=0;i<5; i++){
+			collection.save({'category': arr[0], 'count':i+1, 'name':arr[1][i]})
+		}
+		
+		arr = ['学科教案',['文史哲', '数理化', '地理', '体育', '英语']];
+		for (var i=0;i<5; i++){
+			collection.save({'category': arr[0], 'count':i, 'name':arr[1][i]})
+		}
+		
+		arr = ['能力提升',['求职能力', '表达能力', '社会能力']];
+		for (var i=0;i<3; i++){
+			collection.save({'category': arr[0], 'count':5-i, 'name':arr[1][i]})
+		}
+		
 	});
 	console.log('main 3');
 	 
