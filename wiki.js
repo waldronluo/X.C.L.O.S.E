@@ -41,18 +41,34 @@ iolisten.sockets.on('connection', function (socket){
 	console.log('start connect');
 
 	if (firstPathname == '/' || firstPathname == ""){
-		mongoDBGetTags(socket);	
+		mongoDbGetTags(socket);	
 	}
 	else if (firstPathname == "/search"){
 		console.log('search start');
-		// search mode : LastChange / CreateTime / AccessCount
+		// searchStr: ????
+		// sortWay  : LastChange / CreateTime / AccessCount
+		// page		: 1,2,......
 		mongoDbSearchPost(socket,
 						queryStrArray['searchStr'],
 						queryStrArray['sortWay'],
 						queryStrArray['page'] );
-	}
-	
 		
+		console.log('start socket on searchPost');
+		socket.on('searchPost',function(searchArr){
+			mongoDbSearchPost(socket,
+						searchArr['searchStr'],
+						searchArr['sortWay'],
+						searchArr['page'] );
+		});
+	
+	}
+	else if (firstPathname == "/teach-plan"){
+		mongoDbGetOnePost(socket, queryStrArray['post_id'])
+	}
+	else if (firstPathname == "teach-plan-edit"){
+	}
+	else {
+	}
 		
 	// login
 	console.log('start socket on login');
@@ -109,6 +125,7 @@ iolisten.sockets.on('connection', function (socket){
 		}
 		console.log(userArray);
 	});
+	
 });
 
 // default page output setting
@@ -118,14 +135,15 @@ app.use(function(req, res){
 	console.log("Request for " + pathname + " received.");
 	console.log("Request for " + firstPathname + " ---received.");
 		
-	if (pathname == "/search"){
+	if (pathname == "/search"){		
+		//	url sample:		http://127.0.0.1:8089/search?method=123&searchStr=hello&page=1&sortWay=LastChange
 		console.log('-- search.html --');
 		firstPathname = "/search";
 		res.writeHead(200, {"Content-Type": "text/html"});
 		res.write(fs.readFileSync(__dirname + '/static/search.html', 'utf-8'));
 		res.end();
 		
-		//	url sample:		http://127.0.0.1:8089/search?method=123&searchStr=hello&page=1&sortWay=LastChange
+		queryStrArray = new Array();
 		queryStrArray['method'] = querystring.parse(url.parse(req.url).query)['method'];
 		queryStrArray['searchStr'] = querystring.parse(url.parse(req.url).query)['searchStr'];
 		queryStrArray['sortWay'] = querystring.parse(url.parse(req.url).query)['sortWay'];
@@ -134,17 +152,23 @@ app.use(function(req, res){
 	}
 	
 	if (pathname == "/teach-plan"){
+		//	url sample:		http://127.0.0.1:8089/teach-plan?post_id=123
+		firstPathname = "/teach-plan";
 		res.writeHead(200, {"Content-Type": "text/html"});
 		res.write(fs.readFileSync(__dirname + '/static/teach-plan.html', 'utf-8'));
 		res.end();
-		firstPathname = "/teach-plan";
+		
+		queryStrArray = new Array();
+		queryStrArray['post_id'] = querystring.parse(url.parse(req.url).query)['post_id'];
+		console.log(queryStrArray);
 	}
 	
 	if (pathname == "/teach-plan-edit"){
+		//  url sample:
+		firstPathname = "/teach-plan-edit";
 		res.writeHead(200, {"Content-Type": "text/html"});
 		res.write(fs.readFileSync(__dirname + '/static/teach-plan-edit.html', 'utf-8'));
 		res.end();
-		firstPathname = "/teach-plan-edit";
 	}
 	if (pathname == "/favicon.ico"){res.end();}
 });
@@ -162,7 +186,7 @@ app.use(function(req, res){
 */
 
 // get tags for first access
-function mongoDBGetTags(socket){
+function mongoDbGetTags(socket){
 	var TagsArr = new Array();
 
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
@@ -225,7 +249,6 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 									break;
 								else sendArr[i] = arr[(page-1)*10+i];
 							}
-							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
 						});
 					});
@@ -304,6 +327,23 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 		});
 	});
 }
+
+// get one post By _id --->
+function mongoDbGetOnePost(socket, post_id){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.update({'_id':post_id}, {'$inc':{'access_count':1}}, function(err){});
+			collection
+		});
+	});
+}
+
+
+
+
 
 
 // new user: return success or failed
@@ -409,26 +449,9 @@ function mongoDbChangePost(changePost ){
 }
 
 
-
-// update one post access_count
-function mongoDbUpdatePostCount(post_id){
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	
-	mgconnect.open(function (err, db) {	  
-		db.collection('postlist', function (err, collection) {
-			collection.update({'_id':post_id}, {'$inc':{'access_count':1}}, function(err){
-				return;
-			});
-		});
-	});
-}
-
 // update Tags ------
 
 // update Comments -------
-
-
 
 // User struct -- for user construct
 User = function(){
