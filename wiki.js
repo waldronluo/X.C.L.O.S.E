@@ -216,7 +216,7 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 									'teaching_goal':1, 
 									'origin_createTime':1, 
 									'post_createTime':1, 
-									'post_tag':1}).sort({'post_createTime':-1}, function(err,result){
+									'tags':1}).sort({'post_createTime':-1}, function(err,result){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(10);
 							var len = arr.length;
@@ -225,6 +225,7 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 									break;
 								else sendArr[i] = arr[(page-1)*10+i];
 							}
+							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
 						});
 					});
@@ -239,7 +240,7 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 									'teaching_goal':1, 
 									'origin_createTime':1, 
 									'post_createTime':1, 
-									'post_tag':1}).sort({'origin_createTime':-1}, function(err,result){
+									'tags':1}).sort({'origin_createTime':-1}, function(err,result){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(10);
 							var len = arr.length;
@@ -262,7 +263,7 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 									'teaching_goal':1, 
 									'origin_createTime':1, 
 									'post_createTime':1, 
-									'post_tag':1}).sort({'access_count':-1}, function(err,result){
+									'tags':1}).sort({'access_count':-1}, function(err,result){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(10);
 							var len = arr.length;
@@ -285,7 +286,7 @@ function mongoDbSearchPost(socket, searchStr, sortWay, page){
 									'teaching_goal':1, 
 									'origin_createTime':1, 
 									'post_createTime':1, 
-									'post_tag':1}).sort({'post_createTime':-1}, function(err,result){
+									'tags':1}).sort({'post_createTime':-1}, function(err,result){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(10);
 							var len = arr.length;
