@@ -9,8 +9,8 @@
     <div class="wrapper">
       <div class="header">
         <div class="userlog">
-          <a class="login" href="#" >登录</a>
-          <a class="signin" href="#">注册</a>
+          <a class="login" href="#" onclick="login()" >登录</a>
+          <a class="signin" href="#" onclick="signin()" >注册</a>
         </div>
 
         <div class="header-content">
@@ -67,7 +67,7 @@
         </div>
 
         <div class="page">
-          <a class="page-counter" href="#"><</a> 
+          <a class="page-counter" href="#"><</a>
           <a class="page-counter" href="#">1</a> 
           <a class="page-counter" href="#">2</a> 
           <a class="page-counter" href="#">3</a> 
@@ -75,9 +75,64 @@
           <a class="page-counter" href="#">></a> 
         </div>
       </div>
-
     </div>
+    <!-- popup popup signin!!!-->
+    <div id="login">
+      <div class="light-blue-bar">
+        <section class="light-blue-bar-word">登录</section>
+        <section class="light-blue-bar-X" onclick="X()">X</section>
 
+      </div>
+      <form class="popup-form">
+        <div class="input-pair">
+          <label class="popup-label">帐号</label>
+          <input class="popup-input" name="username"></input>
+        </div>
+        <div class="input-pair">
+          <label class="popup-label">密码</label>
+          <input class="popup-input" name="password" type="password"></input>
+        </div>
+        <button class="aButton blockButton">登录</button>
+      </form>
+      <div class="dark-blue-filter small"></div>
+      <p class="pNoAccount" > 还没有帐号咩？<a href="#">注册注册！</a></p>
+    </div>
+    <!-- popup form -->
+    <!-- popup popup login!!!-->
+    <div id="signin">
+      <div class="light-blue-bar">
+        <section class="light-blue-bar-word">注册</section>
+        <section class="light-blue-bar-X" onclick="X()">X</section>
+      </div>
+      <form class="popup-form">
+        <table>
+          <tr class="hd35">
+            <td class="wd50">用户名</td>
+            <td class="wd100"><input name="username"/></td>
+          </tr>
+          <tr class="hd35">
+            <td class="wd50">密码</td>
+            <td class="wd100"><input name="password" type="password"/></td>
+          </tr>
+          <tr class="hd35">
+            <td class="wd50">再输入</td>
+            <td class="wd100"><input name="password2" type="password"/></td>
+          </tr>
+          <tr class="hd35">
+            <td class="wd50">邮箱</td>
+            <td class="wd100"><input name="email"/></td>
+          </tr>
+        </table>
+              <button class="aButton blockButton" >登录</button>
+      </form>
+    </div>
+    <!-- popup form -->
+    <!-- block everything -->
+    <div id="blockEverything"></div>
+    <!-- block everything -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/base.js"></script>
   </div>
 
 </body>
