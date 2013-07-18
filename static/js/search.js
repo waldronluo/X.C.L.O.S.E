@@ -30,10 +30,11 @@ GLOBAL.socket = io.connect('http://127.0.0.1:8089');
 })();
 
 function changeSortWay (sortWay) {
-    GLOBAL.socket.emit( getCookie("searchStr"), sortWay, getCookie("page") );
+    console.log("here!");
+    GLOBAL.socket.emit( "searchPost",[getCookie("searchStr"), sortWay, getCookie("page")] );
 }
 function changePage (page) {
-    GLOBAL.socket.emit( getCookie("searchStr"), getCookie("sortWay"), page );
+    GLOBAL.socket.emit( "searchPost",[getCookie("searchStr"), getCookie("sortWay"), page] );
 }
 
 function refreshPageCount (pageCounter) {
@@ -47,9 +48,13 @@ function refreshPageCount (pageCounter) {
         for (var i=0 ; i < pageCounter; i++) {
             var a = document.createElement("a");
             a.className = "page-counter";
-            a.innerHTML = 1+i;
-            a.onclick = "changePage("+(i+1)+")";
+            var counter = i+1;
+            a.innerHTML = counter;
+            a.href="#";
+            //a.onclick="";
+            a.onclick = function() {changePage(a.innerHTML);};
             page.appendChild(a);
+            //今晚写博客
         }
     }
 
