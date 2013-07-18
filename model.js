@@ -287,7 +287,7 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 								{'teach-plan-read-counter':arr[0].access_count},
 								{'origin_createTime':arr[0].origin_createTime},
 								{'post_createTime':arr[0].post_createTime},
-								{'post_createFrom_id':arr[0].post_createFrom_id}
+								{'post_createFrom_id':arr[0].post_createFrom_id},
 								{'most_recent':arr[0].most_recent},
 								{'teach-plan-creater':arr[0].post_author},
 								{'post_id':arr[0]._id}
