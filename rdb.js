@@ -144,7 +144,7 @@ mgconnect.open(function (err, db) {
 	
 var counter = 100;
 var tempDate = new Date();
-var staticDate = tempDate;
+var staticDate = new Date();
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
@@ -190,7 +190,7 @@ for (var i=0; i<4; i++)
 
 counter = 222;
 tempDate = new Date();
-staticDate = tempDate;
+staticDate = new Date();
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
@@ -234,7 +234,7 @@ for (var i=0; i<4; i++)
 
 counter = 835;
 tempDate = new Date();
-staticDate = tempDate;
+staticDate = new Date();
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
@@ -279,7 +279,7 @@ for (var i=0; i<4; i++)
 
 counter = 159;
 tempDate = new Date();
-staticDate = tempDate;
+staticDate = new Date();
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
@@ -323,7 +323,7 @@ for (var i=0; i<4; i++)
 
 counter = 1057;
 tempDate = new Date();
-staticDate = tempDate;
+staticDate = new Date();
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
