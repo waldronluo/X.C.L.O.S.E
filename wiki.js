@@ -53,19 +53,19 @@ iolisten.sockets.on('connection', function (socket){
 	else if (firstPathname == "/teach-plan"){
 		model.mongoDbGetOnePost(socket, queryStrArray['post_id']);
 	}
-	else if (firstPathname == "teach-plan-edit"){
+	else if (firstPathname == "/teach-plan-edit"){
 	}
 	else {
 	}
 	
 	
-	// get labels
+	// index -- get labels
 	console.log('start socket on labels');
 	socket.on('labels',function(){
 		model.mongoDbGetTags(socket);	
 	});
 	
-	// searchPost;
+	// search -- searchPost;
 	console.log('start socket on searchPost');
 	socket.on('searchPost',function(searchArr){
 		model.mongoDbSearchPost(socket,
@@ -74,33 +74,65 @@ iolisten.sockets.on('connection', function (socket){
 						searchArr['page'] );
 	});
 		
-	// login
+	// teach-plan-edit -- newPost
+	console.log('start socket on newPost');
+	socket.on('newPost',function(postArr, userName){
+		var isLogin = false;
+		for (var i=0; i<userArray.length; i++){
+			if (userArray[i] == userName){
+				isLogin = true;
+				break;
+			}
+		}
+		if (isLogin){
+			console.log('New teaching plan -- start');
+			mongoDbNewPost(postArr);
+		}
+		else {
+			console.log('New teaching plan -- not login');
+		}
+	});
+	
+	// teach-plan-edit -- changePost
+	console.log('start socket on changePost');
+	socket.on('changePost',function(postArr, userName){
+		var isLogin = false;
+		for (var i=0; i<userArray.length; i++){
+			if (userArray[i] == userName){
+				isLogin = true;
+				break;
+			}
+		}
+		if (isLogin){
+			console.log('New teaching plan -- start');
+			mongoDbChangePost(postArr);
+		}
+		else {
+			console.log('New teaching plan -- not login');
+		}
+	});
+	
+	// public -- login
 	console.log('start socket on login');
 	socket.on('login',function(name, password){
 		if (model.mongoDbCheckUser(name, password)){
 			socket.emit('loginReply', true);
 			//save User Information for this user
 			var count = userArray.length;
-			userArray[count] = new User();
-			userArray[count].setUserBasic(name, password);
-			//userArray[count] = name;
-			console.log(userArray);
+			userArray[count] = name;
 		}else {
 			socket.emit('loginReply', false);
 		}
+		console.log(userArray);
 	});	
 	
-	// logout
+	// public -- logout
 	console.log('start socket on logout');
 	socket.on('logout',function(name){
 		var hasUser = false;
 		var i;
 		for (i=0; i<userArray.length; i++){
-			// if (userArray[i] == name){
-				// hasUser = true;
-				// break;
-			// }
-			if (userArray[i].name == name){
+			if (userArray[i] == name){
 				hasUser = true;
 				break;
 			}
@@ -110,20 +142,17 @@ iolisten.sockets.on('connection', function (socket){
 			socket.emit('logoutReply',true);
 		}
 		else socket.emit('logoutReply',false);
-		
 		console.log(userArray);
 	});	
 	
-	// register
+	// public -- register
 	console.log('start socket on register');	
 	socket.on('register',function(name, password, passwordCon, email){
 		if ((passwordCon == password) && model.mongoDbNewUser(name, password, email)){
 			socket.emit('registerReply',true);
 			var count = userArray.length;
-			userArray[count] = new User();
-			userArray[count].setUserBasic(name, password, email);
-			
-			//	userArray[count] = name;
+			userArray[count] = name;
+
 		} else {
 			socket.emit('registerReply',false);
 		}

@@ -68,7 +68,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 									'post_createTime':1, 
 									'tags':1}).sort({'post_createTime':-1}, function(err,result){
 						result.toArray(function(err,arr){
-							var sendArr = new Array(10);
+							var sendArr = new Array(11);
 							var len = arr.length;
 							for (var i=0; i<10; i++){
 								if ((page-1)*10+i >= len)
@@ -80,13 +80,12 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 								}
 							}
+							sendArr[10] = searchStr;
+							sendArr[11] = sortWay;
+							sendArr[12] = page;
+							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
-							var backArr = new Array();
-							backArr['searchStr'] = searchStr;
-							backArr['sortWay'] = sortWay;
-							backArr['page'] = page;
-							backArr['pageCount'] = Math.ceil(len/10);
-							socket.emit('searchPostReply', sendArr ,backArr);
+							socket.emit('searchPostReply', sendArr);
 						});
 					});
 					break;
@@ -114,13 +113,12 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 								}
 							}
+							sendArr[10] = searchStr;
+							sendArr[11] = sortWay;
+							sendArr[12] = page;
+							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
-							var backArr = new Array();
-							backArr['searchStr'] = searchStr;
-							backArr['sortWay'] = sortWay;
-							backArr['page'] = page;
-							backArr['pageCount'] = Math.ceil(len/10);
-							socket.emit('searchPostReply', sendArr ,backArr);
+							socket.emit('searchPostReply', sendArr);
 						});
 					});
 					break;
@@ -148,13 +146,12 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 								}
 							}
+							sendArr[10] = searchStr;
+							sendArr[11] = sortWay;
+							sendArr[12] = page;
+							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
-							var backArr = new Array();
-							backArr['searchStr'] = searchStr;
-							backArr['sortWay'] = sortWay;
-							backArr['page'] = page;
-							backArr['pageCount'] = Math.ceil(len/10);
-							socket.emit('searchPostReply', sendArr ,backArr);
+							socket.emit('searchPostReply', sendArr);
 						});
 					});
 					break;
@@ -182,13 +179,12 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 								}
 							}
+							sendArr[10] = searchStr;
+							sendArr[11] = sortWay;
+							sendArr[12] = page;
+							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
-							var backArr = new Array();
-							backArr['searchStr'] = searchStr;
-							backArr['sortWay'] = sortWay;
-							backArr['page'] = page;
-							backArr['pageCount'] = Math.ceil(len/10);
-							socket.emit('searchPostReply', sendArr ,backArr);
+							socket.emit('searchPostReply', sendArr);
 						});
 					});
 					break;
@@ -208,6 +204,8 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 			collection.update({'_id':post_id}, {'$inc':{'access_count':1}}, function(err){});
 			collection.find({'_id':post_id}, function (err,result){
 				result.toArray(function(err, arr){
+					arr[0].origin_createTime = dateFormat(arr[0].origin_createTime);
+					arr[0].post_createTime = dateFormat(arr[0].post_createTime);
 					console.log(arr);
 					socket.emit('getOnePostReply', arr);
 				});
@@ -283,47 +281,59 @@ exports.mongoDbCheckUser = function(name, password){
 }
 
 
-// new post by {name, post}
+// new post by {}
 // return: T/F----------------------------
-exports.mongoDbNewPost = function(newPost){
+exports.mongoDbNewPost = function(newPostArr){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
-			collection.find({'course_title': (newPost.course_title)} , {'name':1,'_id':1},function(err,result){
+			collection.find({'course_title': (newPostArr['course_title']), 'most_recent':1} , 
+							{'name':1, 'origin_createTime':1, '_id':1},function(err,result){
 				result.toArray(function(err, arr){	
 					if (arr.length !== 0){
-						console.log('already have a post');
+						console.log('already have a post, to Change Post');
+						newPostArr['origin_createTime'] = arr[0].origin_createTime;
+						newPostArr['post_createTime'] = new Date();
+						newPostArr['post_createFrom_id'] = arr[0]._id;
 					} else {
-						// only 'tags' needs origin name
-						// count=0, createFrom=-1, post_id=_id (Auto generated), 
-						collection.save({'course_title':newPost.course_title, 
-										'template_title':newPost.template_title, 
-										'topic':newPost.topic, 
-										'course_time':newPost.course_time, 
-										'volunteer':newPost.volunteer, 
-										'course_class':newPost.course_class, 
-										'background':newPost.background, 
-										'course_prepare':newPost.course_prepare, 
-										'teaching_resource':newPost.teaching_resource, 
-										'teaching_goal':newPost.teaching_goal, 
-										'lesson_starting_time':newPost.lesson_starting_time, 
-										'lesson_starting_content':newPost.lesson_starting_content, 
-										'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-										'lesson_main_time':newPost.lesson_main_time, 
-										'lesson_main_content':newPost.lesson_main_content, 
-										'lesson_main_pattern':newPost.lesson_main_pattern, 
-										'lesson_ending_time':newPost.lesson_ending_time, 
-										'lesson_ending_content':newPost.lesson_ending_content, 
-										'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-										'lesson_summary':newPost.lesson_summary, 
-										'lesson_comment':newPost.lesson_comment, 
-										'tags':newPost.post_tag,
-										'post_createFrom_id':newPost.post_createFrom_id, 
-										'access_count':newPost.access_count});
-						console.log('new post success');
+						console.log('new post start');
+						newPostArr['origin_createTime'] = new Date();
+						newPostArr['post_createTime'] = new Date();
 					}
+					newPostArr['most_recent'] = 1;
+					
+					// only 'tags' needs origin name
+					// count=0, createFrom=-1, post_id=_id (Auto generated), 
+					collection.save({'course_title':newPostArr['course_title'], 
+									'template_title':newPostArr['template_title'], 
+									'topic':newPostArr['topic'], 
+									'course_time':newPostArr['course_time'], 
+									'volunteer':newPostArr['volunteer'], 
+									'course_class':newPostArr['course_class'], 
+									'background':newPostArr['background'], 
+									'course_prepare':newPostArr['course_prepare'], 
+									'teaching_resource':newPostArr['teaching_resource'], 
+									'teaching_goal':newPostArr['teaching_goal'], 
+									'lesson_starting_time':newPostArr['lesson_starting_time'], 
+									'lesson_starting_content':newPostArr['lesson_starting_content'], 
+									'lesson_starting_pattern':newPostArr['lesson_starting_pattern'], 
+									'lesson_main_time':newPostArr['lesson_main_time'], 
+									'lesson_main_content':newPostArr['lesson_main_content'], 
+									'lesson_main_pattern':newPostArr['lesson_main_pattern'], 
+									'lesson_ending_time':newPostArr['lesson_ending_time'], 
+									'lesson_ending_content':newPostArr['lesson_ending_content'], 
+									'lesson_ending_pattern':newPostArr['lesson_ending_pattern'], 
+									'lesson_summary':newPostArr['lesson_summary'], 
+									'lesson_comment':newPostArr['lesson_comment'], 
+									'tags':newPostArr['post_tag'],
+									'post_createFrom_id':newPostArr['post_createFrom_id'], 
+									'access_count':newPostArr['access_count'],
+									'origin_createTime':newPostArr['origin_createTime'],
+									'post_createTime':newPostArr['post_createTime'],
+									'post_createFrom_id':newPostArr['post_createFrom_id'],
+									'_id':newPostArr['_id']});
 				});
 			});
 		});
@@ -332,7 +342,7 @@ exports.mongoDbNewPost = function(newPost){
 
 // change post 
 // return: ?????
-exports.mongoDbChangePost = function(changePost){
+exports.mongoDbChangePost = function(changePostArr){
 	// -------------
 }
 // update Tags ------
@@ -394,7 +404,7 @@ Post = function(){
 	// hot topic count  						when Access in showpage, count+1
 	this.access_count = 0;
 	// post ID									Only ID for One saved Post
-	this.post_id = 0;		//key
+	this.post_id = 0;		//key--: _id
 	// Oringi create time						if (createFrom=_id), then (origin_createTime =  post[_id].origin_createTime)
 	this.origin_createTime = new Date();
 	
