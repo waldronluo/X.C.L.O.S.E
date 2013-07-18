@@ -108,14 +108,17 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							// sendArr = [{'course_title': "123456"}, {'coure':"123456"}, {'ctitle' : "123456"}];
 							var sendArr = new Array(14);
 							var len = arr.length;
-							for (var i=0; i<10; i++){
-								if ((page-1)*10+i >= len)
-									break;
-								else {
-									sendArr[i] = arr[(page-1)*10+i];
-									// date format : 2010.03.09
-									sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
-									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+							if (len != 0){
+								for (var i=0; i<10; i++){
+									if ((page-1)*10+i >= len)
+										break;
+									else {
+										sendArr[i] = arr[(page-1)*10+i];
+										console.log(sendArr[i].origin_createTime);
+										//date format : 2010.03.09
+										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
+										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+									}
 								}
 							}
 							sendArr[10] = searchStr;
@@ -141,14 +144,17 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(14);
 							var len = arr.length;
-							for (var i=0; i<10; i++){
-								if ((page-1)*10+i >= len)
-									break;
-								else {
-									sendArr[i] = arr[(page-1)*10+i];
-									//date format : 2010.03.09
-									sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
-									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+							if (len != 0){
+								for (var i=0; i<10; i++){
+									if ((page-1)*10+i >= len)
+										break;
+									else {
+										sendArr[i] = arr[(page-1)*10+i];
+										console.log(sendArr[i].origin_createTime);
+										//date format : 2010.03.09
+										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
+										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+									}
 								}
 							}
 							sendArr[10] = searchStr;
@@ -174,14 +180,17 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(14);
 							var len = arr.length;
-							for (var i=0; i<10; i++){
-								if ((page-1)*10+i >= len)
-									break;
-								else {
-									sendArr[i] = arr[(page-1)*10+i];
-									//date format : 2010.03.09
-									sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
-									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+							if (len != 0){
+								for (var i=0; i<10; i++){
+									if ((page-1)*10+i >= len)
+										break;
+									else {
+										sendArr[i] = arr[(page-1)*10+i];
+										console.log(sendArr[i].origin_createTime);
+										//date format : 2010.03.09
+										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
+										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+									}
 								}
 							}
 							sendArr[10] = searchStr;
@@ -207,15 +216,17 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 						result.toArray(function(err,arr){
 							var sendArr = new Array(14);
 							var len = arr.length;
-							for (var i=0; i<10; i++){
-								if ((page-1)*10+i >= len)
-									break;
-								else {
-									sendArr[i] = arr[(page-1)*10+i];
-									console.log(sendArr[i].origin_createTime);
-									//date format : 2010.03.09
-									sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
-									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+							if (len != 0){
+								for (var i=0; i<10; i++){
+									if ((page-1)*10+i >= len)
+										break;
+									else {
+										sendArr[i] = arr[(page-1)*10+i];
+										console.log(sendArr[i].origin_createTime);
+										//date format : 2010.03.09
+										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
+										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+									}
 								}
 							}
 							sendArr[10] = searchStr;
@@ -243,37 +254,46 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 			//collection.update({'_id':post_id}, {'$inc':{'access_count':1}}, function(err){});
 			collection.find({'_id':post_id}, function (err,result){
 				result.toArray(function(err, arr){
-					arr[0].origin_createTime = dateFormat(arr[0].origin_createTime);
-					arr[0].post_createTime = dateFormat(arr[0].post_createTime);
+					if (arr.length != 0){
+						
+						
+						arr[0].origin_createTime = dateFormat(arr[0].origin_createTime);
+						arr[0].post_createTime = dateFormat(arr[0].post_createTime);
 					
-					var sendArr;
-					sendArr = ['course_title':arr[0].course_title, 
-								'template_title':arr[0].template_title, 
-								'topic':arr[0].topic, 
-								'course_time':arr[0].course_time, 
-								'volunteer':arr[0].volunteer, 
-								'course_class':arr[0].course_class, 
-								'background':arr[0].background, 
-								'course_prepare':arr[0].course_prepare, 
-								'teaching_resource':arr[0].teaching_resource, 
-								'teaching_goal':arr[0].teaching_goal, 
-								'lesson_starting_time':arr[0].lesson_starting_time, 
-								'lesson_starting_content':arr[0].lesson_starting_content, 
-								'lesson_starting_pattern':arr[0].lesson_starting_pattern, 
-								'lesson_main_time':arr[0].lesson_main_time, 
-								'lesson_main_content':arr[0].lesson_main_content, 
-								'lesson_main_pattern':arr[0].lesson_main_pattern, 
-								'lesson_ending_time':arr[0].lesson_ending_time, 
-								'lesson_ending_content':arr[0].lesson_ending_content, 
-								'lesson_ending_pattern':arr[0].lesson_ending_pattern, 
-								'lesson_summary':arr[0].lesson_summary, 
-								'lesson_comment':arr[0].lesson_comment, 
-								'tags':arr[0].post_tag,
-								'access_count':arr[0].access_count,
-								'origin_createTime':arr[0].origin_createTime,
-								'post_createTime':arr[0].post_createTime,
-								'post_createFrom_id':arr[0].post_createFrom_id];
-					socket.eit('getOnePostReply', arr);
+						
+						var sendArr;
+						sendArr = [{'teach-plan-title':arr[0].course_title}, 
+								{'template_title':arr[0].template_title}, 
+								{'topic':arr[0].topic}, 
+								{'course_time':arr[0].course_time}, 
+								{'volunteer':arr[0].volunteer}, 
+								{'course_class':arr[0].course_class}, 
+								{'background':arr[0].background}, 
+								{'course_prepare':arr[0].course_prepare}, 
+								{'teaching_resource':arr[0].teaching_resource}, 
+								{'teaching_goal':arr[0].teaching_goal}, 
+								{'lesson_starting_time':arr[0].lesson_starting_time}, 
+								{'lesson_starting_content':arr[0].lesson_starting_content}, 
+								{'lesson_starting_pattern':arr[0].lesson_starting_pattern}, 
+								{'lesson_main_time':arr[0].lesson_main_time}, 
+								{'lesson_main_content':arr[0].lesson_main_content}, 
+								{'lesson_main_pattern':arr[0].lesson_main_pattern}, 
+								{'lesson_ending_time':arr[0].lesson_ending_time}, 
+								{'lesson_ending_content':arr[0].lesson_ending_content}, 
+								{'lesson_ending_pattern':arr[0].lesson_ending_pattern}, 
+								{'lesson_summary':arr[0].lesson_summary}, 
+								{'lesson_comment':arr[0].lesson_comment}, 
+								{'tags':arr[0].post_tag},
+								{'teach-plan-read-counter':arr[0].access_count},
+								{'origin_createTime':arr[0].origin_createTime},
+								{'post_createTime':arr[0].post_createTime},
+								{'post_createFrom_id':arr[0].post_createFrom_id}
+								{'most_recent':arr[0].most_recent},
+								{'teach-plan-creater':arr[0].post_author},
+								{'post_id':arr[0]._id}
+								];						
+						socket.eit('getOnePostReply', sendArr);
+					}
 				});
 			});
 		});
@@ -399,7 +419,10 @@ exports.mongoDbNewPost = function(newPostArr){
 									'access_count':newPostArr['access_count'],
 									'origin_createTime':newPostArr['origin_createTime'],
 									'post_createTime':newPostArr['post_createTime'],
-									'post_createFrom_id':newPostArr['post_createFrom_id']});
+									'post_createFrom_id':newPostArr['post_createFrom_id'],
+									'most_recent':newPostArr['most_recent'],
+									'post_author':newPostArr['post_author']
+									});
 				});
 			});
 		});
@@ -454,11 +477,14 @@ exports.mongoDbChangePost = function(changePostArr){
 									'lesson_ending_pattern':newPostArr['lesson_ending_pattern'], 
 									'lesson_summary':newPostArr['lesson_summary'], 
 									'lesson_comment':newPostArr['lesson_comment'], 
-									'tags':newPostArr['post_tag'],
+									'tags':newPostArr['post_tag'], 
 									'access_count':newPostArr['access_count'],
 									'origin_createTime':newPostArr['origin_createTime'],
 									'post_createTime':newPostArr['post_createTime'],
-									'post_createFrom_id':newPostArr['post_createFrom_id']});
+									'post_createFrom_id':newPostArr['post_createFrom_id'],
+									'most_recent':newPostArr['most_recent'],
+									'post_author':newPostArr['post_author']
+									});
 				});
 			});
 		});
