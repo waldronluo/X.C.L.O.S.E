@@ -19,6 +19,7 @@ var portNumber = portNumberDefault;
 var app = connect();
 app.use(connect.logger('dev'));
 app.use(connect.static(__dirname + '/static'));
+app.use(connect.bodyParser());
 
 
 // http server ---------------------
@@ -168,6 +169,8 @@ app.use(function(req, res){
 	var pathname = url.parse(req.url).pathname;
 	console.log("Request for " + pathname + " received.");
 	console.log("Request for " + firstPathname + " ---received.");
+	console.log(req.body);
+	console.log('-------------------------');
 	
 	if (pathname == "/" || pathname == ""){
 		firstPathname = "/";

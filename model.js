@@ -114,7 +114,6 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
-										console.log(sendArr[i].origin_createTime);
 										//date format : 2010.03.09
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
@@ -150,7 +149,6 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
-										console.log(sendArr[i].origin_createTime);
 										//date format : 2010.03.09
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
@@ -186,7 +184,6 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
-										console.log(sendArr[i].origin_createTime);
 										//date format : 2010.03.09
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
@@ -222,7 +219,6 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
-										console.log(sendArr[i].origin_createTime);
 										//date format : 2010.03.09
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
