@@ -213,6 +213,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 								else {
 									sendArr[i] = arr[(page-1)*10+i];
 									// date format : 2010.03.09
+									
 									sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 								}
