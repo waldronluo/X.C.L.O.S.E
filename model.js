@@ -89,7 +89,10 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	  
-	 console.log('DB search post---');
+	if (page <= 0 || page == undefined)
+		page =1;
+
+	console.log('DB search post---');
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
 			switch (sortWay){
@@ -220,8 +223,9 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
 										//date format : 2010.03.09
-										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
+										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
+										
 									}
 								}
 							}
@@ -248,7 +252,7 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
 			//collection.update({'_id':post_id}, {'$inc':{'access_count':1}}, function(err){});
-			collection.find({'_id':post_id},{},function (err,result){
+			collection.find({'_id':post_id},function (err,result){
 				result.toArray(function(err, arr){
 					var sendArr = new Array();
 					console.log(post_id);
@@ -256,7 +260,10 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 					if (arr.length != 0){
 						arr[0].origin_createTime = dateFormat(arr[0].origin_createTime);
 						arr[0].post_createTime = dateFormat(arr[0].post_createTime);
-
+						for (parts in arr[0]){
+							console.log(parts);
+						}
+							
 						sendArr = [{'teach-plan-title':arr[0].course_title}, 
 								{'teach-plan-creater':arr[0].post_author},
 								{'teach-plan-update-date':arr[0].post_createTime},
@@ -264,7 +271,7 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 								{'teach-plan-edit-counter':"unknown"},
 								{'teach-plan-like-counter':"unknown"},
 								{'teach-plan-download-counter':"unknown"},
-								{'teach-plan-label-group':arr[0].post_tag},			//tags? teach-plan-label-group
+								{'teach-plan-label-group':arr[0].tags},			//tags? teach-plan-label-group
 								
 								{'teach-plan-coursename':arr[0].course_title}, 
 								{'teach-plan-template':arr[0].template_title}, 

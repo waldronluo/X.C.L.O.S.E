@@ -134,7 +134,6 @@ mgconnect.open(function (err, db) {
 		collection.save({'name':'bbb', 'password':'222', 'email':'bbb@niubi.com'});
 		collection.save({'name':'zhang', 'password':'123456', 'email':'hey@qq.com'});
 		collection.save({'name':'lou', 'password':'654321', 'email':'hello@niubi.com'});
-		console.log('hehe');
 	});
 	console.log('main 1');
 	
@@ -178,16 +177,35 @@ for (var i=0; i<4; i++)
 	newPost.lesson_summary = '自我评价：这堂课以家乡为主，让学生从自己最熟悉的家乡入手；说进行引导（本意是让学生认真发现家乡的美，家乡的文化，发现它，喜欢它，爱上它。';
 	
 	
-	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-					'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-					'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-					'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-					'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-					'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+	collection.save({'course_title':newPost.course_title, 
+					'template_title':newPost.template_title, 
+					'topic':newPost.topic, 
+					'course_time':newPost.course_time, 
+					'volunteer':newPost.volunteer, 
+					'course_class':newPost.course_class, 
+					'background':newPost.background, 
+					'course_prepare':newPost.course_prepare, 
+					'teaching_resource':newPost.teaching_resource, 
+					'teaching_goal':newPost.teaching_goal, 
+					'lesson_starting_time':newPost.lesson_starting_time, 
+					'lesson_starting_content':newPost.lesson_starting_content, 
+					'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+					'lesson_main_time':newPost.lesson_main_time, 
+					'lesson_main_content':newPost.lesson_main_content, 
+					'lesson_main_pattern':newPost.lesson_main_pattern, 
+					'lesson_ending_time':newPost.lesson_ending_time, 
+					'lesson_ending_content':newPost.lesson_ending_content, 
+					'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+					'lesson_summary':newPost.lesson_summary, 
+					'lesson_comment':newPost.lesson_comment, 
 					'tags':newPost.post_tag,
-					'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-					'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
+					'post_createFrom_id':newPost.post_createFrom_id, 
+					'access_count':newPost.access_count,
+					'post_createTime':newPost.post_createTime, 
+					'origin_createTime':newPost.origin_createTime, 
+					'most_recent':newPost.most_recent, 
+					'_id':newPost.post_id, 
+					'post_author':newPost.post_author});
 }
 
 counter = 222;
@@ -222,16 +240,35 @@ for (var i=0; i<4; i++)
 	newPost.lesson_main_content = '第二节课（“家乡”作品展示）\n1.让完成了作业的学生上台与大家一起分享。每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答：1. 家乡意味着什么？2.我们能为我们的家乡做什么？小组讨论\n3.展示结束，分享学生们的感受（5min）\n4. 总结：我们的家乡是我们永远的根，我们要有一双善于发现美的眼睛，发现它，认识它，爱它。\n作业要求：以“家乡”（瑶族文化）为题写一篇文章。';
 	newPost.lesson_summary = '自我评价：这堂课以家乡为主，让学生从自己最熟悉的家乡入手；说起瑶族文化，学生们都很快反应；讨论效果较佳；第二节课的成果展示，很多学生由于准备不足，展示效果不佳；由于时间掌握得不是很好，最后没有进行引导（本意是让学生认真发现家乡的美，家乡的文化，发现它，喜欢它，爱上它。';	
 	
-	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-					'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-					'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-					'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-					'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-					'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+	collection.save({'course_title':newPost.course_title, 
+					'template_title':newPost.template_title, 
+					'topic':newPost.topic, 
+					'course_time':newPost.course_time, 
+					'volunteer':newPost.volunteer, 
+					'course_class':newPost.course_class, 
+					'background':newPost.background, 
+					'course_prepare':newPost.course_prepare, 
+					'teaching_resource':newPost.teaching_resource, 
+					'teaching_goal':newPost.teaching_goal, 
+					'lesson_starting_time':newPost.lesson_starting_time, 
+					'lesson_starting_content':newPost.lesson_starting_content, 
+					'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+					'lesson_main_time':newPost.lesson_main_time, 
+					'lesson_main_content':newPost.lesson_main_content, 
+					'lesson_main_pattern':newPost.lesson_main_pattern, 
+					'lesson_ending_time':newPost.lesson_ending_time, 
+					'lesson_ending_content':newPost.lesson_ending_content, 
+					'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+					'lesson_summary':newPost.lesson_summary, 
+					'lesson_comment':newPost.lesson_comment, 
 					'tags':newPost.post_tag,
-					'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-					'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
+					'post_createFrom_id':newPost.post_createFrom_id, 
+					'access_count':newPost.access_count,
+					'post_createTime':newPost.post_createTime, 
+					'origin_createTime':newPost.origin_createTime, 
+					'most_recent':newPost.most_recent, 
+					'_id':newPost.post_id, 
+					'post_author':newPost.post_author});
 }
 
 counter = 835;
@@ -269,16 +306,35 @@ for (var i=0; i<4; i++)
 	newPost.lesson_main_content = '第二节课（“）\n1.让完成了作业的学生上台与大家一起分享。每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答：1. 家乡意味着什么？2.我们能为我们的家乡做什么？小组讨论\n3.展示结束，分享学生们的感受（5min）\n4. 总结：我们的家乡是我们永远的根，我们要有一双善于发现美的眼睛，发现它，认识它，爱它。\n作业要求：以“家乡”（瑶族文化）为题写一篇文章。';
 	newPost.lesson_summary = '让学生从自己最熟悉的家乡入手；学生们都很快反应；讨论效果较佳';	
 	
-	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-					'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-					'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-					'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-					'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-					'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+	collection.save({'course_title':newPost.course_title, 
+					'template_title':newPost.template_title, 
+					'topic':newPost.topic, 
+					'course_time':newPost.course_time, 
+					'volunteer':newPost.volunteer, 
+					'course_class':newPost.course_class, 
+					'background':newPost.background, 
+					'course_prepare':newPost.course_prepare, 
+					'teaching_resource':newPost.teaching_resource, 
+					'teaching_goal':newPost.teaching_goal, 
+					'lesson_starting_time':newPost.lesson_starting_time, 
+					'lesson_starting_content':newPost.lesson_starting_content, 
+					'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+					'lesson_main_time':newPost.lesson_main_time, 
+					'lesson_main_content':newPost.lesson_main_content, 
+					'lesson_main_pattern':newPost.lesson_main_pattern, 
+					'lesson_ending_time':newPost.lesson_ending_time, 
+					'lesson_ending_content':newPost.lesson_ending_content, 
+					'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+					'lesson_summary':newPost.lesson_summary, 
+					'lesson_comment':newPost.lesson_comment, 
 					'tags':newPost.post_tag,
-					'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-					'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
+					'post_createFrom_id':newPost.post_createFrom_id, 
+					'access_count':newPost.access_count,
+					'post_createTime':newPost.post_createTime, 
+					'origin_createTime':newPost.origin_createTime, 
+					'most_recent':newPost.most_recent, 
+					'_id':newPost.post_id, 
+					'post_author':newPost.post_author});
 }
 
 counter = 159;
@@ -315,16 +371,35 @@ for (var i=0; i<4; i++)
 	newPost.lesson_main_content = '每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答';
 	newPost.lesson_summary = '自我评价：最后没有进行引导（本意是让。';	
 	
-	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-					'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-					'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-					'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-					'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-					'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+	collection.save({'course_title':newPost.course_title, 
+					'template_title':newPost.template_title, 
+					'topic':newPost.topic, 
+					'course_time':newPost.course_time, 
+					'volunteer':newPost.volunteer, 
+					'course_class':newPost.course_class, 
+					'background':newPost.background, 
+					'course_prepare':newPost.course_prepare, 
+					'teaching_resource':newPost.teaching_resource, 
+					'teaching_goal':newPost.teaching_goal, 
+					'lesson_starting_time':newPost.lesson_starting_time, 
+					'lesson_starting_content':newPost.lesson_starting_content, 
+					'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+					'lesson_main_time':newPost.lesson_main_time, 
+					'lesson_main_content':newPost.lesson_main_content, 
+					'lesson_main_pattern':newPost.lesson_main_pattern, 
+					'lesson_ending_time':newPost.lesson_ending_time, 
+					'lesson_ending_content':newPost.lesson_ending_content, 
+					'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+					'lesson_summary':newPost.lesson_summary, 
+					'lesson_comment':newPost.lesson_comment, 
 					'tags':newPost.post_tag,
-					'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-					'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
+					'post_createFrom_id':newPost.post_createFrom_id, 
+					'access_count':newPost.access_count,
+					'post_createTime':newPost.post_createTime, 
+					'origin_createTime':newPost.origin_createTime, 
+					'most_recent':newPost.most_recent, 
+					'_id':newPost.post_id, 
+					'post_author':newPost.post_author});
 }
 
 counter = 1057;
@@ -349,20 +424,36 @@ for (var i=0; i<4; i++)
 	
 	newPost.post_tag = ['陪伴成长', '情感教育', '乡土认同', '自然教育'];
 	
-	
-	collection.save({'course_title':newPost.course_title, 'template_title':newPost.template_title, 'topic':newPost.topic, 
-					'course_time':newPost.course_time, 'volunteer':newPost.volunteer, 'course_class':newPost.course_class, 
-					'background':newPost.background, 'course_prepare':newPost.course_prepare, 'teaching_resource':newPost.teaching_resource, 'teaching_goal':newPost.teaching_goal, 
-					'lesson_starting_time':newPost.lesson_starting_time, 'lesson_starting_content':newPost.lesson_starting_content, 'lesson_starting_pattern':newPost.lesson_starting_pattern, 
-					'lesson_main_time':newPost.lesson_main_time, 'lesson_main_content':newPost.lesson_main_content, 'lesson_main_pattern':newPost.lesson_main_pattern, 
-					'lesson_ending_time':newPost.lesson_ending_time, 'lesson_ending_content':newPost.lesson_ending_content, 'lesson_ending_pattern':newPost.lesson_ending_pattern, 
-					'lesson_summary':newPost.lesson_summary, 'lesson_comment':newPost.lesson_comment, 
+	collection.save({'course_title':newPost.course_title, 
+					'template_title':newPost.template_title, 
+					'topic':newPost.topic, 
+					'course_time':newPost.course_time, 
+					'volunteer':newPost.volunteer, 
+					'course_class':newPost.course_class, 
+					'background':newPost.background, 
+					'course_prepare':newPost.course_prepare, 
+					'teaching_resource':newPost.teaching_resource, 
+					'teaching_goal':newPost.teaching_goal, 
+					'lesson_starting_time':newPost.lesson_starting_time, 
+					'lesson_starting_content':newPost.lesson_starting_content, 
+					'lesson_starting_pattern':newPost.lesson_starting_pattern, 
+					'lesson_main_time':newPost.lesson_main_time, 
+					'lesson_main_content':newPost.lesson_main_content, 
+					'lesson_main_pattern':newPost.lesson_main_pattern, 
+					'lesson_ending_time':newPost.lesson_ending_time, 
+					'lesson_ending_content':newPost.lesson_ending_content, 
+					'lesson_ending_pattern':newPost.lesson_ending_pattern, 
+					'lesson_summary':newPost.lesson_summary, 
+					'lesson_comment':newPost.lesson_comment, 
 					'tags':newPost.post_tag,
-					'post_createFrom_id':newPost.post_createFrom_id, 'access_count':newPost.access_count,
-					'post_createTime':newPost.post_createTime, 'origin_createTime':newPost.origin_createTime, 'most_recent':newPost.most_recent, '_id':newPost.post_id});
+					'post_createFrom_id':newPost.post_createFrom_id, 
+					'access_count':newPost.access_count,
+					'post_createTime':newPost.post_createTime, 
+					'origin_createTime':newPost.origin_createTime, 
+					'most_recent':newPost.most_recent, 
+					'_id':newPost.post_id, 
+					'post_author':newPost.post_author});
 }
-
-		console.log('keke');
 	});
 	console.log('main 2');
 	 
@@ -391,14 +482,6 @@ for (var i=0; i<4; i++)
 		
 	});
 	console.log('main 3');
-	 
-	db.collection('postlist_test', function (err, collection) {
-		collection.find(function(err, result){
-			result.toArray(function(err, arr){
-					console.log(arr);
-			});
-		});
-	});
 });
 
 /*
