@@ -54,6 +54,7 @@ iolisten.sockets.on('connection', function (socket){
 		model.mongoDbGetOnePost(socket, queryStrArray['post_id']);
 	}
 	else if (firstPathname == "/teach-plan-edit"){
+		model.mongoDbGetTagsForEdit(socket);
 	}
 	else {
 	}
@@ -86,6 +87,7 @@ iolisten.sockets.on('connection', function (socket){
 		}
 		if (isLogin){
 			console.log('New teaching plan -- start');
+			postArr['post_author'] = userName;
 			mongoDbNewPost(postArr);
 		}
 		else {

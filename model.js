@@ -47,6 +47,42 @@ exports.mongoDbGetTags = function(socket){
 		});
 	});
 }
+// get tags when EDIT a teaching plan
+exports.mongoDbGetTagsForEdit = function(socket){
+	var TagsArr = new Array();
+
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver, {safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('tagslist', function (err, collection) {
+			collection.find().sort({'category':1}, function(err,result){
+				result.toArray(function(err,arr){
+					//console.log('Arr = ');
+					//console.log(arr);
+					var countCat = -1;
+					var countTag = 0;
+					var nowCat = '';
+					for (var i=0; i<arr.length; i++){
+						if (nowCat != arr[i].category){
+							nowCat = arr[i].category;
+							countCat++;
+							countTag = 0;
+							TagsArr[countCat] = [arr[i].category, []];
+						}
+						//console.log('-- '+ i + ','+countCat+ ','+ countTag);
+						TagsArr[countCat][1][countTag] = arr[i].name;
+						countTag++;
+					}
+					console.log(TagsArr);
+
+					socket.emit('editTagsReply', TagsArr);
+					return TagsArr;
+				});
+			});
+		});
+	});
+}
 
 // search post by title
 exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
@@ -68,14 +104,16 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 									'post_createTime':1, 
 									'tags':1}).sort({'post_createTime':-1}, function(err,result){
 						result.toArray(function(err,arr){
-							var sendArr = new Array(11);
+							// var sendArr = new Array(1);
+							// sendArr[0] = [{'course_title': "123456"}, {'coure':"123456"}, {'ctitle' : "123456"}];
+							var sendArr = new Array(14);
 							var len = arr.length;
 							for (var i=0; i<10; i++){
 								if ((page-1)*10+i >= len)
 									break;
 								else {
 									sendArr[i] = arr[(page-1)*10+i];
-									// date format : 2010.03.09
+									//date format : 2010.03.09
 									sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 									sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 								}
@@ -297,13 +335,15 @@ exports.mongoDbNewPost = function(newPostArr){
 						newPostArr['origin_createTime'] = arr[0].origin_createTime;
 						newPostArr['post_createTime'] = new Date();
 						newPostArr['post_createFrom_id'] = arr[0]._id;
+						collection.update({'_id':arr[0]._id}, {'$inc':{'most_recent':-1}}, function(err){});
 					} else {
 						console.log('new post start');
 						newPostArr['origin_createTime'] = new Date();
 						newPostArr['post_createTime'] = new Date();
+						newPostArr['post_createFrom_id'] = -1;
 					}
 					newPostArr['most_recent'] = 1;
-					
+					console.log(newPostArr);
 					// only 'tags' needs origin name
 					// count=0, createFrom=-1, post_id=_id (Auto generated), 
 					collection.save({'course_title':newPostArr['course_title'], 
@@ -332,8 +372,7 @@ exports.mongoDbNewPost = function(newPostArr){
 									'access_count':newPostArr['access_count'],
 									'origin_createTime':newPostArr['origin_createTime'],
 									'post_createTime':newPostArr['post_createTime'],
-									'post_createFrom_id':newPostArr['post_createFrom_id'],
-									'_id':newPostArr['_id']});
+									'post_createFrom_id':newPostArr['post_createFrom_id']});
 				});
 			});
 		});
@@ -341,9 +380,63 @@ exports.mongoDbNewPost = function(newPostArr){
 }
 
 // change post 
-// return: ?????
+// return: 
 exports.mongoDbChangePost = function(changePostArr){
-	// -------------
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.find({'course_title': (newPostArr['course_title']), 'most_recent':1} , 
+							{'name':1, 'origin_createTime':1, '_id':1},function(err,result){
+				result.toArray(function(err, arr){	
+					if (arr.length !== 0){
+						console.log('already have a post, to Change Post');
+						newPostArr['origin_createTime'] = arr[0].origin_createTime;
+						newPostArr['post_createTime'] = new Date();
+						newPostArr['post_createFrom_id'] = arr[0]._id;
+						collection.update({'_id':arr[0]._id}, {'$inc':{'most_recent':-1}}, function(err){});
+					} else {
+						console.log('new post start');
+						newPostArr['origin_createTime'] = new Date();
+						newPostArr['post_createTime'] = new Date();
+						newPostArr['post_createFrom_id'] = -1;
+					}
+					newPostArr['most_recent'] = 1;
+					console.log(newPostArr);
+					// only 'tags' needs origin name
+					// count=0, createFrom=-1, post_id=_id (Auto generated), 
+					collection.save({'course_title':newPostArr['course_title'], 
+									'template_title':newPostArr['template_title'], 
+									'topic':newPostArr['topic'], 
+									'course_time':newPostArr['course_time'], 
+									'volunteer':newPostArr['volunteer'], 
+									'course_class':newPostArr['course_class'], 
+									'background':newPostArr['background'], 
+									'course_prepare':newPostArr['course_prepare'], 
+									'teaching_resource':newPostArr['teaching_resource'], 
+									'teaching_goal':newPostArr['teaching_goal'], 
+									'lesson_starting_time':newPostArr['lesson_starting_time'], 
+									'lesson_starting_content':newPostArr['lesson_starting_content'], 
+									'lesson_starting_pattern':newPostArr['lesson_starting_pattern'], 
+									'lesson_main_time':newPostArr['lesson_main_time'], 
+									'lesson_main_content':newPostArr['lesson_main_content'], 
+									'lesson_main_pattern':newPostArr['lesson_main_pattern'], 
+									'lesson_ending_time':newPostArr['lesson_ending_time'], 
+									'lesson_ending_content':newPostArr['lesson_ending_content'], 
+									'lesson_ending_pattern':newPostArr['lesson_ending_pattern'], 
+									'lesson_summary':newPostArr['lesson_summary'], 
+									'lesson_comment':newPostArr['lesson_comment'], 
+									'tags':newPostArr['post_tag'],
+									'post_createFrom_id':newPostArr['post_createFrom_id'], 
+									'access_count':newPostArr['access_count'],
+									'origin_createTime':newPostArr['origin_createTime'],
+									'post_createTime':newPostArr['post_createTime'],
+									'post_createFrom_id':newPostArr['post_createFrom_id']});
+				});
+			});
+		});
+	});
 }
 // update Tags ------
 
