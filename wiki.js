@@ -70,9 +70,9 @@ iolisten.sockets.on('connection', function (socket){
 	console.log('start socket on searchPost');
 	socket.on('searchPost',function(searchArr){
 		model.mongoDbSearchPost(socket,
-						searchArr['searchStr'],
-						searchArr['sortWay'],
-						searchArr['page'] );
+						searchArr[0],
+						searchArr[1],
+						searchArr[2] );
 	});
 		
 	// teach-plan-edit -- newPost
@@ -194,13 +194,14 @@ app.use(function(req, res){
 	else if (pathname == "/teach-plan"){
 		//	url sample:		http://127.0.0.1:8089/teach-plan?post_id=123
 		firstPathname = "/teach-plan";
-		res.writeHead(200, {"Content-Type": "text/html"});
-		res.write(fs.readFileSync(__dirname + '/static/teach-plan.html', 'utf-8'));
-		res.end();
 		
 		queryStrArray = new Array();
 		queryStrArray['post_id'] = querystring.parse(url.parse(req.url).query)['post_id'];
 		console.log(queryStrArray);
+		
+		res.writeHead(200, {"Content-Type": "text/html"});
+		res.write(fs.readFileSync(__dirname + '/static/teach-plan.html', 'utf-8'));
+		res.end();
 	}
 	else if (pathname == "/teach-plan-edit"){
 		//  url sample:

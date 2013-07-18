@@ -246,7 +246,7 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + 20);
+	tempDate.setDate(tempDate.getDate() + 10);
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
@@ -291,7 +291,7 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + 20);
+	tempDate.setDate(tempDate.getDate() + 20-i*2);
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
@@ -335,7 +335,7 @@ for (var i=0; i<4; i++)
 	else newPost.post_createFrom_id = counter + i - 1;
 	
 	newPost.post_createTime = tempDate;
-	tempDate.setDate(tempDate.getDate() + 20);
+	tempDate.setDate(tempDate.getDate() + 20-i);
 	newPost.origin_createTime = staticDate;
 	
 	if (i==3) newPost.most_recent = 1; 
