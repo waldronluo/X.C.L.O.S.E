@@ -255,41 +255,48 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 			collection.find({'_id':post_id}, function (err,result){
 				result.toArray(function(err, arr){
 					if (arr.length != 0){
-						
-						
 						arr[0].origin_createTime = dateFormat(arr[0].origin_createTime);
 						arr[0].post_createTime = dateFormat(arr[0].post_createTime);
 					
-						
 						var sendArr;
 						sendArr = [{'teach-plan-title':arr[0].course_title}, 
-								{'template_title':arr[0].template_title}, 
-								{'topic':arr[0].topic}, 
-								{'course_time':arr[0].course_time}, 
-								{'volunteer':arr[0].volunteer}, 
-								{'course_class':arr[0].course_class}, 
-								{'background':arr[0].background}, 
-								{'course_prepare':arr[0].course_prepare}, 
-								{'teaching_resource':arr[0].teaching_resource}, 
-								{'teaching_goal':arr[0].teaching_goal}, 
-								{'lesson_starting_time':arr[0].lesson_starting_time}, 
-								{'lesson_starting_content':arr[0].lesson_starting_content}, 
-								{'lesson_starting_pattern':arr[0].lesson_starting_pattern}, 
-								{'lesson_main_time':arr[0].lesson_main_time}, 
-								{'lesson_main_content':arr[0].lesson_main_content}, 
-								{'lesson_main_pattern':arr[0].lesson_main_pattern}, 
-								{'lesson_ending_time':arr[0].lesson_ending_time}, 
-								{'lesson_ending_content':arr[0].lesson_ending_content}, 
-								{'lesson_ending_pattern':arr[0].lesson_ending_pattern}, 
-								{'lesson_summary':arr[0].lesson_summary}, 
-								{'lesson_comment':arr[0].lesson_comment}, 
-								{'tags':arr[0].post_tag},
+								{'teach-plan-creater':arr[0].post_author},
+								{'teach-plan-update-date':arr[0].post_createTime},
 								{'teach-plan-read-counter':arr[0].access_count},
+								{'teach-plan-edit-counter':"unknown"},
+								{'teach-plan-like-counter':"unknown"},
+								{'teach-plan-download-counter':"unknown"},
+								{'teach-plan-label-group':arr[0].post_tag},			//tags? teach-plan-label-group
+								
+								{'teach-plan-coursename':arr[0].course_title}, 
+								{'teach-plan-template':arr[0].template_title}, 
+								{'teach-plan-course':arr[0].topic}, 
+								{'teach-plan-course-last':arr[0].course_time}, 
+								{'teach-plan-processing-staff':arr[0].volunteer}, 
+								{'teach-plan-processing-grade':arr[0].course_class}, 
+								{'teach-plan-background':arr[0].background}, 
+								{'teach-plan-prepare-class':arr[0].course_prepare}, 
+								{'teach-plan-resources':arr[0].teaching_resource}, 
+								{'teach-plan-target':arr[0].teaching_goal}, 
+								{'teach-plan-leading-time':arr[0].lesson_starting_time}, 
+								{'teach-plan-leading-content':arr[0].lesson_starting_content}, 
+								{'teach-plan-leading-requirement':arr[0].lesson_starting_pattern}, 
+								{'teach-plan-ongoing-time':arr[0].lesson_main_time}, 
+								{'teach-plan-ongoing-content':arr[0].lesson_main_content}, 
+								{'teach-plan-ongoing-requirement':arr[0].lesson_main_pattern}, 
+								{'teach-plan-ending-time':arr[0].lesson_ending_time}, 
+								{'teach-plan-ending-content':arr[0].lesson_ending_content}, 
+								{'teach-plan-ending-requirement':arr[0].lesson_ending_pattern}, 
+								{'teach-plan-conclusion-time':""}, 
+								{'teach-plan-conclusion-content':arr[0].lesson_summary}, 
+								{'teach-plan-conclusion-requirement':""}, 
+								{'teach-plan-description-time':""}, 
+								{'teach-plan-description-content':arr[0].lesson_comment}, 
+								{'teach-plan-description-requirement':""}, 
+								
 								{'origin_createTime':arr[0].origin_createTime},
-								{'post_createTime':arr[0].post_createTime},
 								{'post_createFrom_id':arr[0].post_createFrom_id},
 								{'most_recent':arr[0].most_recent},
-								{'teach-plan-creater':arr[0].post_author},
 								{'post_id':arr[0]._id}
 								];						
 						socket.eit('getOnePostReply', sendArr);
@@ -381,47 +388,48 @@ exports.mongoDbNewPost = function(newPostArr){
 					if (arr.length !== 0){
 						console.log('already have a post, to Change Post');
 						newPostArr['origin_createTime'] = arr[0].origin_createTime;
-						newPostArr['post_createTime'] = new Date();
+						newPostArr['teach-plan-update-date'] = new Date();
 						newPostArr['post_createFrom_id'] = arr[0]._id;
 						collection.update({'_id':arr[0]._id}, {'$inc':{'most_recent':-1}}, function(err){});
 					} else {
 						console.log('new post start');
 						newPostArr['origin_createTime'] = new Date();
-						newPostArr['post_createTime'] = new Date();
+						newPostArr['teach-plan-update-date'] = new Date();
 						newPostArr['post_createFrom_id'] = -1;
 					}
 					newPostArr['most_recent'] = 1;
 					console.log(newPostArr);
 					// only 'tags' needs origin name
 					// count=0, createFrom=-1, post_id=_id (Auto generated), 
-					collection.save({'course_title':newPostArr['course_title'], 
-									'template_title':newPostArr['template_title'], 
-									'topic':newPostArr['topic'], 
-									'course_time':newPostArr['course_time'], 
-									'volunteer':newPostArr['volunteer'], 
-									'course_class':newPostArr['course_class'], 
-									'background':newPostArr['background'], 
-									'course_prepare':newPostArr['course_prepare'], 
-									'teaching_resource':newPostArr['teaching_resource'], 
-									'teaching_goal':newPostArr['teaching_goal'], 
-									'lesson_starting_time':newPostArr['lesson_starting_time'], 
-									'lesson_starting_content':newPostArr['lesson_starting_content'], 
-									'lesson_starting_pattern':newPostArr['lesson_starting_pattern'], 
-									'lesson_main_time':newPostArr['lesson_main_time'], 
-									'lesson_main_content':newPostArr['lesson_main_content'], 
-									'lesson_main_pattern':newPostArr['lesson_main_pattern'], 
-									'lesson_ending_time':newPostArr['lesson_ending_time'], 
-									'lesson_ending_content':newPostArr['lesson_ending_content'], 
-									'lesson_ending_pattern':newPostArr['lesson_ending_pattern'], 
-									'lesson_summary':newPostArr['lesson_summary'], 
-									'lesson_comment':newPostArr['lesson_comment'], 
-									'tags':newPostArr['post_tag'], 
-									'access_count':newPostArr['access_count'],
+					collection.save({'course_title':newPostArr['teach-plan-coursename'], 
+									'template_title':newPostArr['teach-plan-template'], 
+									'topic':newPostArr['teach-plan-course'], 
+									'course_time':newPostArr['teach-plan-course-last'], 
+									'volunteer':newPostArr['teach-plan-processing-staff'], 
+									'course_class':newPostArr['teach-plan-processing-grade'], 
+									'background':newPostArr['teach-plan-background'], 
+									'course_prepare':newPostArr['teach-plan-prepare-class'], 
+									'teaching_resource':newPostArr['teach-plan-resources'], 
+									'teaching_goal':newPostArr['teach-plan-target'], 
+									'lesson_starting_time':newPostArr['teach-plan-leading-time'], 
+									'lesson_starting_content':newPostArr['teach-plan-leading-content'], 
+									'lesson_starting_pattern':newPostArr['teach-plan-leading-requirement'], 
+									'lesson_main_time':newPostArr['teach-plan-ongoing-time'], 
+									'lesson_main_content':newPostArr['teach-plan-ongoing-content'], 
+									'lesson_main_pattern':newPostArr['teach-plan-ongoing-requirement'], 
+									'lesson_ending_time':newPostArr['teach-plan-ending-time'], 
+									'lesson_ending_content':newPostArr['teach-plan-ending-content'], 
+									'lesson_ending_pattern':newPostArr['teach-plan-ending-requirement'], 
+									'lesson_summary':newPostArr['teach-plan-conclusion-content'], 
+									'lesson_comment':newPostArr['teach-plan-description-content'], 
+									
+									'tags':newPostArr['teach-plan-label-group'], 	//tags? teach-plan-label-group
+									'access_count':newPostArr['teach-plan-read-counter'],
 									'origin_createTime':newPostArr['origin_createTime'],
-									'post_createTime':newPostArr['post_createTime'],
+									'post_createTime':newPostArr['teach-plan-update-date'],
 									'post_createFrom_id':newPostArr['post_createFrom_id'],
 									'most_recent':newPostArr['most_recent'],
-									'post_author':newPostArr['post_author']
+									'post_author':newPostArr['teach-plan-creater']
 									});
 				});
 			});
