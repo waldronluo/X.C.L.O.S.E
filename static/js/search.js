@@ -1,10 +1,31 @@
+var GLOBAL = [];
+
+GLOBAL.socket = io.connect('http://127.0.0.1:8089');
+
+
 (function(){
-    var socket = io.connect('http://127.0.0.1:8089');
-    socket.on('searchPostReply',function(teachPlanList){
+    
+
+    searchStr = getCookie("searchStr");
+    sortWay = getCookie("sortWay");
+    page = getCookie("page");
+    console.log(searchStr + " " +
+    sortWay + " " +
+    page + " " );
+    if ( searchStr != "" || 
+            sortWay != "" || 
+                page != "" ) {
+        GLOBAL.socket.emit ('searchPost',[searchStr,sortWay,page]);
+                }
+
+    GLOBAL.socket.on('searchPostReply',function(teachPlanList){
+        setCookie ("searchStr", teachPlanList[10]);
+        setCookie ("searchWay", teachPlanList[11]);
+        setCookie ("page", teachPlanList[12]);
         console.log(teachPlanList);
         var resultGroup = document.getElementById("resultGroup");
         resultGroup.innerHTML = "";
-        for (var i=0; i < teachPlanList.length; i++) {
+        for (var i=0; i < 10; i++) {
             if (teachPlanList[i] == null) break;
             console.log(teachPlanList[i]);
 
@@ -14,6 +35,7 @@
             var resultTitle = document.createElement("a");
             resultTitle.className = "resultTitle";
             resultTitle.href="/teach-plan?post_id="+teachPlanList[i]["_id"];
+            resultTitle.target = "_blank";
             resultTitle.innerHTML = teachPlanList[i]["course_title"];
             result.appendChild(resultTitle);
 
