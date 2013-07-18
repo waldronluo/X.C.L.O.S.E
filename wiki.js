@@ -52,6 +52,7 @@ iolisten.sockets.on('connection', function (socket){
 						queryStrArray['page'] );
 	}
 	else if (firstPathname == "/teach-plan"){
+		console.log(queryStrArray['post_id']);
 		model.mongoDbGetOnePost(socket, queryStrArray['post_id']);
 	}
 	else if (firstPathname == "/teach-plan-edit"){
@@ -169,7 +170,8 @@ app.use(function(req, res){
 	var pathname = url.parse(req.url).pathname;
 	console.log("Request for " + pathname + " received.");
 	console.log("Request for " + firstPathname + " ---received.");
-	console.log(req.body);
+	var temarr = req.body;
+	console.log(temarr);
 	console.log('-------------------------');
 	
 	if (pathname == "/" || pathname == ""){
@@ -188,7 +190,7 @@ app.use(function(req, res){
 		console.log(queryStrArray);
 		
 		res.writeHead(200, {
-			"Set-Cookie": ["searchStr=" + queryStrArray['searchStr'], "sortWay=" + queryStrArray['sortWay'], "page=" + queryStrArray['page']],
+			"Set-Cookie": ["searchStr=" + escape(queryStrArray['searchStr']), "sortWay=" + queryStrArray['sortWay'], "page=" + queryStrArray['page']],
 			"Content-Type": "text/html"
 		});
 		res.write(fs.readFileSync(__dirname + '/static/search.html', 'utf-8'));
@@ -213,7 +215,9 @@ app.use(function(req, res){
 		res.write(fs.readFileSync(__dirname + '/static/teach-plan-edit.html', 'utf-8'));
 		res.end();
 	}
+	
 	else if (pathname == "/favicon.ico"){res.end();}
+	
 });
 
 

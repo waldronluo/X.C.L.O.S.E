@@ -1,4 +1,4 @@
-var mongodb = require('mongodb');		//mongoDB for user
+﻿var mongodb = require('mongodb');		//mongoDB for user
 /*	about DB data structure:
 	db:	test
 		collection:	userlist:
@@ -244,17 +244,20 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 exports.mongoDbGetOnePost = function(socket, post_id){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	post_id = parseInt(post_id);			// string --> int  to find _id
 	
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
 			//collection.update({'_id':post_id}, {'$inc':{'access_count':1}}, function(err){});
-			collection.find({'_id':post_id}, function (err,result){
+			collection.find({'_id':post_id},{},function (err,result){
 				result.toArray(function(err, arr){
+					var sendArr = new Array();
+					console.log(post_id);
+					
 					if (arr.length != 0){
 						arr[0].origin_createTime = dateFormat(arr[0].origin_createTime);
 						arr[0].post_createTime = dateFormat(arr[0].post_createTime);
-					
-						var sendArr;
+
 						sendArr = [{'teach-plan-title':arr[0].course_title}, 
 								{'teach-plan-creater':arr[0].post_author},
 								{'teach-plan-update-date':arr[0].post_createTime},
@@ -294,9 +297,10 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 								{'post_createFrom_id':arr[0].post_createFrom_id},
 								{'most_recent':arr[0].most_recent},
 								{'post_id':arr[0]._id}
-								];						
-						socket.eit('getOnePostReply', sendArr);
+								];				
+						console.log(sendArr);
 					}
+					socket.emit('getOnePostReply', sendArr);
 				});
 			});
 		});
