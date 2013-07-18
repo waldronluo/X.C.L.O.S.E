@@ -11,7 +11,7 @@
 						[_id,  userName, comment_createTime, post_id, content]
 */
 
-// get tags for first access
+// get tags for first access	----labelsReply
 exports.mongoDbGetTags = function(socket){
 	var TagsArr = new Array();
 
@@ -47,7 +47,7 @@ exports.mongoDbGetTags = function(socket){
 		});
 	});
 }
-// get tags when EDIT a teaching plan
+// get tags when EDIT a teaching plan	----editTagsReply
 exports.mongoDbGetTagsForEdit = function(socket){
 	var TagsArr = new Array();
 
@@ -84,7 +84,7 @@ exports.mongoDbGetTagsForEdit = function(socket){
 	});
 }
 
-// search post by title
+// search post by title		----searchPostReply
 exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
@@ -240,7 +240,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 	});
 }
 
-// get one post By _id --->
+// get one post By _id		----getOnePostReply
 exports.mongoDbGetOnePost = function(socket, post_id){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
@@ -324,6 +324,7 @@ function dateFormat(date){
 
 
 
+//--------------------------------------------------test unfinished
 // new user: return success or failed
 // return: T/F 
 exports.mongoDbNewUser = function(name, password, email){

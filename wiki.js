@@ -69,9 +69,11 @@ iolisten.sockets.on('connection', function (socket){
 	
 	// search -- searchPost;
 	console.log('start socket on searchPost');
-	socket.on('searchPost',function(post_id){
-		
-		model.mongoDbGetOnePost(socket, post_id);
+	socket.on('searchPost',function(searchArr){
+		model.mongoDbSearchPost(socket,
+						searchArr[0],
+						searchArr[1],
+						searchArr[2] );
 	});
 	
 	// search -- getOnePost;
@@ -218,7 +220,9 @@ app.use(function(req, res){
 	else if (pathname == "/teach-plan-edit"){
 		//  url sample:
 		firstPathname = "/teach-plan-edit";
-		res.writeHead(200, {"Content-Type": "text/html"});
+		res.writeHead(200, {
+			"Content-Type": "text/html"
+		});
 		res.write(fs.readFileSync(__dirname + '/static/teach-plan-edit.html', 'utf-8'));
 		res.end();
 	}
