@@ -9,7 +9,6 @@ var querystring = require("querystring");
 var url = require("url");
 var fs = require("fs");
 
-
 // Defaults
 var portNumberDefault = process.env.PORT || 8089;
 var listenAddr = process.env.NW_ADDR || '127.0.0.1';    // "" ==> INADDR_ANY
@@ -20,7 +19,6 @@ var app = connect();
 app.use(connect.logger('dev'));
 app.use(connect.static(__dirname + '/static'));
 app.use(connect.bodyParser());
-
 
 // http server ---------------------
 var server = http.createServer(app);
@@ -53,12 +51,13 @@ iolisten.sockets.on('connection', function (socket){
 	}
 	else if (firstPathname == "/teach-plan"){
 		console.log(queryStrArray['post_id']);
-		model.mongoDbGetOnePost(socket, queryStrArray['post_id']);
+		var post_id = parseInt(queryStrArray['post_id']);			// string --> int  to find _id
+		model.mongoDbGetOnePost(socket, post_id);
 	}
 	else if (firstPathname == "/teach-plan-edit"){
 		model.mongoDbGetTagsForEdit(socket);
 	}
-	else {
+	else if (firstPathname == "/teach-plan-save"){
 	}
 	
 	
@@ -70,11 +69,16 @@ iolisten.sockets.on('connection', function (socket){
 	
 	// search -- searchPost;
 	console.log('start socket on searchPost');
-	socket.on('searchPost',function(searchArr){
-		model.mongoDbSearchPost(socket,
-						searchArr[0],
-						searchArr[1],
-						searchArr[2] );
+	socket.on('searchPost',function(post_id){
+		
+		model.mongoDbGetOnePost(socket, post_id);
+	});
+	
+	// search -- getOnePost;
+	console.log('start socket on searchPost');
+	socket.on('getOnePost',function(post_id){
+		post_id = parseInt(post_id);
+		model.mongoDbSearchPost(socket, post_id);
 	});
 		
 	// teach-plan-edit -- newPost
@@ -204,7 +208,10 @@ app.use(function(req, res){
 		queryStrArray['post_id'] = querystring.parse(url.parse(req.url).query)['post_id'];
 		console.log(queryStrArray);
 		
-		res.writeHead(200, {"Content-Type": "text/html"});
+		res.writeHead(200, {
+			"Set-Cookie": [ "post_id=" + queryStrArray['post_id'] ],
+			"Content-Type": "text/html"
+		});
 		res.write(fs.readFileSync(__dirname + '/static/teach-plan.html', 'utf-8'));
 		res.end();
 	}

@@ -244,7 +244,6 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 exports.mongoDbGetOnePost = function(socket, post_id){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	post_id = parseInt(post_id);			// string --> int  to find _id
 	
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
