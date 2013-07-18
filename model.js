@@ -45,6 +45,7 @@ exports.mongoDbGetTags = function(socket){
 				});
 			});
 		});
+		db.close();
 	});
 }
 // get tags when EDIT a teaching plan	----editTagsReply
@@ -81,6 +82,7 @@ exports.mongoDbGetTagsForEdit = function(socket){
 				});
 			});
 		});
+		db.close();
 	});
 }
 
@@ -241,6 +243,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 				}
 			}
 		});
+		db.close();
 	});
 }
 
@@ -310,6 +313,7 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 				});
 			});
 		});
+		db.close();
 	});
 }
 
@@ -377,6 +381,7 @@ exports.mongoDbCheckUser = function(name, password){
 				});
 			});
 		});
+		db.close();
 	});
 }
 
@@ -441,6 +446,7 @@ exports.mongoDbNewPost = function(newPostArr){
 				});
 			});
 		});
+		db.close();
 	});
 }
 

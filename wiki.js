@@ -218,9 +218,15 @@ app.use(function(req, res){
 		res.end();
 	}
 	else if (pathname == "/teach-plan-edit"){
-		//  url sample:
+		//  url sample:	
+		//		change mode: http://127.0.0.1:8089/teach-plan-edit?change_id=123
+		//		new mode:	 http://127.0.0.1:8089/teach-plan-edit
 		firstPathname = "/teach-plan-edit";
+		queryStrArray['change_id'] = querystring.parse(url.parse(req.url).query)['change_id'];
+		if (queryStrArray['change_id'] == null)
+			queryStrArray['change_id'] = '-1';
 		res.writeHead(200, {
+			"Set-Cookie": [ "change_id=" + queryStrArray['change_id'] ],
 			"Content-Type": "text/html"
 		});
 		res.write(fs.readFileSync(__dirname + '/static/teach-plan-edit.html', 'utf-8'));

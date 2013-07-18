@@ -121,11 +121,10 @@ Post = function(){
 	this.setIDAndCount = function(post_createFrom_id, access_count, post_id){
 		
 	}
-}
+};
 
-	  
-	  
-	  
+var obj = function()
+{
 mgconnect.open(function (err, db) {	 
 	// init user		x 4
 	db.createCollection('userlist'); 
@@ -136,7 +135,6 @@ mgconnect.open(function (err, db) {
 		collection.save({'name':'lou', 'password':'654321', 'email':'hello@niubi.com'});
 	});
 	console.log('main 1');
-	
 	//init post			x 20
 	db.createCollection('postlist');
 	db.collection('postlist', function (err, collection) {
@@ -482,7 +480,11 @@ for (var i=0; i<4; i++)
 		
 	});
 	console.log('main 3');
+	
+	db.close();
 });
+}
+();
 
 /*
 post----------------------------------------
