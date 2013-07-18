@@ -19,15 +19,23 @@ GLOBAL.socket = io.connect('http://127.0.0.1:8089');
                 }
 
     GLOBAL.socket.on('searchPostReply',function(teachPlanList){
-        setCookie ("searchStr", teachPlanList[10]);
-        setCookie ("sortWay", teachPlanList[11]);
-        setCookie ("page", teachPlanList[12]);
-        setCookie ("pageCount", teachPlanList[13]);
+        setCookie ("searchStr", teachPlanList[10],7);
+        setCookie ("sortWay", teachPlanList[11],7);
+        setCookie ("page", teachPlanList[12],7);
+        setCookie ("pageCount", teachPlanList[13],7);
         console.log(teachPlanList);
         refreshContent (teachPlanList);
         refreshPageCount (teachPlanList[13]);
     });
 })();
+
+function changeSortWay (sortWay) {
+    GLOBAL.socket.emit( getCookie("searchStr"), sortWay, getCookie("page") );
+}
+function changePage (page) {
+    GLOBAL.socket.emit( getCookie("searchStr"), getCookie("sortWay"), page );
+}
+
 function refreshPageCount (pageCounter) {
     console.log(pageCounter);
     var page = document.getElementById("page");
@@ -40,6 +48,7 @@ function refreshPageCount (pageCounter) {
             var a = document.createElement("a");
             a.className = "page-counter";
             a.innerHTML = 1+i;
+            a.onclick = "changePage("+(i+1)+")";
             page.appendChild(a);
         }
     }
