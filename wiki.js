@@ -184,7 +184,6 @@ app.use(function(req, res){
 		queryStrArray['page'] = querystring.parse(url.parse(req.url).query)['page'];
 		console.log(queryStrArray);
 		
-		console.log(cookieStr);
 		res.writeHead(200, {
 			"Set-Cookie": ["searchStr=" + queryStrArray['searchStr'], "sortWay=" + queryStrArray['sortWay'], "page=" + queryStrArray['page']],
 			"Content-Type": "text/html"
