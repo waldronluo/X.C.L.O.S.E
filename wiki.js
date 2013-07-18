@@ -176,9 +176,6 @@ app.use(function(req, res){
 		//	url sample:		http://127.0.0.1:8089/search?method=123&searchStr=hello&page=1&sortWay=LastChange
 		console.log('-- search.html --');
 		firstPathname = "/search";
-		res.writeHead(200, {"Content-Type": "text/html"});
-		res.write(fs.readFileSync(__dirname + '/static/search.html', 'utf-8'));
-		res.end();
 		
 		queryStrArray = new Array();
 		queryStrArray['method'] = querystring.parse(url.parse(req.url).query)['method'];
@@ -186,6 +183,14 @@ app.use(function(req, res){
 		queryStrArray['sortWay'] = querystring.parse(url.parse(req.url).query)['sortWay'];
 		queryStrArray['page'] = querystring.parse(url.parse(req.url).query)['page'];
 		console.log(queryStrArray);
+		
+		console.log(cookieStr);
+		res.writeHead(200, {
+			"Set-Cookie": ["searchStr=" + queryStrArray['searchStr'], "sortWay=" + queryStrArray['sortWay'], "page=" + queryStrArray['page']],
+			"Content-Type": "text/html"
+		});
+		res.write(fs.readFileSync(__dirname + '/static/search.html', 'utf-8'));
+		res.end();
 	}
 	else if (pathname == "/teach-plan"){
 		//	url sample:		http://127.0.0.1:8089/teach-plan?post_id=123
