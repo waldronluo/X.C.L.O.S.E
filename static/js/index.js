@@ -1,9 +1,10 @@
 var GLOBAL = [];
 GLOBAL.socket = io.connect('http://127.0.0.1:8089');
 (function () {
-    //console.log("index.js");
+    console.log("index.js");
 	GLOBAL.socket.emit('labels');
     GLOBAL.socket.on('labelsReply', function (TagsArr){
+        console.log(TagsArr);
     var labelgroups = [];
     var labelgroupName = [];
     for ( var i=0 ; i < TagsArr.length ; i++ ) {
