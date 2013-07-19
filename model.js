@@ -39,13 +39,12 @@ exports.mongoDbGetTags = function(socket){
 						countTag++;
 					}
 					console.log(TagsArr);
-
 					socket.emit('labelsReply', TagsArr);
 					return TagsArr;
+					db.close();
 				});
 			});
 		});
-		db.close();
 	});
 }
 // get tags when EDIT a teaching plan	----editTagsReply
@@ -79,10 +78,10 @@ exports.mongoDbGetTagsForEdit = function(socket){
 
 					socket.emit('editTagsReply', TagsArr);
 					return TagsArr;
+					db.close();
 				});
 			});
 		});
-		db.close();
 	});
 }
 
@@ -131,6 +130,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
+							db.close();
 						});
 					});
 					break;
@@ -166,6 +166,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
+							db.close();
 						});
 					});
 					break;
@@ -201,6 +202,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
+							db.close();
 						});
 					});
 					break;
@@ -237,13 +239,13 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
+							db.close();
 						});
 					});
 					break;
 				}
 			}
 		});
-		db.close();
 	});
 }
 
@@ -310,10 +312,10 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 						console.log(sendArr);
 					}
 					socket.emit('getOnePostReply', sendArr);
+					db.close();
 				});
 			});
 		});
-		db.close();
 	});
 }
 
