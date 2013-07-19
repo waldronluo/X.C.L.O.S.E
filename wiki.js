@@ -258,7 +258,15 @@ app.use(function(req, res){
 		res.end();
 	}
 	
-	else if (pathname == "/favicon.ico"){res.end();}
+	else if (pathname == "/favicon.ico"){
+		res.end();
+	}
+	else {
+		firstPathname = "";
+		res.writeHead(200, {"Content-Type": "text/html"});
+		res.write(fs.readFileSync(__dirname + '/static/index.html', 'utf-8'));
+		res.end();
+	}
 	
 });
 
