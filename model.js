@@ -90,10 +90,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	  
-	if (page <= 0 || page == undefined)
-		page =1;
-
-	console.log('DB search post---');
+	console.log('DB search post--- (' + searchStr + " , " +sortWay + " , " +page + ")");
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
 			switch (sortWay){
@@ -118,6 +115,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
+										console.log(sendArr[i]);
 										//date format : 2010.03.09
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
@@ -130,7 +128,6 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
-							db.close();
 						});
 					});
 					break;
@@ -154,6 +151,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
+										console.log(sendArr[i]);
 										//date format : 2010.03.09
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
@@ -166,7 +164,6 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
-							db.close();
 						});
 					});
 					break;
@@ -190,6 +187,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
+										console.log(sendArr[i]);
 										//date format : 2010.03.09
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
@@ -202,7 +200,6 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
-							db.close();
 						});
 					});
 					break;
@@ -226,6 +223,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
+										console.log(sendArr[i]);
 										//date format : 2010.03.09
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
@@ -239,7 +237,6 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
-							db.close();
 						});
 					});
 					break;
@@ -265,10 +262,7 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 					if (arr.length != 0){
 						arr[0].origin_createTime = dateFormat(arr[0].origin_createTime);
 						arr[0].post_createTime = dateFormat(arr[0].post_createTime);
-						for (parts in arr[0]){
-							console.log(parts);
-						}
-							
+						
 						sendArr = [{'teach-plan-title':arr[0].course_title}, 
 								{'teach-plan-creater':arr[0].post_author},
 								{'teach-plan-update-date':arr[0].post_createTime},

@@ -70,6 +70,18 @@ iolisten.sockets.on('connection', function (socket){
 	// search -- searchPost;
 	console.log('start socket on searchPost');
 	socket.on('searchPost',function(searchArr){
+		if (searchArr[2] <= 0 || searchArr[2] == undefined){
+			console.log('--- page undefined');
+			searchArr[2] =1;
+		}
+		if (searchArr[1] == undefined){
+			console.log('--- sortWay undefined');
+			searchArr[1] = "";
+		}
+		if (searchArr[0] == undefined){
+			console.log('--- searchStr undefined');
+			searchArr[0] = "";
+		}
 		model.mongoDbSearchPost(socket,
 						searchArr[0],
 						searchArr[1],
@@ -80,7 +92,7 @@ iolisten.sockets.on('connection', function (socket){
 	console.log('start socket on searchPost');
 	socket.on('getOnePost',function(post_id){
 		post_id = parseInt(post_id);
-		model.mongoDbSearchPost(socket, post_id);
+		model.mongoDbGetOnePost(socket, post_id);
 	});
 		
 	// teach-plan-edit -- newPost
@@ -193,6 +205,19 @@ app.use(function(req, res){
 		queryStrArray['searchStr'] = querystring.parse(url.parse(req.url).query)['searchStr'];
 		queryStrArray['sortWay'] = querystring.parse(url.parse(req.url).query)['sortWay'];
 		queryStrArray['page'] = querystring.parse(url.parse(req.url).query)['page'];
+		
+		if (queryStrArray['page'] <= 0 || queryStrArray['page'] == undefined){
+			console.log('--- page undefined');
+			queryStrArray['page'] =1;
+		}
+		if (queryStrArray['sortWay'] == undefined){
+			console.log('--- sortWay undefined');
+			queryStrArray['sortWay'] = "";
+		}
+		if (queryStrArray['searchStr'] == undefined){
+			console.log('--- searchStr undefined');
+			queryStrArray['searchStr'] = "";
+		}
 		console.log(queryStrArray);
 		
 		res.writeHead(200, {
