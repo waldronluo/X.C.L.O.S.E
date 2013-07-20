@@ -49,5 +49,13 @@
 
 .teach-plan-self {
   margin: 20px 50px 20px 50px;
+}
+
+.content .teach-plan-self-form {
   background: rgb(240,248,250);
+}
+
+.content .teach-plan-right {
+  float: right;
+  margin: 10px 20px 20px 10px;
 }
