@@ -33,8 +33,10 @@ function editTeachingPlan () {
     quickAddTextArea ("teach-plan-description-time", 4, 10);
     quickAddTextArea ("teach-plan-description-content", 85, 10);
     quickAddTextArea ("teach-plan-description-requirement", 29, 10);
-    GLOBAL.socket.emit("existingLabels");
-    GLOBAl.socket.emit("");
+    GLOBAL.socket.emit("labels");
+    GLOBAL.socket.on ("labelsReply", function (TagsArr) {
+        console.log(TagsArr);
+    });
 }
 
 function quickAddTextArea (elementId, cols, rows) {
