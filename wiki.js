@@ -53,11 +53,19 @@ iolisten.sockets.on('connection', function (socket){
 		console.log(queryStrArray['post_id']);
 		var post_id = parseInt(queryStrArray['post_id']);			// string --> int  to find _id
 		model.mongoDbGetOnePost(socket, post_id);
+		model.mongoDbAddAccessCount(post_id);
 	}
 	else if (firstPathname == "/teach-plan-edit"){
 		model.mongoDbGetTagsForEdit(socket);
 	}
 	else if (firstPathname == "/teach-plan-save"){
+		console.log('save start');
+	}
+	else if (firstPathname == "/teach-plan-history"){
+		console.log('history start');
+		console.log(queryStrArray['post_id']);
+		var post_id = parseInt(queryStrArray['post_id']);			// string --> int  to find _id
+		model.mongoDbHistoryData(socket, post_id);
 	}
 	
 	// index -- get labels
@@ -117,7 +125,7 @@ iolisten.sockets.on('connection', function (socket){
 	
 	// teach-plan-edit -- changePost
 	console.log('start socket on changePost');
-	socket.on('changePost',function(postArr, userName){
+	socket.on('changePost',function(postArr, userName, post_id){
 		var isLogin = false;
 		for (var i=0; i<userArray.length; i++){
 			if (userArray[i] == userName){
@@ -126,11 +134,11 @@ iolisten.sockets.on('connection', function (socket){
 			}
 		}
 		if (isLogin){
-			console.log('New teaching plan -- start');
-			mongoDbChangePost(postArr);
+			console.log('Change teaching plan -- start');
+			mongoDbChangePost(postArr, post_id);
 		}
 		else {
-			console.log('New teaching plan -- not login');
+			console.log('Change teaching plan -- not login');
 		}
 	});
 	
@@ -264,6 +272,17 @@ app.use(function(req, res){
 		res.end();
 	}
 	else if (pathname == "/teach-plan-history"){
+		//	url sample:		http://127.0.0.1:8089/teach-plan-history?post_id=123
+		firstPathname = "/teach-plan-history";
+		queryStrArray = new Array();
+		queryStrArray['post_id'] = querystring.parse(url.parse(req.url).query)['post_id'];		
+		console.log(queryStrArray);
+		
+		res.writeHead(200, {"Content-Type": "text/html"});
+		res.write(fs.readFileSync(__dirname + '/static/search.html', 'utf-8'));
+		res.end();
+	}
+	else if (pathname == "/teach-plan-save"){
 		res.end();
 	}
 	

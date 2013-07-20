@@ -10,7 +10,6 @@
 					commentlist:
 						[_id,  userName, comment_createTime, post_id, content]
 */
-
 // get tags for first access	----labelsReply
 exports.mongoDbGetTags = function(socket){
 	var TagsArr = new Array();
@@ -257,7 +256,6 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 	
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
-			//collection.update({'_id':post_id}, {'$inc':{'access_count':1}}, function(err){});
 			collection.find({'_id':post_id},function (err,result){
 				result.toArray(function(err, arr){
 					var sendArr = new Array();
@@ -271,9 +269,9 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 								{'teach-plan-creater':arr[0].post_author},
 								{'teach-plan-update-date':arr[0].post_createTime},
 								{'teach-plan-read-counter':arr[0].access_count},
-								{'teach-plan-edit-counter':1},
-								{'teach-plan-like-counter':2},
-								{'teach-plan-download-counter':3},
+								{'teach-plan-edit-counter':arr[0].edit_count},
+								{'teach-plan-like-counter':0},
+								{'teach-plan-download-counter':arr[0].download_count},
 								{'teach-plan-label-group':arr[0].tags},			//tags? teach-plan-label-group
 								
 								{'teach-plan-coursename':arr[0].course_title}, 
@@ -317,6 +315,50 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 	});
 }
 
+// Add post access_count
+exports.mongoDbAddAccessCount = function(post_id){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.update({'_id':post_id}, {'$inc':{'access_count':1}}, function(err){
+				console.log(post_id + ': access_count + 1');
+				db.close();
+			});
+		});
+	});
+};
+
+// Add post edit_count
+exports.mongoDbAddEditCount = function(post_id){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.update({'_id':post_id}, {'$inc':{'edit_count':1}}, function(err){
+				console.log(post_id + ': edit_count + 1');
+				db.close();
+			});
+		});
+	});
+};
+
+// Add post download_count
+exports.mongoDbAddDownloadCount = function(post_id){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.update({'_id':post_id}, {'$inc':{'download_count':1}}, function(err){
+				console.log(post_id + ': download_count + 1');
+				db.close();
+			});
+		});
+	});
+};
 
 // function for date format :  Date() --> 2010.03.09
 function dateFormat(date){
@@ -334,6 +376,191 @@ function dateFormat(date){
 }
 
 
+
+//------------------testing
+// new post -- newPostArr from
+exports.mongoDbNewPost = function(newPostArr){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			// new post Init
+			var temp_post_createFrom_id = -1;
+			var temp_origin_createTime = new Date();
+			var temp_post_createTime = new Date();
+			var temp_access_count = 0;
+			var temp_edit_count = 0;
+			var temp_download_count = 0;
+			var temp_most_recent = 1;
+			// save
+			collection.save({'course_title':newPostArr['teach-plan-coursename'], 
+						'template_title':newPostArr['teach-plan-template'], 
+						'topic':newPostArr['teach-plan-course'], 
+						'course_time':newPostArr['teach-plan-course-last'], 
+						'volunteer':newPostArr['teach-plan-processing-staff'], 
+						'course_class':newPostArr['teach-plan-processing-grade'], 
+						'background':newPostArr['teach-plan-background'], 
+						'course_prepare':newPostArr['teach-plan-prepare-class'], 
+						'teaching_resource':newPostArr['teach-plan-resources'], 
+						'teaching_goal':newPostArr['teach-plan-target'], 
+						'lesson_starting_time':newPostArr['teach-plan-leading-time'], 
+						'lesson_starting_content':newPostArr['teach-plan-leading-content'], 
+						'lesson_starting_pattern':newPostArr['teach-plan-leading-requirement'], 
+						'lesson_main_time':newPostArr['teach-plan-ongoing-time'], 
+						'lesson_main_content':newPostArr['teach-plan-ongoing-content'], 
+						'lesson_main_pattern':newPostArr['teach-plan-ongoing-requirement'], 
+						'lesson_ending_time':newPostArr['teach-plan-ending-time'], 
+						'lesson_ending_content':newPostArr['teach-plan-ending-content'], 
+						'lesson_ending_pattern':newPostArr['teach-plan-ending-requirement'], 
+						'lesson_summary':newPostArr['teach-plan-conclusion-content'], 
+						'lesson_comment':newPostArr['teach-plan-description-content'], 
+						'tags':newPostArr['teach-plan-label-group'], 	//tags? teach-plan-label-group
+						
+						'post_createFrom_id':temp_post_createFrom_id, 
+						'access_count':temp_access_count,
+						'edit_count':temp_edit_count,
+						'download_count':temp_download_count,
+						'post_createTime':temp_post_createTime, 
+						'origin_createTime':temp_origin_createTime, 
+						'most_recent':temp_most_recent	
+						}, function(){
+							db.close();
+						});
+			console.log(newPostArr);
+		});
+	});
+};
+
+// change post --- changePostArr, post_id
+exports.mongoDbChangePost = function(changePostArr, post_id){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			// change post Init
+			var temp_post_createFrom_id = -1;
+			var temp_origin_createTime = new Date();
+			var temp_post_createTime = new Date();
+			var temp_access_count = 0;
+			var temp_edit_count = 0;
+			var temp_download_count = 0;
+			var temp_most_recent = 1;
+			// change
+			collection.find({'_id':post_id}, 
+							{'name':1, 'origin_createTime':1, 'post_createFrom_id':1, '_id':1},function(err,result){
+				result.toArray(function(err, arr){
+					if (arr.length !== 0){
+						console.log('already have a post, to Change Post');
+						temp_post_createFrom_id	= arr[0].post_createFrom_id;
+						temp_origin_createTime = arr[0].origin_createTime;
+						
+						collection.update({'_id':arr[0]._id}, {'$inc':{'most_recent':-1}}, function(err){
+							// only 'tags' needs origin name 
+							collection.save({'course_title':newPostArr['teach-plan-coursename'], 
+									'template_title':newPostArr['teach-plan-template'], 
+									'topic':newPostArr['teach-plan-course'], 
+									'course_time':newPostArr['teach-plan-course-last'], 
+									'volunteer':newPostArr['teach-plan-processing-staff'], 
+									'course_class':newPostArr['teach-plan-processing-grade'], 
+									'background':newPostArr['teach-plan-background'], 
+									'course_prepare':newPostArr['teach-plan-prepare-class'], 
+									'teaching_resource':newPostArr['teach-plan-resources'], 
+									'teaching_goal':newPostArr['teach-plan-target'], 
+									'lesson_starting_time':newPostArr['teach-plan-leading-time'], 
+									'lesson_starting_content':newPostArr['teach-plan-leading-content'], 
+									'lesson_starting_pattern':newPostArr['teach-plan-leading-requirement'], 
+									'lesson_main_time':newPostArr['teach-plan-ongoing-time'], 
+									'lesson_main_content':newPostArr['teach-plan-ongoing-content'], 
+									'lesson_main_pattern':newPostArr['teach-plan-ongoing-requirement'], 
+									'lesson_ending_time':newPostArr['teach-plan-ending-time'], 
+									'lesson_ending_content':newPostArr['teach-plan-ending-content'], 
+									'lesson_ending_pattern':newPostArr['teach-plan-ending-requirement'], 
+									'lesson_summary':newPostArr['teach-plan-conclusion-content'], 
+									'lesson_comment':newPostArr['teach-plan-description-content'], 
+									'tags':newPostArr['teach-plan-label-group'], 	//tags? teach-plan-label-group
+									
+									'post_createFrom_id':temp_post_createFrom_id, 
+									'access_count':temp_access_count,
+									'edit_count':temp_edit_count,
+									'download_count':temp_download_count,
+									'post_createTime':temp_post_createTime, 
+									'origin_createTime':temp_origin_createTime, 
+									'most_recent':temp_most_recent	
+									}, function(){
+										db.close();
+									});
+						});
+					} else {
+						console.log('No match id, to New Post');
+						// only 'tags' needs origin name 
+						collection.save({'course_title':newPostArr['teach-plan-coursename'], 
+									'template_title':newPostArr['teach-plan-template'], 
+									'topic':newPostArr['teach-plan-course'], 
+									'course_time':newPostArr['teach-plan-course-last'], 
+									'volunteer':newPostArr['teach-plan-processing-staff'], 
+									'course_class':newPostArr['teach-plan-processing-grade'], 
+									'background':newPostArr['teach-plan-background'], 
+									'course_prepare':newPostArr['teach-plan-prepare-class'], 
+									'teaching_resource':newPostArr['teach-plan-resources'], 
+									'teaching_goal':newPostArr['teach-plan-target'], 
+									'lesson_starting_time':newPostArr['teach-plan-leading-time'], 
+									'lesson_starting_content':newPostArr['teach-plan-leading-content'], 
+									'lesson_starting_pattern':newPostArr['teach-plan-leading-requirement'], 
+									'lesson_main_time':newPostArr['teach-plan-ongoing-time'], 
+									'lesson_main_content':newPostArr['teach-plan-ongoing-content'], 
+									'lesson_main_pattern':newPostArr['teach-plan-ongoing-requirement'], 
+									'lesson_ending_time':newPostArr['teach-plan-ending-time'], 
+									'lesson_ending_content':newPostArr['teach-plan-ending-content'], 
+									'lesson_ending_pattern':newPostArr['teach-plan-ending-requirement'], 
+									'lesson_summary':newPostArr['teach-plan-conclusion-content'], 
+									'lesson_comment':newPostArr['teach-plan-description-content'], 
+									'tags':newPostArr['teach-plan-label-group'], 	//tags? teach-plan-label-group
+									
+									'post_createFrom_id':temp_post_createFrom_id, 
+									'access_count':temp_access_count,
+									'edit_count':temp_edit_count,
+									'download_count':temp_download_count,
+									'post_createTime':temp_post_createTime, 
+									'origin_createTime':temp_origin_createTime, 
+									'most_recent':temp_most_recent	
+									}, function(){
+										db.close();
+									});
+					}
+				});
+			});
+		});
+	});
+};
+
+// history data -- socket, post_id
+exports.mongoDbHistoryData = function(socket, post_id){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	var historyListArray = new Array();
+	
+	colsole.log('history search start -------');
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.find({$or:[{'_id':post_id}, {'post_createFrom_id':post_id}]},
+							{'_id':1, 'course_title':1, 'post_createTime':1, 'access_count':1, 'download_count':1, 'post_author':1
+							}).sort({'post_createTime':-1}, function(err,result){
+				result.toArray(function(err,arr){
+					for (var i=0; i< arr.length; i++){
+						arr[i].post_createTime = dateFormat(arr[i].post_createTime);
+						historyListArray[i] = arr[i];
+					}
+					console.log('get history:');
+					console.log(historyListArray);
+					socket.emit('historyListReply',historyListArray);
+					db.close();
+				});
+			})
+		});
+	});
+};
 
 //--------------------------------------------------test unfinished
 // new user: return success or failed
@@ -391,136 +618,6 @@ exports.mongoDbCheckUser = function(name, password){
 	});
 }
 
-
-// new post by {}
-// return: T/F----------------------------
-exports.mongoDbNewPost = function(newPostArr){
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	
-	mgconnect.open(function (err, db) {	  
-		db.collection('postlist', function (err, collection) {
-			collection.find({'course_title': (newPostArr['course_title']), 'most_recent':1} , 
-							{'name':1, 'origin_createTime':1, '_id':1},function(err,result){
-				result.toArray(function(err, arr){	
-					if (arr.length !== 0){
-						console.log('already have a post, to Change Post');
-						newPostArr['origin_createTime'] = arr[0].origin_createTime;
-						newPostArr['teach-plan-update-date'] = new Date();
-						newPostArr['post_createFrom_id'] = arr[0]._id;
-						collection.update({'_id':arr[0]._id}, {'$inc':{'most_recent':-1}}, function(err){});
-					} else {
-						console.log('new post start');
-						newPostArr['origin_createTime'] = new Date();
-						newPostArr['teach-plan-update-date'] = new Date();
-						newPostArr['post_createFrom_id'] = -1;
-					}
-					newPostArr['most_recent'] = 1;
-					console.log(newPostArr);
-					// only 'tags' needs origin name
-					// count=0, createFrom=-1, post_id=_id (Auto generated), 
-					collection.save({'course_title':newPostArr['teach-plan-coursename'], 
-									'template_title':newPostArr['teach-plan-template'], 
-									'topic':newPostArr['teach-plan-course'], 
-									'course_time':newPostArr['teach-plan-course-last'], 
-									'volunteer':newPostArr['teach-plan-processing-staff'], 
-									'course_class':newPostArr['teach-plan-processing-grade'], 
-									'background':newPostArr['teach-plan-background'], 
-									'course_prepare':newPostArr['teach-plan-prepare-class'], 
-									'teaching_resource':newPostArr['teach-plan-resources'], 
-									'teaching_goal':newPostArr['teach-plan-target'], 
-									'lesson_starting_time':newPostArr['teach-plan-leading-time'], 
-									'lesson_starting_content':newPostArr['teach-plan-leading-content'], 
-									'lesson_starting_pattern':newPostArr['teach-plan-leading-requirement'], 
-									'lesson_main_time':newPostArr['teach-plan-ongoing-time'], 
-									'lesson_main_content':newPostArr['teach-plan-ongoing-content'], 
-									'lesson_main_pattern':newPostArr['teach-plan-ongoing-requirement'], 
-									'lesson_ending_time':newPostArr['teach-plan-ending-time'], 
-									'lesson_ending_content':newPostArr['teach-plan-ending-content'], 
-									'lesson_ending_pattern':newPostArr['teach-plan-ending-requirement'], 
-									'lesson_summary':newPostArr['teach-plan-conclusion-content'], 
-									'lesson_comment':newPostArr['teach-plan-description-content'], 
-									
-									'tags':newPostArr['teach-plan-label-group'], 	//tags? teach-plan-label-group
-									'access_count':newPostArr['teach-plan-read-counter'],
-									'origin_createTime':newPostArr['origin_createTime'],
-									'post_createTime':newPostArr['teach-plan-update-date'],
-									'post_createFrom_id':newPostArr['post_createFrom_id'],
-									'most_recent':newPostArr['most_recent'],
-									'post_author':newPostArr['teach-plan-creater']
-									}, function(){
-										db.close();
-									});
-				});
-			});
-		});
-		db.close();
-	});
-}
-
-// change post 
-// return: 
-exports.mongoDbChangePost = function(changePostArr){
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	
-	mgconnect.open(function (err, db) {	  
-		db.collection('postlist', function (err, collection) {
-			collection.find({'course_title': (newPostArr['course_title']), 'most_recent':1} , 
-							{'name':1, 'origin_createTime':1, '_id':1},function(err,result){
-				result.toArray(function(err, arr){	
-					if (arr.length !== 0){
-						console.log('already have a post, to Change Post');
-						newPostArr['origin_createTime'] = arr[0].origin_createTime;
-						newPostArr['post_createTime'] = new Date();
-						newPostArr['post_createFrom_id'] = arr[0]._id;
-						collection.update({'_id':arr[0]._id}, {'$inc':{'most_recent':-1}}, function(err){});
-					} else {
-						console.log('new post start');
-						newPostArr['origin_createTime'] = new Date();
-						newPostArr['post_createTime'] = new Date();
-						newPostArr['post_createFrom_id'] = -1;
-					}
-					newPostArr['most_recent'] = 1;
-					console.log(newPostArr);
-					// only 'tags' needs origin name
-					// count=0, createFrom=-1, post_id=_id (Auto generated), 
-					collection.save({'course_title':newPostArr['course_title'], 
-									'template_title':newPostArr['template_title'], 
-									'topic':newPostArr['topic'], 
-									'course_time':newPostArr['course_time'], 
-									'volunteer':newPostArr['volunteer'], 
-									'course_class':newPostArr['course_class'], 
-									'background':newPostArr['background'], 
-									'course_prepare':newPostArr['course_prepare'], 
-									'teaching_resource':newPostArr['teaching_resource'], 
-									'teaching_goal':newPostArr['teaching_goal'], 
-									'lesson_starting_time':newPostArr['lesson_starting_time'], 
-									'lesson_starting_content':newPostArr['lesson_starting_content'], 
-									'lesson_starting_pattern':newPostArr['lesson_starting_pattern'], 
-									'lesson_main_time':newPostArr['lesson_main_time'], 
-									'lesson_main_content':newPostArr['lesson_main_content'], 
-									'lesson_main_pattern':newPostArr['lesson_main_pattern'], 
-									'lesson_ending_time':newPostArr['lesson_ending_time'], 
-									'lesson_ending_content':newPostArr['lesson_ending_content'], 
-									'lesson_ending_pattern':newPostArr['lesson_ending_pattern'], 
-									'lesson_summary':newPostArr['lesson_summary'], 
-									'lesson_comment':newPostArr['lesson_comment'], 
-									'tags':newPostArr['post_tag'], 
-									'access_count':newPostArr['access_count'],
-									'origin_createTime':newPostArr['origin_createTime'],
-									'post_createTime':newPostArr['post_createTime'],
-									'post_createFrom_id':newPostArr['post_createFrom_id'],
-									'most_recent':newPostArr['most_recent'],
-									'post_author':newPostArr['post_author']
-									}, function(){
-										db.close();
-									});
-				});
-			});
-		});
-	});
-}
 // update Tags ------
 
 // update Comments -------
@@ -570,20 +667,24 @@ Post = function(){
 	this.lesson_comment = "";
 	
 	this.post_tag = [];
-	
-	// other entry
 	this.post_author = "";
 	
 	// (stable data)x4 : Only Change In Server
 	// This post created from post_id=???		-1 means Origin
 	this.post_createFrom_id = -1;		
-	// hot topic count  						when Access in showpage, count+1
+	// show post count  						when Access in showpage, count+1
 	this.access_count = 0;
+	// edit post count
+	this.edit_count = 0;
+	// download post count
+	this.download_count = 0;
+	
 	// post ID									Only ID for One saved Post
 	this.post_id = 0;		//key--: _id
-	// Oringi create time						if (createFrom=_id), then (origin_createTime =  post[_id].origin_createTime)
-	this.origin_createTime = new Date();
 	
+	// first vaesion create time				if (createFrom=_id), then (origin_createTime =  post[_id].origin_createTime)
+	this.origin_createTime = new Date();
+	// this post create time
 	this.post_createTime = new Date();
 	// most recent 								1 means newest / 0 means not
 	this.most_recent = 1;

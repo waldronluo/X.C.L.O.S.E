@@ -4,7 +4,6 @@
 var mongodb = require('mongodb');
 var mgserver = new mongodb.Server('127.0.0.1',27017);
 var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	  
 
 // post struct -- for post present
 Post = function(){
@@ -37,20 +36,25 @@ Post = function(){
 	this.lesson_comment = "";
 	
 	this.post_tag = [];
-	
-	// other entry
-	this.post_createTime = new Date();
 	this.post_author = "";
 	
 	// (stable data)x4 : Only Change In Server
 	// This post created from post_id=???		-1 means Origin
 	this.post_createFrom_id = -1;		
-	// hot topic count  						when Access in showpage, count+1
+	// show post count  						when Access in showpage, count+1
 	this.access_count = 0;
+	// edit post count
+	this.edit_count = 0;
+	// download post count
+	this.download_count = 0;
+	
 	// post ID									Only ID for One saved Post
-	this.post_id = 0;		//key
-	// Oringi create time						if (createFrom=_id), then (origin_createTime =  post[_id].origin_createTime)
+	this.post_id = 0;		//key--: _id
+	
+	// first vaesion create time				if (createFrom=_id), then (origin_createTime =  post[_id].origin_createTime)
 	this.origin_createTime = new Date();
+	// this post create time
+	this.post_createTime = new Date();
 	// most recent 								1 means newest / 0 means not
 	this.most_recent = 1;
 	
@@ -121,7 +125,7 @@ Post = function(){
 	this.setIDAndCount = function(post_createFrom_id, access_count, post_id){
 		
 	}
-};
+}
 
 var obj = function()
 {
@@ -152,7 +156,7 @@ for (var i=0; i<4; i++)
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
-	else newPost.post_createFrom_id = counter + i - 1;
+	else newPost.post_createFrom_id = counter;
 	
 	newPost.post_createTime = tempDate;
 	tempDate.setDate(tempDate.getDate() + 15);
@@ -174,6 +178,9 @@ for (var i=0; i<4; i++)
 	newPost.lesson_main_content = '第二节课（“家乡”作品展示）\n1.让完成了作业的学生上台与大家一起分享。每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答：1. 家乡意味着什么\n总结：我们的家乡是我们永远的根，我们要有一双善于发现美的眼睛，发现它，认识它，爱它。\n作业要求：以“家乡”（瑶族文化）为题写一篇文章。';
 	newPost.lesson_summary = '自我评价：这堂课以家乡为主，让学生从自己最熟悉的家乡入手；说进行引导（本意是让学生认真发现家乡的美，家乡的文化，发现它，喜欢它，爱上它。';
 	
+	newPost.access_count = i+5;
+	newPost.edit_count = i+1;
+	newPost.download_count = 2;
 	
 	collection.save({'course_title':newPost.course_title, 
 					'template_title':newPost.template_title, 
@@ -197,13 +204,17 @@ for (var i=0; i<4; i++)
 					'lesson_summary':newPost.lesson_summary, 
 					'lesson_comment':newPost.lesson_comment, 
 					'tags':newPost.post_tag,
+					'post_author':newPost.post_author,
+					
 					'post_createFrom_id':newPost.post_createFrom_id, 
+					'_id':newPost.post_id,
 					'access_count':newPost.access_count,
+					'edit_count':newPost.edit_count,
+					'download_count':newPost.download_count,
 					'post_createTime':newPost.post_createTime, 
 					'origin_createTime':newPost.origin_createTime, 
-					'most_recent':newPost.most_recent, 
-					'_id':newPost.post_id, 
-					'post_author':newPost.post_author});
+					'most_recent':newPost.most_recent					
+					});
 }
 
 counter = 222;
@@ -217,7 +228,7 @@ for (var i=0; i<4; i++)
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
-	else newPost.post_createFrom_id = counter + i - 1;
+	else newPost.post_createFrom_id = counter;
 	
 	newPost.post_createTime = tempDate;
 	tempDate.setDate(tempDate.getDate() + 20);
@@ -238,6 +249,10 @@ for (var i=0; i<4; i++)
 	newPost.lesson_main_content = '第二节课（“家乡”作品展示）\n1.让完成了作业的学生上台与大家一起分享。每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答：1. 家乡意味着什么？2.我们能为我们的家乡做什么？小组讨论\n3.展示结束，分享学生们的感受（5min）\n4. 总结：我们的家乡是我们永远的根，我们要有一双善于发现美的眼睛，发现它，认识它，爱它。\n作业要求：以“家乡”（瑶族文化）为题写一篇文章。';
 	newPost.lesson_summary = '自我评价：这堂课以家乡为主，让学生从自己最熟悉的家乡入手；说起瑶族文化，学生们都很快反应；讨论效果较佳；第二节课的成果展示，很多学生由于准备不足，展示效果不佳；由于时间掌握得不是很好，最后没有进行引导（本意是让学生认真发现家乡的美，家乡的文化，发现它，喜欢它，爱上它。';	
 	
+	newPost.access_count = i+5;
+	newPost.edit_count = i+1;
+	newPost.download_count = 2;
+	
 	collection.save({'course_title':newPost.course_title, 
 					'template_title':newPost.template_title, 
 					'topic':newPost.topic, 
@@ -260,13 +275,17 @@ for (var i=0; i<4; i++)
 					'lesson_summary':newPost.lesson_summary, 
 					'lesson_comment':newPost.lesson_comment, 
 					'tags':newPost.post_tag,
+					'post_author':newPost.post_author,
+					
 					'post_createFrom_id':newPost.post_createFrom_id, 
+					'_id':newPost.post_id,
 					'access_count':newPost.access_count,
+					'edit_count':newPost.edit_count,
+					'download_count':newPost.download_count,
 					'post_createTime':newPost.post_createTime, 
 					'origin_createTime':newPost.origin_createTime, 
-					'most_recent':newPost.most_recent, 
-					'_id':newPost.post_id, 
-					'post_author':newPost.post_author});
+					'most_recent':newPost.most_recent					
+					});
 }
 
 counter = 835;
@@ -282,7 +301,7 @@ for (var i=0; i<4; i++)
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
-	else newPost.post_createFrom_id = counter + i - 1;
+	else newPost.post_createFrom_id = counter;
 	
 	newPost.post_createTime = tempDate;
 	tempDate.setDate(tempDate.getDate() + 8);
@@ -304,6 +323,10 @@ for (var i=0; i<4; i++)
 	newPost.lesson_main_content = '第二节课（“）\n1.让完成了作业的学生上台与大家一起分享。每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答：1. 家乡意味着什么？2.我们能为我们的家乡做什么？小组讨论\n3.展示结束，分享学生们的感受（5min）\n4. 总结：我们的家乡是我们永远的根，我们要有一双善于发现美的眼睛，发现它，认识它，爱它。\n作业要求：以“家乡”（瑶族文化）为题写一篇文章。';
 	newPost.lesson_summary = '让学生从自己最熟悉的家乡入手；学生们都很快反应；讨论效果较佳';	
 	
+	newPost.access_count = i+5;
+	newPost.edit_count = i+1;
+	newPost.download_count = 2;
+	
 	collection.save({'course_title':newPost.course_title, 
 					'template_title':newPost.template_title, 
 					'topic':newPost.topic, 
@@ -326,13 +349,17 @@ for (var i=0; i<4; i++)
 					'lesson_summary':newPost.lesson_summary, 
 					'lesson_comment':newPost.lesson_comment, 
 					'tags':newPost.post_tag,
+					'post_author':newPost.post_author,
+					
 					'post_createFrom_id':newPost.post_createFrom_id, 
+					'_id':newPost.post_id,
 					'access_count':newPost.access_count,
+					'edit_count':newPost.edit_count,
+					'download_count':newPost.download_count,
 					'post_createTime':newPost.post_createTime, 
 					'origin_createTime':newPost.origin_createTime, 
-					'most_recent':newPost.most_recent, 
-					'_id':newPost.post_id, 
-					'post_author':newPost.post_author});
+					'most_recent':newPost.most_recent					
+					});
 }
 
 counter = 159;
@@ -348,7 +375,7 @@ for (var i=0; i<4; i++)
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
-	else newPost.post_createFrom_id = counter + i - 1;
+	else newPost.post_createFrom_id = counter;
 	
 	newPost.post_createTime = tempDate;
 	tempDate.setDate(tempDate.getDate() + 17-i*2);
@@ -369,6 +396,10 @@ for (var i=0; i<4; i++)
 	newPost.lesson_main_content = '每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答';
 	newPost.lesson_summary = '自我评价：最后没有进行引导（本意是让。';	
 	
+	newPost.access_count = i+5;
+	newPost.edit_count = i+1;
+	newPost.download_count = 2;
+	
 	collection.save({'course_title':newPost.course_title, 
 					'template_title':newPost.template_title, 
 					'topic':newPost.topic, 
@@ -391,13 +422,17 @@ for (var i=0; i<4; i++)
 					'lesson_summary':newPost.lesson_summary, 
 					'lesson_comment':newPost.lesson_comment, 
 					'tags':newPost.post_tag,
+					'post_author':newPost.post_author,
+					
 					'post_createFrom_id':newPost.post_createFrom_id, 
+					'_id':newPost.post_id,
 					'access_count':newPost.access_count,
+					'edit_count':newPost.edit_count,
+					'download_count':newPost.download_count,
 					'post_createTime':newPost.post_createTime, 
 					'origin_createTime':newPost.origin_createTime, 
-					'most_recent':newPost.most_recent, 
-					'_id':newPost.post_id, 
-					'post_author':newPost.post_author});
+					'most_recent':newPost.most_recent					
+					});
 }
 
 counter = 1057;
@@ -411,7 +446,7 @@ for (var i=0; i<4; i++)
 	newPost.post_id = counter + i;
 	
 	if (i==0) newPost.post_createFrom_id = -1;
-	else newPost.post_createFrom_id = counter + i - 1;
+	else newPost.post_createFrom_id = counter;
 	
 	newPost.post_createTime = tempDate;
 	tempDate.setDate(tempDate.getDate() + 20-i);
@@ -421,6 +456,20 @@ for (var i=0; i<4; i++)
 	else newPost.most_recent = 0;
 	
 	newPost.post_tag = ['陪伴成长', '情感教育', '乡土认同', '自然教育'];
+	
+	newPost.template_title = '服务学习';
+	newPost.volunteer = '唯一';
+	newPost.background = '让学生贡献自己的力量的感念';
+	newPost.course_prepare = '道具,入组义工等';
+	
+	newPost.lesson_starting_content = '家乡的概念，那让我了解一下家乡要素有什么，家乡有什么？（5min 讨论时间，5min的总结，分享）\n（ps：因为是两个班合在一起上课，所以有一个班相对来说会比较积极）\n2.家乡是个比较泛的概念，可以很大可以由大到小。由省，市，县，到镇。\n提问：当别';
+	
+	newPost.lesson_main_content = '每组都有个别对象展示，但是由于准备时间不足，形式单一，内容较缺乏。首先是已完成作业的学生展示。接着是歌曲《家乡》的改编或模范。学生分组将"家乡"用瑶语翻译出来, 小组成果。20mins\n2.写下几个问题让学生思考并回答';
+	newPost.lesson_summary = '自我评价：最后没有进行引导（本意是让。';	
+	
+	newPost.access_count = i+5;
+	newPost.edit_count = i+1;
+	newPost.download_count = 2;
 	
 	collection.save({'course_title':newPost.course_title, 
 					'template_title':newPost.template_title, 
@@ -444,13 +493,17 @@ for (var i=0; i<4; i++)
 					'lesson_summary':newPost.lesson_summary, 
 					'lesson_comment':newPost.lesson_comment, 
 					'tags':newPost.post_tag,
+					'post_author':newPost.post_author,
+					
 					'post_createFrom_id':newPost.post_createFrom_id, 
+					'_id':newPost.post_id,
 					'access_count':newPost.access_count,
+					'edit_count':newPost.edit_count,
+					'download_count':newPost.download_count,
 					'post_createTime':newPost.post_createTime, 
 					'origin_createTime':newPost.origin_createTime, 
-					'most_recent':newPost.most_recent, 
-					'_id':newPost.post_id, 
-					'post_author':newPost.post_author});
+					'most_recent':newPost.most_recent					
+					});
 }
 	});
 	console.log('main 2');
