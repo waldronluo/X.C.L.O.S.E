@@ -40,8 +40,8 @@ exports.mongoDbGetTags = function(socket){
 					}
 					console.log(TagsArr);
 					socket.emit('labelsReply', TagsArr);
-					return TagsArr;
 					db.close();
+					return TagsArr;
 				});
 			});
 		});
@@ -128,6 +128,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
+							db.close();
 						});
 					});
 					break;
@@ -164,6 +165,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
+							db.close();
 						});
 					});
 					break;
@@ -200,6 +202,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
+							db.close();
 						});
 					});
 					break;
@@ -237,6 +240,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[13] = Math.ceil(len/10);
 							console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
+							db.close();
 						});
 					});
 					break;
@@ -345,13 +349,18 @@ exports.mongoDbNewUser = function(name, password, email){
 					console.log(arr.length);
 					if (arr.length !== 0){
 						console.log('already have a user');
+						db.close();
 						return false;
+					}
+					else {
+						collection.save({'name':name, 'password':password, 'email':email}, function(){
+							db.close();
+						});
+						console.log('user register success');
+						return true;
 					}
 				});
 			});
-			collection.save({'name':name, 'password':password, 'email':email});
-			console.log('user register success');
-			return true;
 		});
 	});
 }
@@ -369,15 +378,16 @@ exports.mongoDbCheckUser = function(name, password){
 					console.log(arr.length);
 					if (arr.length == 1){
 						console.log('user login: '+arr[0]);
+						db.close();
 						return true;
 					} else if (arr.length == 0){
 						console.log('login info error');
+						db.close();
 						return false;
 					}
 				});
 			});
 		});
-		db.close();
 	});
 }
 
@@ -438,6 +448,8 @@ exports.mongoDbNewPost = function(newPostArr){
 									'post_createFrom_id':newPostArr['post_createFrom_id'],
 									'most_recent':newPostArr['most_recent'],
 									'post_author':newPostArr['teach-plan-creater']
+									}, function(){
+										db.close();
 									});
 				});
 			});
@@ -501,6 +513,8 @@ exports.mongoDbChangePost = function(changePostArr){
 									'post_createFrom_id':newPostArr['post_createFrom_id'],
 									'most_recent':newPostArr['most_recent'],
 									'post_author':newPostArr['post_author']
+									}, function(){
+										db.close();
 									});
 				});
 			});
