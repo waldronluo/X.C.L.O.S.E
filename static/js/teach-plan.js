@@ -108,12 +108,12 @@ function addTextArea (element, cols, rows, name) {
         document.getElementById ("teach-plan-ending-time").innerHTML = teachPlan[24]['teach-plan-ending-time'];
         document.getElementById ("teach-plan-ending-content").innerHTML = teachPlan[25]['teach-plan-ending-content'];
         document.getElementById ("teach-plan-ending-requirement").innerHTML = teachPlan[26]['teach-plan-ending-requirement'];
-        document.getElementById ("teach-plan-conclusion-time").innerHTML = teachPlan[24]['teach-plan-conclusion-time'];
-        document.getElementById ("teach-plan-conclusion-content").innerHTML = teachPlan[25]['teach-plan-conclusion-content'];
-        document.getElementById ("teach-plan-conclusion-requirement").innerHTML = teachPlan[26]['teach-plan-conclusion-requirement'];
-        document.getElementById ("teach-plan-description-time").innerHTML = teachPlan[24]['teach-plan-description-time'];
-        document.getElementById ("teach-plan-description-content").innerHTML = teachPlan[25]['teach-plan-description-content'];
-        document.getElementById ("teach-plan-description-requirement").innerHTML = teachPlan[26]['teach-plan-description-requirement'];
+        document.getElementById ("teach-plan-conclusion-time").innerHTML = teachPlan[27]['teach-plan-conclusion-time'];
+        document.getElementById ("teach-plan-conclusion-content").innerHTML = teachPlan[28]['teach-plan-conclusion-content'];
+        document.getElementById ("teach-plan-conclusion-requirement").innerHTML = teachPlan[29]['teach-plan-conclusion-requirement'];
+        document.getElementById ("teach-plan-description-time").innerHTML = teachPlan[30]['teach-plan-description-time'];
+        document.getElementById ("teach-plan-description-content").innerHTML = teachPlan[31]['teach-plan-description-content'];
+        document.getElementById ("teach-plan-description-requirement").innerHTML = teachPlan[32]['teach-plan-description-requirement'];
     
         });
 
