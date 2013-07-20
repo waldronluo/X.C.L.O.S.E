@@ -29,7 +29,7 @@ GLOBAL.socket = io.connect('http://127.0.0.1:8089');
             var a = document.createElement("a");
             a.className = "labelSelf";
             a.href = "/search?searchStr=" + labelgroups[i][j]+"&sortWay=LastChange&page=1";
-            a.target = "_blank";
+    //        a.target = "_blank";
             a.innerHTML = labelgroups[i][j];
             
             div.appendChild(a);
