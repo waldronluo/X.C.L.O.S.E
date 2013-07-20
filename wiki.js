@@ -60,7 +60,6 @@ iolisten.sockets.on('connection', function (socket){
 	else if (firstPathname == "/teach-plan-save"){
 	}
 	
-	
 	// index -- get labels
 	console.log('start socket on labels');
 	socket.on('labels',function(){
@@ -98,14 +97,15 @@ iolisten.sockets.on('connection', function (socket){
 	// teach-plan-edit -- newPost
 	console.log('start socket on newPost');
 	socket.on('newPost',function(postArr, userName){
-		var isLogin = false;
-		for (var i=0; i<userArray.length; i++){
-			if (userArray[i] == userName){
-				isLogin = true;
-				break;
-			}
-		}
-		if (isLogin){
+		// var isLogin = false;
+		// for (var i=0; i<userArray.length; i++){
+			// if (userArray[i] == userName){
+				// isLogin = true;
+				// break;
+			// }
+		// }
+		// if (isLogin){
+		if (true){			// 'true' for function test
 			console.log('New teaching plan -- start');
 			postArr['post_author'] = userName;
 			mongoDbNewPost(postArr);
@@ -132,6 +132,12 @@ iolisten.sockets.on('connection', function (socket){
 		else {
 			console.log('New teaching plan -- not login');
 		}
+	});
+	
+	// teach-plan-history -- findHistoryPost
+	console.log('start socket on findHistoryPost');
+	socket.on('findHistoryPost',function(post_id){
+		post_id = parseInt(post_id);
 	});
 	
 	// public -- login
@@ -257,6 +263,9 @@ app.use(function(req, res){
 		res.write(fs.readFileSync(__dirname + '/static/teach-plan-edit.html', 'utf-8'));
 		res.end();
 	}
+	else if (pathname == "/teach-plan-history"){
+		res.end();
+	}
 	
 	else if (pathname == "/favicon.ico"){
 		res.end();
@@ -267,70 +276,48 @@ app.use(function(req, res){
 		res.write(fs.readFileSync(__dirname + '/static/index.html', 'utf-8'));
 		res.end();
 	}
-	
 });
 
 
 
-/*		-- socket.io     origin
-{
-	
-	// search mode : LastChange / CreateTime / AccessCount
-	var searchWay = 'LastChange';
 
-	
-	
-	// Post operation
-	// new post
-	socket.on('newPost',function(newPost){
-		if (mongoDbNewPost(newPost)){
-			socket.emit('newPostReply', true);
-			console.log("New Post Success");
-		} else {
-			socket.emit('newPostReply', false);
-			console.log("New Post Failed");
-		}
-	});	
-	// change post
-	socket.on('changePost',function(changePost){
-		(changePost)
-		socket.emit('changePostReply'    );
-		console.log();
-	});	
-		
-	// search post - AccessCount Mode
-	socket.on('searchPost_AccessCount',function(title, page){
-		if (searchTitle != title){
-			searchPostArray = mongoDbSearchPost(title);	
-			searchPostArray.sort(sortByAccessCount);
-			searchWay = 'AccessCount';
-			searchTitle = title;
-		}
-		
-		var tempPostArr = [];
-		
-		socket.emit('searchPostReply', tempPostArr, page);
-	});
-	
-	
-	// get one post by ID in SearchArr	
-	// post page 	[1,2,3,4,5,......]
-	// post ID 		[0,1,2,3,4,......]
-	socket.on('getOnePost',function(page, id){
-		var postId = (page-1) * pageLength + id;
-		// Add access_count when requested
-		mongoDbUpdatePostCount( searchPostArray[postId].post_id );
-		socket.emit('searchPostReply', searchPostArray[postId]);
-	});
-	
-	// if a user disconnects, reinitialise variables
-	socket.on('disconnect', function(){
-		var currentPath = process.cwd() + '/';
-		refreshDir();
-		var links = getDir.parseLinks(dir);
-		var directoryDepth = 0;
-		// set -  connect.cookie -> null
-	});
-});
+/*	node.js文件上传
+exports.postFile = function(req, res) {
+    if (req.headers['content-type'].match(/application\/octet-stream/i)) {
+        //文件名字
+        var fileExtention = req.headers['x-file-name'];
+        var fileStream = fs.createWriteStream(filePath);
+        req.pipe(fileStream);
+        req.on('end', function() {
+            //接收数据完毕，需要给客户端返回值，否则，客户端将一直等待，直到失败（其实上传文件已经成功了）
+            res.send({success:true});
+        })
+    }
+};
+*/
 
+/*	node.js文件下载
+exports.donwloadZip = function(req, res) {
+//    require('path').exists(userFile, function(exists) {
+//        console.log("exists: ", exists);
+//        if (exists) {
+//            fs.readFile(userFile, "binary", function(err, data) {
+//                res.writeHead(200, {"Content-Type": "application/zip"});
+//                res.write(data, "binary");
+//                res.end();
+//            });
+//        }
+//    });
+//上面的代码可以处理小文件，如果文件太大的话，由于 data 数据会保存在内存中，可能会造成内存不足
+	require('path').exists(userFile, function(exists) {
+		console.log("exists: ", exists);
+		if (exists) {
+			res.writeHead(200, {"Content-Type": "application/zip"});
+			fileStream.pipe(res);
+			fileStream.on("end", function() {
+				res.end();
+			});
+		}
+	});
+};
 */

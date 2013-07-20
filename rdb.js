@@ -460,32 +460,34 @@ for (var i=0; i<4; i++)
 		
 		var arr = ['灯塔理念',['乡土认同', '陪伴成长', '服务学习']];
 		for (var i=0;i<3; i++){
-			collection.save({'category': arr[0], 'count':2*i+1, 'name':arr[1][i]})
+			collection.save({'category': arr[0], 'count':2*i+1, 'name':arr[1][i]});
 		}
 			
 		arr = ['多元课程',['自然教育', '互动游戏', '综合性活动', '戏剧教育', '学生工作']];
 		for (var i=0;i<5; i++){
-			collection.save({'category': arr[0], 'count':i+1, 'name':arr[1][i]})
+			collection.save({'category': arr[0], 'count':i+1, 'name':arr[1][i]});
 		}
 		
 		arr = ['学科教案',['文史哲', '数理化', '地理', '体育', '英语']];
 		for (var i=0;i<5; i++){
-			collection.save({'category': arr[0], 'count':i, 'name':arr[1][i]})
+			collection.save({'category': arr[0], 'count':i, 'name':arr[1][i]});
 		}
 		
 		arr = ['能力提升',['求职能力', '表达能力', '社会能力']];
 		for (var i=0;i<3; i++){
-			collection.save({'category': arr[0], 'count':5-i, 'name':arr[1][i]})
+			collection.save({'category': arr[0], 'count':5-i, 'name':arr[1][i]});
 		}
 		
 	});
-	console.log('main 3');
+	console.log('main 3 -- finish');
 	
 });
 }
 ();
 
-/*
+
+/*	mongoDB 输入数据列表
+
 post----------------------------------------
 
 家乡大发现
@@ -535,9 +537,7 @@ post----------------------------------------
 	2013.3.10
 	2013.4.2
 	数理化  服务学习
-	*/
 
-/*
 tags -----------------------------
 
 灯塔理念
