@@ -1,4 +1,5 @@
 ﻿var mongodb = require('mongodb');		//mongoDB for user
+var fs = require("fs");
 /*	about DB data structure:
 	db:	test
 		collection:	userlist:
@@ -311,6 +312,10 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 								{'post_id':arr[0].post_id}
 								];				
 						console.log(sendArr);
+						// add access count
+						collection.update({'post_id':post_id}, {'$inc':{'access_count':1}}, function(err){
+							console.log(post_id + ': access_count + 1');
+						});
 					}
 					socket.emit('getOnePostReply', sendArr);
 					db.close();
@@ -348,7 +353,7 @@ exports.mongoDbHistoryData = function(socket, post_id){
 				result.toArray(function(err,arr){
 					if (arr.length != 0){
 						collection.find({$or:[{'post_id':arr[0].post_createFrom_id}, {'post_createFrom_id':arr[0].post_createFrom_id}]},
-							{'post_id':1, '_id':0, 'course_title':1, 'post_createTime':1, 'access_count':1, 'download_count':1, 'post_author':1
+							{'post_id':1, '_id':0, 'course_title':1, 'post_createTime':1, 'like_count':1, 'post_author':1
 							}).sort({'post_createTime':-1}, function(err,result){
 							result.toArray(function(err,arr){
 								for (var i=0; i< arr.length; i++){
@@ -449,8 +454,10 @@ exports.downloadOnePostXML = function(post_id, res){
 	});
 }
 
-// change post --- changePostArr, post_id
-exports.mongoDbChangePost = function(req, post_id, username){
+// change post --- 
+// input: req.body, post_id, username
+// output: res.write(/teach-plan)
+exports.mongoDbChangePost = function(req, res, post_id, username){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	
@@ -462,13 +469,15 @@ exports.mongoDbChangePost = function(req, post_id, username){
 			var temp_post_createTime = new Date();
 			var temp_access_count = 0;
 			var temp_edit_count = 0;
+			var temp_like_count = 0;
 			var temp_download_count = 0;
 			var temp_most_recent = 1;
 			var temp_tags = new Array();
 			
+			// get username 
 			if (username == undefined)
 				username = 'default';
-			// get tags
+			// get tags by array index 27--n
 			var counter = 0;
 			for (item in req.body){
 				counter++;
@@ -478,15 +487,17 @@ exports.mongoDbChangePost = function(req, post_id, username){
 			console.log(temp_tags);
 			// change
 			collection.find({'post_id':post_id}, 
-							{'name':1, 'origin_createTime':1, 'post_createFrom_id':1, 'post_id':1},function(err,result){
+							{'name':1, 'origin_createTime':1, 'post_createFrom_id':1, 'post_id':1, 'edit_count':1},function(err,result){
 				result.toArray(function(err, arr){
 					if (arr.length !== 0){
 						console.log('Already have a post, to Change Post');
 						temp_post_createFrom_id	= arr[0].post_createFrom_id;
 						temp_origin_createTime = arr[0].origin_createTime;
+						temp_edit_count = arr[0].edit_count;
 						
+						// source post is NOT the most recent
 						collection.update({'post_id':post_id}, {'$inc':{'most_recent':-1}}, function(err){
-							// only 'tags' needs origin name 
+							// only 'tags' needs origin name , save post
 							collection.save({'course_title':req.body['teach-plan-coursename'], 
 									'template_title':req.body['teach-plan-template'], 
 									'topic':req.body['teach-plan-course'], 
@@ -509,27 +520,45 @@ exports.mongoDbChangePost = function(req, post_id, username){
 									'lesson_summary':req.body['teach-plan-conclusion-content'], 
 									'lesson_comment':req.body['teach-plan-description-content'], 
 									'tags':temp_tags,
-									'post_author':username,				//
+									'post_author':username,
 									
 									'post_createFrom_id':temp_post_createFrom_id, 
 									'access_count':temp_access_count,
 									'edit_count':temp_edit_count,
+									'like_count':temp_like_count,
 									'download_count':temp_download_count,
 									'post_createTime':temp_post_createTime, 
 									'origin_createTime':temp_origin_createTime, 
 									'most_recent':temp_most_recent,
-									'post_id':'-1'
+									'post_id':'-1'	// signal for reconstruct
 									}, function(){
 										collection.find({'post_id':'-1'},{'_id':1},function(err,result){
 											result.toArray(function(err,arr){
-												console.log('-- construct post_id');
+												console.log('-- REconstruct post_id');		// only the new post can be found
 												console.log(arr);
-												for (var i=0; i<arr.length; i++){
-													collection.update({'_id':arr[i]._id},{$set:{'post_id':arr[i]._id.toString()}});
+												if (arr.length != 0){
+													collection.update({'_id':arr[0]._id},{$set:{'post_id':arr[0]._id.toString()}},
+																	function(){
+														// return teach-plan after update
+														res.writeHead(200, {
+															"Set-Cookie": [ "post_id=" + arr[0]._id.toString()],
+															"Content-Type": "text/html"
+														});
+														res.write(fs.readFileSync(__dirname + '/static/teach-plan.html', 'utf-8'));
+														res.end();
+													});
+												}
+												else {
+													// return index after err
+													res.writeHead(200, {"Content-Type": "text/html"});
+													res.write(fs.readFileSync(__dirname + '/static/index.html', 'utf-8'));
+													res.end();
 												}
 											});
+											collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
+												console.log(post_id + ': edit_count + 1');
+											});
 										});
-										return 0;			// 0 for change post
 									});
 						});
 					} else {
@@ -557,26 +586,45 @@ exports.mongoDbChangePost = function(req, post_id, username){
 									'lesson_summary':req.body['teach-plan-conclusion-content'], 
 									'lesson_comment':req.body['teach-plan-description-content'], 
 									'tags':temp_tags,
+									'post_author':username,
 									
 									'post_createFrom_id':temp_post_createFrom_id.toString(), 
 									'access_count':temp_access_count,
 									'edit_count':temp_edit_count,
+									'like_count':temp_like_count,
 									'download_count':temp_download_count,
 									'post_createTime':temp_post_createTime, 
 									'origin_createTime':temp_origin_createTime, 
 									'most_recent':temp_most_recent,
-									'post_id':'-1'
+									'post_id':'-1'			// signal for reconstruct
 									}, function(){
 										collection.find({'post_id':'-1'},{'_id':1},function(err,result){
 											result.toArray(function(err,arr){
-												console.log('-- construct post_id');
+												console.log('-- REconstruct post_id');		// only the new post can be found
 												console.log(arr);
-												for (var i=0; i<arr.length; i++){
-													collection.update({'_id':arr[i]._id},{$set:{'post_id':arr[i]._id.toString()}});
+												if (arr.length != 0){
+													collection.update({'_id':arr[0]._id},{$set:{'post_id':arr[0]._id.toString()}},
+																	function(){
+														// return teach-plan after update
+														res.writeHead(200, {
+															"Set-Cookie": [ "post_id=" + arr[0]._id.toString()],
+															"Content-Type": "text/html"
+														});
+														res.write(fs.readFileSync(__dirname + '/static/teach-plan.html', 'utf-8'));
+														res.end();
+													});
+												}
+												else {
+													// return index after err
+													res.writeHead(200, {"Content-Type": "text/html"});
+													res.write(fs.readFileSync(__dirname + '/static/index.html', 'utf-8'));
+													res.end();
 												}
 											});
+											collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
+												console.log(post_id + ': edit_count + 1');
+											});
 										});
-										return 1;			// 1 for new post
 									});
 					}
 				});

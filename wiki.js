@@ -41,25 +41,17 @@ iolisten.sockets.on('connection', function (socket){
 	
 	if (firstPathname == "/search"){
 		console.log('search start');
-		// searchStr: ????
-		// sortWay  : LastChange / CreateTime / AccessCount
-		// page		: 1,2,......
 		model.mongoDbSearchPost(socket,
 						queryStrArray['searchStr'],
 						queryStrArray['sortWay'],
 						queryStrArray['page'] );
 	}
 	else if (firstPathname == "/teach-plan"){
-		console.log('/teachplan: ' +queryStrArray['post_id']);
-		var post_id = queryStrArray['post_id'];			// string
-		model.mongoDbGetOnePost(socket, post_id);
-		model.mongoDbAddAccessCount(post_id);
 	}
 	else if (firstPathname == "/teach-plan-edit"){
 		model.mongoDbGetTagsForEdit(socket);
 	}
 	else if (firstPathname == "/teach-plan-save"){
-		console.log('save start');
 	}
 	else if (firstPathname == "/teach-plan-history"){
 		console.log('history start');
@@ -95,13 +87,14 @@ iolisten.sockets.on('connection', function (socket){
 						searchArr[2] );
 	});
 	
-	// search -- getOnePost;
+	// search -- getOnePost  /teach-plan
 	console.log('start socket on searchPost');
 	socket.on('getOnePost',function(post_id){
 		model.mongoDbGetOnePost(socket, post_id);
 	});
 		
-	// teach-plan-edit -- newPost
+	// --------------------------------------------------------------
+	// teach-plan-edit -- newPost  /teach-plan-save
 	console.log('start socket on newPost');
 	socket.on('newPost',function(postArr, userName){
 		// var isLogin = false;
@@ -122,7 +115,7 @@ iolisten.sockets.on('connection', function (socket){
 		}
 	});
 	
-	// teach-plan-edit -- changePost
+	// teach-plan-edit -- changePost	/
 	console.log('start socket on changePost');
 	socket.on('changePost',function(postArr, userName, post_id){
 		var isLogin = false;
@@ -194,6 +187,7 @@ iolisten.sockets.on('connection', function (socket){
 		}
 		console.log(userArray);
 	});
+	//------------------------------------------------------------------
 });
 
 // default page output setting
@@ -282,16 +276,14 @@ app.use(function(req, res){
 	}
 	else if (pathname == "/teach-plan-save"){
 		//	url sample:		http://127.0.0.1:8089/teach-plan-save      teach-plan-id=123
-		firstPathname = "/teach-plan-save";
+		firstPathname = "/teach-plan";			//use for show teach-plan after save
 		console.log('save start');
 		var post_id = req.body['teach-plan-id'];
 		console.log(req.body);
 		console.log(post_id);
 		var username = "default";
 		
-		model.mongoDbChangePost(req, post_id, username);
-		model.mongoDbAddEditCount(post_id)
-		res.end();
+		model.mongoDbChangePost(req, res, post_id, username);
 	}
 	else if (pathname == "/teach-plan-download"){
 		//	url sample:		http://127.0.0.1:8089/teach-plan-download?post_id=123
@@ -301,7 +293,6 @@ app.use(function(req, res){
 		console.log(queryStrArray);
 		
 		model.downloadOnePostXML(queryStrArray['post_id'], res);
-		model.mongoDbAddDownloadCount(queryStrArray['post_id']);
 	}
 	
 	else if (pathname == "/favicon.ico"){
