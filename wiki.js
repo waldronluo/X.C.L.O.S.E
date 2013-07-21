@@ -277,7 +277,7 @@ app.use(function(req, res){
 		console.log(queryStrArray);
 		
 		res.writeHead(200, {"Content-Type": "text/html"});
-		res.write(fs.readFileSync(__dirname + '/static/test----kkk.html', 'utf-8'));
+		res.write(fs.readFileSync(__dirname + '/static/history.html', 'utf-8'));
 		res.end();
 	}
 	else if (pathname == "/teach-plan-save"){

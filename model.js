@@ -392,20 +392,27 @@ exports.mongoDbHistoryData = function(socket, post_id){
 	console.log('history search start -------');
 	mgconnect.open(function (err, db) {	  
 		db.collection('postlist', function (err, collection) {
-			collection.find({$or:[{'post_id':post_id}, {'post_createFrom_id':post_id}]},
+			collection.find({'post_id':post_id},{'post_createFrom_id':1, '_id':0}, function (err,result){
+				result.toArray(function(err,arr){
+					if (arr.length != 0){
+						collection.find({$or:[{'post_id':arr[0].post_createFrom_id}, {'post_createFrom_id':arr[0].post_createFrom_id}]},
 							{'post_id':1, '_id':0, 'course_title':1, 'post_createTime':1, 'access_count':1, 'download_count':1, 'post_author':1
 							}).sort({'post_createTime':-1}, function(err,result){
-				result.toArray(function(err,arr){
-					for (var i=0; i< arr.length; i++){
-						arr[i].post_createTime = dateFormat(arr[i].post_createTime);
-						historyListArray[i] = arr[i];
+							result.toArray(function(err,arr){
+								for (var i=0; i< arr.length; i++){
+									arr[i].post_createTime = dateFormat(arr[i].post_createTime);
+									historyListArray[i] = arr[i];
+								}
+								console.log('get history:');
+								console.log(historyListArray);
+								socket.emit('historyListReply',historyListArray);
+								db.close();
+							});
+						})
 					}
-					console.log('get history:');
-					console.log(historyListArray);
-					socket.emit('historyListReply',historyListArray);
-					db.close();
+					else {db.close();}
 				});
-			})
+			});
 		});
 	});
 };
@@ -490,11 +497,7 @@ exports.downloadOnePostXML = function(post_id, res){
 	});
 }
 
-// 27--end is tags
-exports.bodyparser = function(req){
-	console.log('bodyparser-------------');
-	
-}
+
 
 //------------------testing
 // new post -- newPostArr from
@@ -596,7 +599,7 @@ exports.mongoDbChangePost = function(req, post_id, username){
 						temp_post_createFrom_id	= arr[0].post_createFrom_id;
 						temp_origin_createTime = arr[0].origin_createTime;
 						
-						collection.update({'post_id':arr[0].post_createFrom_id}, {'$inc':{'most_recent':-1}}, function(err){
+						collection.update({'post_id':post_id}, {'$inc':{'most_recent':-1}}, function(err){
 							// only 'tags' needs origin name 
 							collection.save({'course_title':req.body['teach-plan-coursename'], 
 									'template_title':req.body['teach-plan-template'], 
