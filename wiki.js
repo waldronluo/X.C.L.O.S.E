@@ -143,17 +143,10 @@ iolisten.sockets.on('connection', function (socket){
 	
 	// public -- login
 	console.log('start socket on login');
-	socket.on('login',function(userArr){	
-		// message struct : userArr = ['name','password']
-		if (model.mongoDbCheckUser(userArr[0], userArr[1])){
-			socket.emit('loginReply', true);
-			//save User Information for this user
-			var count = userArray.length;
-			userArray[count] = userArr[0];
-		}else {
-			socket.emit('loginReply', false);
-		}
-		console.log(userArray);
+	socket.on('login',function(user){	
+		// message struct : user = ['name','password']
+		console.log(user);
+		model.mongoDbLoginUser(socket, userArray, user[0], user[1]);
 	});	
 	
 	// public -- logout
@@ -177,16 +170,11 @@ iolisten.sockets.on('connection', function (socket){
 	
 	// public -- register
 	console.log('start socket on register');	
-	socket.on('register',function(userArr){
+	socket.on('register',function(user){
 		// message struct : userArr = [name, password, passwordCon, email]
-		if (userArr[1] == userArr[2]) {
-			if (model.mongoDbNewUser(userArr[0], userArr[1], userArr[3])){
-				socket.emit('registerReply',true);
-				var count = userArray.length;
-				userArray[count] = userArr[0];
-			} else {
-				socket.emit('registerReply',false);
-			}
+		if (user[1] == user[2]) {
+			model.mongoDbNewUser(socket, userArray, 
+								user[0], user[1], user[3]);
 		}
 		else {
 			socket.emit('registerReply',false);
