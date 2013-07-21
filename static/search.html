@@ -7,17 +7,26 @@
   </head>
   <body>
     <div class="wrapper">
-      <div class="header">
-        <div class="userlog">
-          <a class="login" href="#" onclick="loginWindow()" >登录</a>
-          <a class="signin" href="#" onclick="signinWindow()" >注册</a>
+     <div class="header">
+        <div class="lineOne">
+          <div class="userlog" id="userlog">
+            <a class="login" href="#" onclick="loginWindow()" >登录</a>
+            <a class="signin" href="#" onclick="signinWindow()">注册</a>
+          </div>
+          <div class="userlog" id="logged">
+            欢迎回来 <a href="#" onclick="logout()">登出</a>
+          </div>
         </div>
 
         <div class="header-content">
-          <h1 class="title"> 灯塔教案分享平台</h1>
+          <a class="title" href="/"> 灯塔教案分享平台</a>
           <div class="search"/>
-            <input class="searchInput"/>
-            <a class="aButton" href="#">Go</a>
+            <form action="/search" method="get">
+              <input class="searchInput" name="searchStr"/>
+              <input type="hidden" name="sortWay" value="LastChange"/>
+              <input type="hidden" name="page" value="1"/>
+              <a class="aButton" href="#">Go</a>
+            </form>
           </div>
         </div>
 
@@ -25,6 +34,7 @@
           <!-- Use for dark blue filter"-->
         </div>
       </div>
+
 
       <div class="content">
         <div class="sortGroup">
@@ -76,6 +86,7 @@
         </div>
       </div>
     </div>
+
     <!-- popup popup signin!!!-->
     <div id="login">
       <div class="light-blue-bar">
@@ -86,14 +97,14 @@
       <form class="popup-form">
         <div class="input-pair">
           <label class="popup-label">帐号</label>
-          <input class="popup-input" name="username"></input>
+          <input class="popup-input" name="username" id="loginUsername"></input>
         </div>
         <div class="input-pair">
           <label class="popup-label">密码</label>
-          <input class="popup-input" name="password" type="password"></input>
+          <input class="popup-input" name="password" type="password" id="loginUserPassword"></input>
         </div>
-        <button class="aButton blockButton">登录</button>
       </form>
+      <button class="aButton blockButton" onclick="login()">登录</button>
       <div class="dark-blue-filter small"></div>
       <p class="pNoAccount" > 还没有帐号咩？<a href="#">注册注册！</a></p>
     </div>
@@ -123,7 +134,7 @@
             <td class="wd100"><input name="email"/></td>
           </tr>
         </table>
-              <button class="aButton blockButton" >登录</button>
+        <button class="aButton blockButton" >登录</button>
       </form>
     </div>
     <!-- popup form -->

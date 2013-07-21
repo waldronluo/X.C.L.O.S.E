@@ -63,11 +63,16 @@
   background-color: rgb(44,108,179);
 }
 
+.header .lineOne {
+  display: block;
+  padding: 0px 0px 50px 0px;
+}
+
 .header .userlog {
-  position: relative;
-  font-size: 12px;
-  left: 1135px;
-  margin: 5px 0px 15px 0px;
+  display: inline-block;
+  color: white;
+  float: right;
+  margin: 15px 15px 0px 15px;
 }
 
 .header .userlog .login {
@@ -81,22 +86,24 @@
 }
 
 .header .header-content {
-  display: inline-block;
+  display: block;
+  padding: 0px 15px 30px 15px;
   margin: 5px 0px 20px 0px;
 }
 
 .header .header-content .title {
+  font-size: 30px;
   display: inline-block;
-  position: relative;
+  float: left;
   color: white;
   left: 40px;
+  top: -5px;
+  text-decoration: none;
 }
 
 .header .header-content .search {
   display: inline-block;
-  position: relative;
-  left: 737px;
-  top: -5px;
+  float: right;
 }
 
 .header .header-content .search .searchInput {

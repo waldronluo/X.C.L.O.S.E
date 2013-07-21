@@ -9,16 +9,25 @@
     <div class="wrapper">
 
       <div class="header">
-        <div class="userlog">
-          <a class="login" href="#" onclick="loginWindow()" >登录</a>
-          <a class="signin" href="#" onclick="signinWindow()">注册</a>
+        <div class="lineOne">
+          <div class="userlog" id="userlog">
+            <a class="login" href="#" onclick="loginWindow()" >登录</a>
+            <a class="signin" href="#" onclick="signinWindow()">注册</a>
+          </div>
+          <div class="userlog" id="logged">
+            欢迎回来 <a href="#" onclick="logout()">登出</a>
+          </div>
         </div>
 
         <div class="header-content">
-          <h1 class="title"> 灯塔教案分享平台</h1>
+          <a class="title" href="/"> 灯塔教案分享平台</a>
           <div class="search"/>
-            <input class="searchInput"/>
-            <a class="aButton" href="#">Go</a>
+            <form action="/search" method="get">
+              <input class="searchInput" name="searchStr"/>
+              <input type="hidden" name="sortWay" value="LastChange"/>
+              <input type="hidden" name="page" value="1"/>
+              <a class="aButton" href="#">Go</a>
+            </form>
           </div>
         </div>
 
@@ -35,14 +44,12 @@
             <li class="labelClass">
             <p> 标签1 </p>
             <div class="label">
-              <img src="http://pic.sc.chinaz.com/Files/pic/icons128/5202/8.png"/>
               <a href="#">One </a>
             </div>
             </li>
             <li class="labelClass">
             <p> 标签1 </p>
             <div class="label">
-              <img src="http://pic.sc.chinaz.com/Files/pic/icons128/5202/8.png"/>
               <a href="#">One </a>
             </div>
             </li>
@@ -74,7 +81,7 @@
           <input class="popup-input" name="password" type="password" id="loginUserPassword"></input>
         </div>
       </form>
-        <button class="aButton blockButton" onclick="login()">登录</button>
+      <button class="aButton blockButton" onclick="login()">登录</button>
       <div class="dark-blue-filter small"></div>
       <p class="pNoAccount" > 还没有帐号咩？<a href="#">注册注册！</a></p>
     </div>
@@ -85,26 +92,26 @@
         <section class="light-blue-bar-word">注册</section>
         <a class="light-blue-bar-X" onclick="X()">X</a>
       </div>
-      <form class="popup-form">
+      <form class="popup-form" id="signinForm">
         <table>
           <tr class="hd35">
             <td class="wd50">用户名</td>
-            <td class="wd100"><input name="username"/></td>
+            <td class="wd100"><input name="username" id="signinUsername"/></td>
           </tr>
           <tr class="hd35">
             <td class="wd50">密码</td>
-            <td class="wd100"><input name="password" type="password"/></td>
+            <td class="wd100"><input name="password" type="password" id="signinPassword"/></td>
           </tr>
           <tr class="hd35">
             <td class="wd50">再输入</td>
-            <td class="wd100"><input name="password2" type="password"/></td>
+            <td class="wd100"><input name="password2" type="password" id="signinPassword2"/></td>
           </tr>
           <tr class="hd35">
             <td class="wd50">邮箱</td>
-            <td class="wd100"><input name="email"/></td>
+            <td class="wd100"><input name="email" id="signinEmail"/></td>
           </tr>
         </table>
-              <button class="aButton blockButton" >登录</button>
+        <button class="aButton blockButton" onclick="signin()" >注册</button>
       </form>
     </div>
     <!-- popup form -->
