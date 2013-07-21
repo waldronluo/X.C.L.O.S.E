@@ -10,8 +10,8 @@
 
       <div class="header">
         <div class="userlog">
-          <a class="login" href="#" onclick="login()" >登录</a>
-          <a class="signin" href="#" onclick="signin()">注册</a>
+          <a class="login" href="#" onclick="loginWindow()" >登录</a>
+          <a class="signin" href="#" onclick="signinWindow()">注册</a>
         </div>
 
         <div class="header-content">
@@ -67,14 +67,14 @@
       <form class="popup-form">
         <div class="input-pair">
           <label class="popup-label">帐号</label>
-          <input class="popup-input" name="username"></input>
+          <input class="popup-input" name="username" id="loginUsername"></input>
         </div>
         <div class="input-pair">
           <label class="popup-label">密码</label>
-          <input class="popup-input" name="password" type="password"></input>
+          <input class="popup-input" name="password" type="password" id="loginUserPassword"></input>
         </div>
-        <button class="aButton blockButton">登录</button>
       </form>
+        <button class="aButton blockButton" onclick="login()">登录</button>
       <div class="dark-blue-filter small"></div>
       <p class="pNoAccount" > 还没有帐号咩？<a href="#">注册注册！</a></p>
     </div>
