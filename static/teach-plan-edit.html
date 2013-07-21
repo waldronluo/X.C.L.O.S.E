@@ -8,76 +8,116 @@
   <body>
     <div class="wrapper">
       <div class="header">
-        <div class="userlog">
-          <a class="login" href="#" onclick="loginWindow()" >登录</a>
-          <a class="signin" href="#" onclick="loginWindow()">注册</a>
-        </div>
-        <div class="header-content">
-          <h1 class="title">灯塔教案分享平台</h1>
-          <div class="search">
-            <input class="searchInput"/>
-            <a class="aButton" href="#">Go</a>
+        <div class="lineOne">
+          <div class="userlog" id="userlog">
+            <a class="login" href="#" onclick="loginWindow()" >登录</a>
+            <a class="signin" href="#" onclick="signinWindow()">注册</a>
+          </div>
+          <div class="userlog" id="logged">
+            欢迎回来 <a href="#" onclick="logout()">登出</a>
           </div>
         </div>
+
+        <div class="header-content">
+          <a class="title" href="/"> 灯塔教案分享平台</a>
+          <div class="search"/>
+            <form action="/search" method="get">
+              <input class="searchInput" name="searchStr"/>
+              <input type="hidden" name="sortWay" value="LastChange"/>
+              <input type="hidden" name="page" value="1"/>
+              <a class="aButton" href="#">Go</a>
+            </form>
+          </div>
+        </div>
+
         <div class="dark-blue-filter">
-          <!-- Ise for dark blue filter -->
+          <!-- Use for dark blue filter"-->
         </div>
       </div>
+
+
       <div class="content">
+        <h1 class="teach-plan-title" id="teach-plan-title"></h1>
+        <div class="teach-plan-info" id="teach-plan-info">
+          <div class="teach-plan-data">
+            <table class="teach-plan-data-tb">
+              <caption class="teach-plan-captain"> 教案数据 </caption>
+              <tbody>
+                <tr> 
+                  <th class="teach-plan-read-counter wd120 hd25">浏览次数：</th>
+                  <td id="teach-plan-read-counter" class="wd50 hd25"> </td>
+                  <th class="teach-plan-edit-counter wd120 hd25">编辑次数：</th>
+                  <td id="teach-plan-edit-counter" class=" wd50 hd25"> <a href="#"></a> </td>
+                </tr>
+                <tr>
+                  <th class="teach-plan-like-counter wd120 hd25">被赞次数： </th>
+                  <td id="teach-plan-like-counter" class="wd50 hd25"></td>
+                  <th class="teach-plan-update-date wd120 hd25">最近更新： </th>
+                  <td id="teach-plan-update-date" class="wd50 hd25"> </td>
+                </tr>
+                <tr>
+                  <th class="teach-plan-download-counter">下载次数： </th>
+                  <td id="teach-plan-download-counter"> </td>
+                  <th class+"teach-plan-creater">教案作者： </th>
+                  <td id="teach-plan-creater"> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="teach-plan-label-group" class="teach-plan-label-group">
+            <table id="teach-plan-label-group-tb" class="teach-plan-label-group-tb">
+              <caption class="teach-plan-captain">教案标签</caption>
+              <tbody class="teach-plan-label-group-tb-tbody">
+              <tr> 
+                <td class="wd125 hd35"><a class="teach-plan-label"></a></td>
+                <td class="wd125 hd35"><a class="teach-plan-label"></a></td>
+              </tr>
+              <tr>
+                <td class="wd125 hd35"><a class="teach-plan-label"></a></td>
+                <td class="wd125 hd35"><a class="teach-plan-label"></a></td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
         <div class="teach-plan-self">
-          <form class="teach-plan-self-form" action="#" method="get">
-            <table class="teach-plan-self-tb-1" border="1">
+          <form class="teach-plan-self-form" method="post" action="/teach-plan-save">
+            <input name="teach-plan-id" id="teach-plan-id" type="hidden"></input>
+            <table class="teach-plan-self-tb-1" border="4">
               <tr>
                 <th  class="wd100" >课程名称</th>
-                <td class="wd450" ><textarea class="teach-plan-coursename" rows="1" cols="54"></textarea></td>
+                <td id="teach-plan-coursename" class="wd450" ></td>
                 <th class="wd100" >模板名称</th>
-                <td class="wd450" >
-                  <input name="teach-plan-template" size="69"></input>
-                </td>
+                <td id="teach-plan-template" class="wd450" ></td>
               </tr>
               <tr>
                 <th class="wd100" >课程</th>
-                <td class="wd450" >
-                  <input name="teach-plan-course" size="69"></input>
-                </td>
+                <td id="teach-plan-course" class="wd450" ></td>
                 <th class="wd100" >课程课时</th>
-                <td name="teach-plan-course-last" class="wd450" >
-                  <input name="teach-plan-course-last" size=69></input>
-                </td>
+                <td id="teach-plan-course-last" class="wd450" ></td>
               </tr>
               <tr>
                 <th class="wd100" >执行义工</th>
-                <td class="wd450" >
-                  <input name="teach-plan-processing-staff" size="69"></input>
-                </td>
+                <td id="teach-plan-processing-staff" class="wd450" ></td>
                 <th class="wd100" >适用授课年级</th>
-                <td class="wd450" >
-                  <input name="teach-plan-processing-grade" size=69></input>
-                </td>
+                <td id="teach-plan-processing-grade" class="wd450" ></td>
               </tr>
               <tr>
                 <th class="wd100 hd25">背景分析</th>
-                <td class="wd1000 hd25" colspan="3"> 
-                  <textarea cols="123" rows="10" name="teach-plan-background"></textarea>
+                <td id="teach-plan-background" class="wd1000 hd25" colspan="3"> 
                 </td>
               </tr>
               <tr>
                 <th class="wd100 hd25">课前准备</th>
-                <td class="wd1000 hd25" colspan="3"> 
-                  <textarea cols="123" rows="10" name="teach-plan-prepare-class"></textarea>
-                </td>
+                <td id="teach-plan-prepare-class" class="wd1000 hd25" colspan="3"> </td>
               </tr>
               <tr>
                 <th class="wd100 hd25">教学资源</th>
-                <td name="teach-plan-resources" class="wd1000 hd25" colspan="3">
-                  <textarea cols="123" rows="10" name="teach-plan-resources"></textarea>
-                </td>
+                <td id="teach-plan-resources" class="wd1000 hd25" colspan="3"></td>
               </tr>
               <tr>
                 <th class="wd100 hd25">教学目标</th>
-                <td name="teach-plan-target" class="wd1000 hd25" colspan="3"> 
-                  <textarea cols="123" rows="10" name="teach-plan-target"></textarea>
-                </td>
+                <td id="teach-plan-target" class="wd1000 hd25" colspan="3"> </td>
               </tr>
             </table>
             <table class="teach-plan-self-tb-2" border="1">
@@ -89,88 +129,117 @@
               </tr>
               <tr>
                 <th class="wd100">导入部分</th>
-                <td class="wd50">
-                  <textarea cols="4" rows="10" name="teach-plan-leading-time"></textarea>
+                <td id="teach-plan-leading-time" class="wd50"> </td>
+                <td id="teach-plan-leading-content" class="wd700">
                 </td>
-                <td class="wd700">
-                  <textarea name="teach-plan-leading-content" rows="10" cols="85"></textarea>
-                </td>
-                <td class="wd250"> 
-                  <textarea name="teach-plan-leading-requirement" rows="10" cols="29"></textarea>
-                </td>
+                <td id="teach-plan-leading-requirement" class="wd250"> </td>
               </tr>
               <tr>
                 <th class="wd100">正式部分</th>
-                  
-                <td class="wd50">
-                  <textarea cols="4" rows="10" name="teach-plan-ongoing-time"></textarea>
+                <td id="teach-plan-ongoing-time" class="wd50"> </td>
+                <td id="teach-plan-ongoing-content" class="wd700">
                 </td>
-                <td class="wd700">
-                  <textarea name="teach-plan-ongoing-content" rows="10" cols="85"></textarea>
-                </td>
-                <td class="wd250"> 
-                  <textarea name="teach-plan-ongoing-requirement" rows="10" cols="29"></textarea>
-                </td>
+                <td id="teach-plan-ongoing-requirement" class="wd250"> </td>
               </tr>
               <tr>
                 <th class="wd100">结束部分</th>
-                <td class="wd50"> 
-                  <textarea cols="4" rows="10" name="teach-plan-ending-time"></textarea>
+                <td id="teach-plan-ending-time" class="wd50"> </td>
+                <td id="teach-plan-ending-content" class="wd700">
                 </td>
-                <td class="wd700">
-                  <textarea name="teach-plan-ending-content" rows="10" cols="85"></textarea>
-                </td>
-                <td class="wd250"> 
-                  <textarea name="teach-plan-ending-requirement" rows="10" cols="29"></textarea>
-                </td>
+                <td id="teach-plan-ending-requirement" class="wd250"> </td>
               </tr>
               <tr>
                 <th class="wd100">课后小结</th>
-                <td class="wd50"> 
-                  <textarea cols="4" rows="10" name="teach-plan-conclusion-time"></textarea>
+                <td id="teach-plan-conclusion-time" class="wd50"> </td>
+                <td id="teach-plan-conclusion-content" class="wd700">
                 </td>
-                <td class="wd700">
-                  <textarea name="teach-plan-conclusion-content" rows="10" cols="85"></textarea>
-                </td>
-                <td class="wd250"> 
-                  <textarea name="teach-plan-conclusion-requirement" rows="10" cols="29"></textarea>
-                </td>
+                <td id="teach-plan-conclusion-requirement" class="wd250"> </td>
               </tr>
               <tr>
-                <th class="wd100">导入部分</th>
-                <td class="wd50"> 
-                  <textarea cols="4" rows="10" name="teach-plan-description-time"></textarea>
+                <th class="wd100">你的描述</th>
+                <td id="teach-plan-description-time" class="wd50"> </td>
+                <td id="teach-plan-description-content" class="wd700">
                 </td>
-                <td class="wd700">
-                  <textarea name="teach-plan-description-content" rows="10" cols="85"></textarea>
-                </td>
-                <td class="wd250"> 
-                  <textarea name="teach-plan-description-requirement" rows="10" cols="29"></textarea>
-                </td>
+                <td id="teach-plan-description-requirement" class="wd250"> </td>
               </tr>
             </table>
-            <table class="teach-plan-self-tb-3" border=1>
+            <table class="teach-plan-self-tb-3" id="teach-plan-self-tb-3" border="1">
               <tr>
                 <th class="wd100">所属标签</th>
-                <td class="wd1100">
-                  <div class="teach-plan-label-select-group">
-                    <div class="teach-plan-label-leader">
-                      leader: 
-                    </div>
-                    <div class="teach-plan-label-select-cloud">
-                      <section class="teach-plan-label-select-pair">
-                      <input class="teach-plan-label-select" type="checkbox" name="a"></input>
-                      <label class="teach-plan-label-select-l"> 乡土认同</label>
-                      </section>
-                    </div>
-                  </div>
+                <td class="wd1100" id="teach-plan-label-select-table">
                 </td>
               </tr>
             </table>
-            <input class="aButton" type=submit value="submit"></input>
+            <section class="teach-plan-submit-section">
+            <button type="submit" class="teach-plan-submit aButton" id="teach-plan-submit">提交教案</button>
+            </section>
           </form>
+          <a href="#" onclick="editTeachingPlan()" class="aButton teach-plan-right" id="teach-plan-edit">修改教案</a>
+          <a href="#" onclick="" class="aButton teach-plan-right" id="teach-plan-download">下载教案</a>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+    <!-- popup popup signin!!!-->
+    <div id="login">
+      <div class="light-blue-bar">
+        <section class="light-blue-bar-word">登录</section>
+        <a class="light-blue-bar-X" onclick="X()">X</a>
+
+      </div>
+      <form class="popup-form">
+        <div class="input-pair">
+          <label class="popup-label">帐号</label>
+          <input class="popup-input" name="username" id="loginUsername"></input>
+        </div>
+        <div class="input-pair">
+          <label class="popup-label">密码</label>
+          <input class="popup-input" name="password" type="password" id="loginUserPassword"></input>
+        </div>
+      </form>
+      <button class="aButton blockButton" onclick="login()">登录</button>
+      <div class="dark-blue-filter small"></div>
+      <p class="pNoAccount" > 还没有帐号咩？<a href="#">注册注册！</a></p>
+    </div>
+    <!-- popup form -->
+    <!-- popup popup login!!!-->
+    <div id="signin">
+      <div class="light-blue-bar">
+        <section class="light-blue-bar-word">注册</section>
+        <a class="light-blue-bar-X" onclick="X()">X</a>
+      </div>
+      <form class="popup-form">
+        <table>
+          <tr class="hd35">
+            <td class="wd50">用户名</td>
+            <td class="wd100"><input name="username"/></td>
+          </tr>
+          <tr class="hd35">
+            <td class="wd50">密码</td>
+            <td class="wd100"><input name="password" type="password"/></td>
+          </tr>
+          <tr class="hd35">
+            <td class="wd50">再输入</td>
+            <td class="wd100"><input name="password2" type="password"/></td>
+          </tr>
+          <tr class="hd35">
+            <td class="wd50">邮箱</td>
+            <td class="wd100"><input name="email"/></td>
+          </tr>
+        </table>
+      </form>
+        <button class="aButton blockButton" >注册</button>
+    </div>
+    <!-- popup form -->
+    <!-- block everything -->
+    <div id="blockEverything"></div>
+    <!-- block everything -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/cookie.js"></script>
+  <script src="js/teach-plan-edit.js"></script>
+  <script src="js/base.js"></script>
+  <script>
+    editTeachingPlan();
+  </script>
+</body>
 </html>

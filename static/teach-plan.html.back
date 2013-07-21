@@ -37,7 +37,7 @@
 
 
       <div class="content">
-        <h1 class="teach-plan-title" id="teach-plan-title"></h1>
+        <h1 class="teach-plan-title" id="teach-plan-title">家乡大发现</h1>
         <div class="teach-plan-info" id="teach-plan-info">
           <div class="teach-plan-data">
             <table class="teach-plan-data-tb">
@@ -45,21 +45,21 @@
               <tbody>
                 <tr> 
                   <th class="teach-plan-read-counter wd120 hd25">浏览次数：</th>
-                  <td id="teach-plan-read-counter" class="wd50 hd25"> </td>
+                  <td id="teach-plan-read-counter" class="wd50 hd25"> 78次</td>
                   <th class="teach-plan-edit-counter wd120 hd25">编辑次数：</th>
-                  <td id="teach-plan-edit-counter" class=" wd50 hd25"> <a href="#"></a> </td>
+                  <td id="teach-plan-edit-counter" class=" wd50 hd25"> <a href="#">7</a> </td>
                 </tr>
                 <tr>
                   <th class="teach-plan-like-counter wd120 hd25">被赞次数： </th>
-                  <td id="teach-plan-like-counter" class="wd50 hd25"></td>
+                  <td id="teach-plan-like-counter" class="wd50 hd25">33次</td>
                   <th class="teach-plan-update-date wd120 hd25">最近更新： </th>
-                  <td id="teach-plan-update-date" class="wd50 hd25"> </td>
+                  <td id="teach-plan-update-date" class="wd50 hd25">今天 </td>
                 </tr>
                 <tr>
                   <th class="teach-plan-download-counter">下载次数： </th>
-                  <td id="teach-plan-download-counter"> </td>
+                  <td id="teach-plan-download-counter">43次 </td>
                   <th class+"teach-plan-creater">教案作者： </th>
-                  <td id="teach-plan-creater"> </td>
+                  <td id="teach-plan-creater">用户名 </td>
                 </tr>
               </tbody>
             </table>
@@ -69,12 +69,12 @@
               <caption class="teach-plan-captain">教案标签</caption>
               <tbody class="teach-plan-label-group-tb-tbody">
               <tr> 
-                <td class="wd125 hd35"><a class="teach-plan-label"></a></td>
-                <td class="wd125 hd35"><a class="teach-plan-label"></a></td>
+                <td class="wd125 hd35"><a class="teach-plan-label">乡土认同</a></td>
+                <td class="wd125 hd35"><a class="teach-plan-label">大麦山</a></td>
               </tr>
               <tr>
-                <td class="wd125 hd35"><a class="teach-plan-label"></a></td>
-                <td class="wd125 hd35"><a class="teach-plan-label"></a></td>
+                <td class="wd125 hd35"><a class="teach-plan-label">自然教育</a></td>
+                <td class="wd125 hd35"><a class="teach-plan-label">社会能力</a></td>
               </tr>
             </tbody>
             </table>
@@ -86,30 +86,31 @@
             <table class="teach-plan-self-tb-1" border="4">
               <tr>
                 <th  class="wd100" >课程名称</th>
-                <td id="teach-plan-coursename" class="wd450" ></td>
+                <td id="teach-plan-coursename" class="wd450" >家乡大发现</td>
                 <th class="wd100" >模板名称</th>
-                <td id="teach-plan-template" class="wd450" ></td>
+                <td id="teach-plan-template" class="wd450" >自然不科学</td>
               </tr>
               <tr>
                 <th class="wd100" >课程</th>
-                <td id="teach-plan-course" class="wd450" ></td>
+                <td id="teach-plan-course" class="wd450" >乡土认同</td>
                 <th class="wd100" >课程课时</th>
-                <td id="teach-plan-course-last" class="wd450" ></td>
+                <td id="teach-plan-course-last" class="wd450" >40min*2</td>
               </tr>
               <tr>
                 <th class="wd100" >执行义工</th>
-                <td id="teach-plan-processing-staff" class="wd450" ></td>
+                <td id="teach-plan-processing-staff" class="wd450" >唯一</td>
                 <th class="wd100" >适用授课年级</th>
-                <td id="teach-plan-processing-grade" class="wd450" ></td>
+                <td id="teach-plan-processing-grade" class="wd450" >初中</td>
               </tr>
               <tr>
                 <th class="wd100 hd25">背景分析</th>
                 <td id="teach-plan-background" class="wd1000 hd25" colspan="3"> 
+                  让学生明白家乡的含义，进而重新认识自己的家乡，进而热爱家乡，树立为家乡贡献自己的力量的观念。
                 </td>
               </tr>
               <tr>
                 <th class="wd100 hd25">课前准备</th>
-                <td id="teach-plan-prepare-class" class="wd1000 hd25" colspan="3"> </td>
+                <td id="teach-plan-prepare-class" class="wd1000 hd25" colspan="3"> 道具、物资、听课义工、入组义工等</td>
               </tr>
               <tr>
                 <th class="wd100 hd25">教学资源</th>
@@ -117,7 +118,7 @@
               </tr>
               <tr>
                 <th class="wd100 hd25">教学目标</th>
-                <td id="teach-plan-target" class="wd1000 hd25" colspan="3"> </td>
+                <td id="teach-plan-target" class="wd1000 hd25" colspan="3"> 让同学们用善于发现的眼光去发现身边的资源，利用身边的资源，增强学生对连南大麦山乡土认同。</td>
               </tr>
             </table>
             <table class="teach-plan-self-tb-2" border="1">
@@ -131,6 +132,7 @@
                 <th class="wd100">导入部分</th>
                 <td id="teach-plan-leading-time" class="wd50"> </td>
                 <td id="teach-plan-leading-content" class="wd700">
+                  让学生明白家乡的含义，进而重新认识自己的家乡，进而热爱家乡，树立为家乡贡献自己的力量的观念。
                 </td>
                 <td id="teach-plan-leading-requirement" class="wd250"> </td>
               </tr>
@@ -138,6 +140,7 @@
                 <th class="wd100">正式部分</th>
                 <td id="teach-plan-ongoing-time" class="wd50"> </td>
                 <td id="teach-plan-ongoing-content" class="wd700">
+                  让学生明白家乡的含义，进而重新认识自己的家乡，进而热爱家乡，树立为家乡贡献自己的力量的观念。
                 </td>
                 <td id="teach-plan-ongoing-requirement" class="wd250"> </td>
               </tr>
@@ -145,6 +148,7 @@
                 <th class="wd100">结束部分</th>
                 <td id="teach-plan-ending-time" class="wd50"> </td>
                 <td id="teach-plan-ending-content" class="wd700">
+                  让学生明白家乡的含义，进而重新认识自己的家乡，进而热爱家乡，树立为家乡贡献自己的力量的观念。
                 </td>
                 <td id="teach-plan-ending-requirement" class="wd250"> </td>
               </tr>
@@ -152,11 +156,12 @@
                 <th class="wd100">课后小结</th>
                 <td id="teach-plan-conclusion-time" class="wd50"> </td>
                 <td id="teach-plan-conclusion-content" class="wd700">
+                  让学生明白家乡的含义，进而重新认识自己的家乡，进而热爱家乡，树立为家乡贡献自己的力量的观念。
                 </td>
                 <td id="teach-plan-conclusion-requirement" class="wd250"> </td>
               </tr>
               <tr>
-                <th class="wd100">你的描述</th>
+                <th class="wd100">导入部分</th>
                 <td id="teach-plan-description-time" class="wd50"> </td>
                 <td id="teach-plan-description-content" class="wd700">
                   让学生明白家乡的含义，进而重新认识自己的家乡，进而热爱家乡，树立为家乡贡献自己的力量的观念。
@@ -228,8 +233,8 @@
             <td class="wd100"><input name="email"/></td>
           </tr>
         </table>
+        <button class="aButton blockButton" >登录</button>
       </form>
-        <button class="aButton blockButton" >注册</button>
     </div>
     <!-- popup form -->
     <!-- block everything -->

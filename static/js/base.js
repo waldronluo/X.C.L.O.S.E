@@ -26,6 +26,7 @@ function signin() {
     var password = document.getElementById ("signinPassword");
     var password2 = document.getElementById ("signinPassword2");
     var email = document.getElementById ("signinEmail");
+    console.log (password.value != password2.value) ;
     if (password.value != password2.value) {
         var p = document.createElement ("p");
         p.style.color = "#FF3311";
@@ -37,6 +38,7 @@ function signin() {
         if (GLOBAL.socket != "undefined") {
             GLOBAL.socket.emit ([name.value, password.value, email.value]);
             GLOBAL.socket.on ("registerReply", function (ifsignin) {
+                console.log("kk");
                 if (ifsignin == "false"){
                     var p = document.createElement ("p");
                     p.style.color = "#FF3311";
@@ -82,13 +84,24 @@ function logout() {
     console.log ("AAA");
     if (GLOBAL.socket != "undefined")
         GLOBAL.socket.emit ("logout", [getCookie("name")]);
-    setCookie("ifLogin", false);
+    setCookie("iflogin", "false");
     userlog = document.getElementById("userlog");
     userlog.style.display = "block";
     logged = document.getElementById("logged");
     logged.style.display = "none";
     console.log ("AAA");
 
+}
+
+function checkLogin () {
+    iflogin = getCookie("iflogin");
+    if (iflogin == "true"){ 
+        window.location.href="/teach-plan-edit";
+        return true;
+    } else {
+        alert("先登录一下啊");
+        return false;
+    }
 }
 
 (function() {

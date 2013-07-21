@@ -3,11 +3,6 @@ var GLOBAL =[];
 GLOBAL.socket = io.connect('http://127.0.0.1:8089');
 
 function editTeachingPlan () {
-    iflogin = getCookie("iflogin");
-    if ( iflogin == "false") {
-        alert("请先登录一下啊");
-        return ;
-    }
     document.getElementById("teach-plan-title").style.display = "none";
     document.getElementById("teach-plan-info").style.display = "none";
 
@@ -110,7 +105,7 @@ function addTextArea (element, cols, rows, name) {
 }
 
 
-
+/*
 (function (){
     var id = getCookie("post_id");
     GLOBAL.socket.emit("getOnePost", id);    
@@ -154,7 +149,6 @@ function addTextArea (element, cols, rows, name) {
             tbody.appendChild(tr);
         }
         table.appendChild(tbody);
-        /*!!!!!!!!!!!!!!!!!!!Here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
         document.getElementById ("teach-plan-coursename").innerHTML = teachPlan[8]['teach-plan-coursename'];
         document.getElementById ("teach-plan-template").innerHTML = teachPlan[9]['teach-plan-template'];
@@ -186,4 +180,4 @@ function addTextArea (element, cols, rows, name) {
 
 
 
-})();
+})();*/
