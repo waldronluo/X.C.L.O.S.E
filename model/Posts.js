@@ -460,6 +460,9 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 														});
 														res.write(fs.readFileSync(__dirname + '/../static/teach-plan.html', 'utf-8'));
 														res.end();
+														collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
+															console.log(arr[0]._id + ': edit_count + 1');
+														});
 													});
 												}
 												else {
@@ -468,9 +471,6 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 													res.write(fs.readFileSync(__dirname + '/../static/index.html', 'utf-8'));
 													res.end();
 												}
-											});
-											collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
-												console.log(arr[0]._id + ': edit_count + 1');
 											});
 										});
 									});
@@ -526,6 +526,9 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 														});
 														res.write(fs.readFileSync(__dirname + '/../static/teach-plan.html', 'utf-8'));
 														res.end();
+														collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
+															console.log(arr[0]._id + ': edit_count + 1');
+														});
 													});
 												}
 												else {
@@ -534,9 +537,6 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 													res.write(fs.readFileSync(__dirname + '/../static/index.html', 'utf-8'));
 													res.end();
 												}
-											});
-											collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
-												console.log(arr[0]._id + ': edit_count + 1');
 											});
 										});
 									});
