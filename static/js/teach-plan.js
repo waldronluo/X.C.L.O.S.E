@@ -114,7 +114,11 @@ function addTextArea (element, cols, rows, name) {
         document.getElementById ("teach-plan-id").value = teachPlan[36]["post_id"];
         document.getElementById ("teach-plan-download").href = "/teach-plan-download?post_id="+teachPlan[36]["post_id"];
         document.getElementById ("teach-plan-title").innerHTML = teachPlan[0]['teach-plan-title'];
-        document.getElementById ("teach-plan-edit-counter").innerHTML = teachPlan[4]['teach-plan-edit-counter'];
+        
+        var editCounter = document.getElementById ("teach-plan-edit-counter");
+        editCounter.innerHTML = "<a href=/teach-plan-history?post_id="+teachPlan[36]["post_id"]+">"+teachPlan[4]['teach-plan-edit-counter']+"</a>";
+        //editCounter.href = "/teach-plan-history?post_id="+teachPlan[36]["post_id"];
+
         document.getElementById ("teach-plan-read-counter").innerHTML = teachPlan[3]['teach-plan-read-counter'];
         document.getElementById ("teach-plan-like-counter").innerHTML = teachPlan[5]['teach-plan-like-counter'];
         document.getElementById ("teach-plan-download-counter").innerHTML = teachPlan[6]['teach-plan-download-counter'];
@@ -123,26 +127,28 @@ function addTextArea (element, cols, rows, name) {
 
         var table = document.getElementById("teach-plan-label-group-tb");
         table.innerHTML = "";
-        var captain = document.createElement("captain");
+        var captain = document.createElement("caption");
         captain.className = "teach-plan-captain";
         captain.innerHTML = "教案标签";
         table.appendChild(captain);
 
+        var tbody = document.createElement("tbody");;
         for ( var i=0 ; i<teachPlan[7]['teach-plan-label-group'].length; i+=2) {
             var tr = document.createElement ("tr");
             for (var j=0 ; j<2; j++ ) {
                 td = document.createElement ("td");
                 td.className = "wd125 hd35";
                 a = document.createElement("a");
-                a.className = "teach-plan-label";
+                a.className = "teach-plan-label"; 
                 a.innerHTML = teachPlan[7]['teach-plan-label-group'][i+j];
+                if (a.innerHTML == "undefined") break;
                 a.href = "/search?searchStr="+a.innerHTML+"&sortWay=LastChange&page=1";
                 td.appendChild(a);
                 tr.appendChild(td);
             }
-            table.appendChild(tr);
-
+            tbody.appendChild(tr);
         }
+        table.appendChild(tbody);
         /*!!!!!!!!!!!!!!!!!!!Here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
         document.getElementById ("teach-plan-coursename").innerHTML = teachPlan[8]['teach-plan-coursename'];
