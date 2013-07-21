@@ -50,8 +50,8 @@ iolisten.sockets.on('connection', function (socket){
 						queryStrArray['page'] );
 	}
 	else if (firstPathname == "/teach-plan"){
-		console.log(queryStrArray['post_id']);
-		var post_id = parseInt(queryStrArray['post_id']);			// string --> int  to find _id
+		console.log('/teachplan: ' +queryStrArray['post_id']);
+		var post_id = queryStrArray['post_id'];			// string
 		model.mongoDbGetOnePost(socket, post_id);
 		model.mongoDbAddAccessCount(post_id);
 	}
@@ -64,7 +64,7 @@ iolisten.sockets.on('connection', function (socket){
 	else if (firstPathname == "/teach-plan-history"){
 		console.log('history start');
 		console.log(queryStrArray['post_id']);
-		var post_id = parseInt(queryStrArray['post_id']);			// string --> int  to find _id
+		var post_id = queryStrArray['post_id'];			// string
 		model.mongoDbHistoryData(socket, post_id);
 	}
 	
@@ -98,7 +98,6 @@ iolisten.sockets.on('connection', function (socket){
 	// search -- getOnePost;
 	console.log('start socket on searchPost');
 	socket.on('getOnePost',function(post_id){
-		post_id = parseInt(post_id);
 		model.mongoDbGetOnePost(socket, post_id);
 	});
 		
@@ -146,6 +145,7 @@ iolisten.sockets.on('connection', function (socket){
 	console.log('start socket on findHistoryPost');
 	socket.on('findHistoryPost',function(post_id){
 		post_id = parseInt(post_id);
+		model.mongoDbHistoryData(socket, post_id);
 	});
 	
 	// public -- login
@@ -202,8 +202,6 @@ app.use(function(req, res){
 	var pathname = url.parse(req.url).pathname;
 	console.log("Request for " + pathname + " received.");
 	console.log("Request for " + firstPathname + " ---received.");
-	var temarr = req.body;
-	console.log(temarr);
 	console.log('-------------------------');
 	
 	if (pathname == "/" || pathname == ""){
@@ -279,11 +277,32 @@ app.use(function(req, res){
 		console.log(queryStrArray);
 		
 		res.writeHead(200, {"Content-Type": "text/html"});
-		res.write(fs.readFileSync(__dirname + '/static/search.html', 'utf-8'));
+		res.write(fs.readFileSync(__dirname + '/static/test----kkk.html', 'utf-8'));
 		res.end();
 	}
 	else if (pathname == "/teach-plan-save"){
+		//	url sample:		http://127.0.0.1:8089/teach-plan-save      teach-plan-id=123
+		firstPathname = "/teach-plan-save";
+		console.log('save start');
+		var id = req.body['teach-plan-id'];
+		console.log(req.body);
+		console.log(id);
+		var username = "default";
+		
+		model.mongoDbChangePost(req, id, username);
+		//model.mongoDbChangePost(temparr, temparr['teach-plan-id']);
 		res.end();
+	}
+	else if (pathname == "/teach-plan-download"){
+		//	url sample:		http://127.0.0.1:8089/teach-plan-download?post_id=123
+		firstPathname = "/teach-plan-download";
+		queryStrArray = new Array();
+		queryStrArray['post_id'] = querystring.parse(url.parse(req.url).query)['post_id'];		
+		console.log(queryStrArray);
+		
+		var temp_id = parseInt(queryStrArray['post_id']);
+		model.downloadOnePostXML(temp_id, res);
+		model.mongoDbAddDownloadCount(temp_id);
 	}
 	
 	else if (pathname == "/favicon.ico"){
@@ -297,46 +316,3 @@ app.use(function(req, res){
 	}
 });
 
-
-
-
-/*	node.js文件上传
-exports.postFile = function(req, res) {
-    if (req.headers['content-type'].match(/application\/octet-stream/i)) {
-        //文件名字
-        var fileExtention = req.headers['x-file-name'];
-        var fileStream = fs.createWriteStream(filePath);
-        req.pipe(fileStream);
-        req.on('end', function() {
-            //接收数据完毕，需要给客户端返回值，否则，客户端将一直等待，直到失败（其实上传文件已经成功了）
-            res.send({success:true});
-        })
-    }
-};
-*/
-
-/*	node.js文件下载
-exports.donwloadZip = function(req, res) {
-//    require('path').exists(userFile, function(exists) {
-//        console.log("exists: ", exists);
-//        if (exists) {
-//            fs.readFile(userFile, "binary", function(err, data) {
-//                res.writeHead(200, {"Content-Type": "application/zip"});
-//                res.write(data, "binary");
-//                res.end();
-//            });
-//        }
-//    });
-//上面的代码可以处理小文件，如果文件太大的话，由于 data 数据会保存在内存中，可能会造成内存不足
-	require('path').exists(userFile, function(exists) {
-		console.log("exists: ", exists);
-		if (exists) {
-			res.writeHead(200, {"Content-Type": "application/zip"});
-			fileStream.pipe(res);
-			fileStream.on("end", function() {
-				res.end();
-			});
-		}
-	});
-};
-*/

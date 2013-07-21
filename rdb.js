@@ -49,7 +49,7 @@ Post = function(){
 	this.download_count = 0;
 	
 	// post ID									Only ID for One saved Post
-	this.post_id = 0;		//key--: _id
+	this.post_id = 0;		//key--: post_id
 	
 	// first vaesion create time				if (createFrom=_id), then (origin_createTime =  post[_id].origin_createTime)
 	this.origin_createTime = new Date();
@@ -167,6 +167,7 @@ for (var i=0; i<4; i++)
 	
 	newPost.post_tag = ['乡土认同', '自然教育', '社会能力', '大麦山'];
 	
+	newPost.post_author = 'helloCJ';
 	
 	newPost.template_title = '自然教育';
 	newPost.volunteer = '唯一';
@@ -206,8 +207,8 @@ for (var i=0; i<4; i++)
 					'tags':newPost.post_tag,
 					'post_author':newPost.post_author,
 					
-					'post_createFrom_id':newPost.post_createFrom_id, 
-					'_id':newPost.post_id,
+					'post_createFrom_id':newPost.post_createFrom_id.toString(), 
+					'post_id':newPost.post_id.toString(),
 					'access_count':newPost.access_count,
 					'edit_count':newPost.edit_count,
 					'download_count':newPost.download_count,
@@ -238,6 +239,7 @@ for (var i=0; i<4; i++)
 	else newPost.most_recent = 0;
 	
 	newPost.post_tag = ['乡土认同', '自然教育', '社会能力', '大麦山'];
+	newPost.post_author = 'zhang';
 	
 	newPost.template_title = '乡土认同';
 	newPost.volunteer = '唯一';
@@ -277,8 +279,8 @@ for (var i=0; i<4; i++)
 					'tags':newPost.post_tag,
 					'post_author':newPost.post_author,
 					
-					'post_createFrom_id':newPost.post_createFrom_id, 
-					'_id':newPost.post_id,
+					'post_createFrom_id':newPost.post_createFrom_id.toString(), 
+					'post_id':newPost.post_id.toString(),
 					'access_count':newPost.access_count,
 					'edit_count':newPost.edit_count,
 					'download_count':newPost.download_count,
@@ -311,7 +313,7 @@ for (var i=0; i<4; i++)
 	else newPost.most_recent = 0;
 	
 	newPost.post_tag = ['乡土认同', '互动游戏', '白湾'];
-	
+	newPost.post_author = 'world';
 	
 	newPost.template_title = '乡土认同';
 	newPost.volunteer = '唯一';
@@ -351,8 +353,8 @@ for (var i=0; i<4; i++)
 					'tags':newPost.post_tag,
 					'post_author':newPost.post_author,
 					
-					'post_createFrom_id':newPost.post_createFrom_id, 
-					'_id':newPost.post_id,
+					'post_createFrom_id':newPost.post_createFrom_id.toString(), 
+					'post_id':newPost.post_id.toString(),
 					'access_count':newPost.access_count,
 					'edit_count':newPost.edit_count,
 					'download_count':newPost.download_count,
@@ -385,6 +387,7 @@ for (var i=0; i<4; i++)
 	else newPost.most_recent = 0;
 	
 	newPost.post_tag = ['数理化', '服务学习'];
+	newPost.post_author = 'easytime';
 	
 	newPost.template_title = '服务学习';
 	newPost.volunteer = '唯一';
@@ -424,8 +427,8 @@ for (var i=0; i<4; i++)
 					'tags':newPost.post_tag,
 					'post_author':newPost.post_author,
 					
-					'post_createFrom_id':newPost.post_createFrom_id, 
-					'_id':newPost.post_id,
+					'post_createFrom_id':newPost.post_createFrom_id.toString(), 
+					'post_id':newPost.post_id.toString(),
 					'access_count':newPost.access_count,
 					'edit_count':newPost.edit_count,
 					'download_count':newPost.download_count,
@@ -456,6 +459,7 @@ for (var i=0; i<4; i++)
 	else newPost.most_recent = 0;
 	
 	newPost.post_tag = ['陪伴成长', '情感教育', '乡土认同', '自然教育'];
+	newPost.post_author = '123456';
 	
 	newPost.template_title = '服务学习';
 	newPost.volunteer = '唯一';
@@ -495,8 +499,8 @@ for (var i=0; i<4; i++)
 					'tags':newPost.post_tag,
 					'post_author':newPost.post_author,
 					
-					'post_createFrom_id':newPost.post_createFrom_id, 
-					'_id':newPost.post_id,
+					'post_createFrom_id':newPost.post_createFrom_id.toString(), 
+					'post_id':newPost.post_id.toString(),
 					'access_count':newPost.access_count,
 					'edit_count':newPost.edit_count,
 					'download_count':newPost.download_count,
