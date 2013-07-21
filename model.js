@@ -97,8 +97,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 			switch (sortWay){
 				case 'LastChange' :{
 					console.log('DB search LastChange, get result');
-					collection.find({'most_recent':1, 
-									$or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}}, {'tags':searchStr}]},
+					collection.find({$or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}}, {'tags':searchStr}]},
 									{'post_id':1, 
 									'course_title':1, 
 									'teaching_goal':1, 
@@ -138,8 +137,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 				}
 				case 'CreateTime' :{
 					console.log('DB search CreateTime, get result');
-					collection.find({'most_recent':1, 
-									$or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}},{'tags':searchStr}]},
+					collection.find({$or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}},{'tags':searchStr}]},
 									{'post_id':1, 
 									'course_title':1, 
 									'teaching_goal':1, 
@@ -177,8 +175,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 				}
 				case 'AccessCount' :{
 					console.log('DB search AccessCount, get result');
-					collection.find({'most_recent':1, 
-									$or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}},{'tags':searchStr}]},
+					collection.find({$or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}},{'tags':searchStr}]},
 									{'post_id':1, 
 									'course_title':1, 
 									'teaching_goal':1, 
@@ -216,8 +213,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 				}
 				default :{
 					console.log('DB search Default, get result');
-					collection.find({'most_recent':1, 
-									$or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}},{'tags':searchStr}]},
+					collection.find({$or:[{'course_title':{$regex:searchStr}}, {'teaching_goal':{$regex:searchStr}},{'tags':searchStr}]},
 									{'post_id':1, 
 									'course_title':1, 
 									'teaching_goal':1, 

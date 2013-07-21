@@ -145,9 +145,9 @@ mgconnect.open(function (err, db) {
 	
 var counter = 100;
 var tempDate = new Date();
-tempDate.setDate(tempDate.getDate() - 8);
+tempDate.setDate(tempDate.getDate() - 160);
 var staticDate = new Date();
-staticDate.setDate(staticDate.getDate() - 8);
+staticDate.setDate(staticDate.getDate() - 160);
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
@@ -219,8 +219,10 @@ for (var i=0; i<4; i++)
 }
 
 counter = 222;
-tempDate = new Date();
-staticDate = new Date();
+var tempDate = new Date();
+tempDate.setDate(tempDate.getDate() - 150);
+var staticDate = new Date();
+staticDate.setDate(staticDate.getDate() - 150);
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
@@ -292,9 +294,9 @@ for (var i=0; i<4; i++)
 
 counter = 835;
 tempDate = new Date();
-tempDate.setDate(tempDate.getDate() - 10);
+tempDate.setDate(tempDate.getDate() - 80);
 staticDate = new Date();
-staticDate.setDate(staticDate.getDate()- 10);
+staticDate.setDate(staticDate.getDate()- 80);
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
@@ -366,9 +368,9 @@ for (var i=0; i<4; i++)
 
 counter = 159;
 tempDate = new Date();
-tempDate.setDate(tempDate.getDate() - 20);
+tempDate.setDate(tempDate.getDate() - 180);
 staticDate = new Date();
-staticDate.setDate(staticDate.getDate() - 20);
+staticDate.setDate(staticDate.getDate() - 180);
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
@@ -439,8 +441,10 @@ for (var i=0; i<4; i++)
 }
 
 counter = 1057;
-tempDate = new Date();
-staticDate = new Date();
+var tempDate = new Date();
+tempDate.setDate(tempDate.getDate() - 160);
+var staticDate = new Date();
+staticDate.setDate(staticDate.getDate() - 160);
 for (var i=0; i<4; i++)
 {
 	var newPost = new Post();
