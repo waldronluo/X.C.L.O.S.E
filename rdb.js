@@ -182,7 +182,7 @@ for (var i=0; i<4; i++)
 	newPost.lesson_summary = '自我评价：这堂课以家乡为主，让学生从自己最熟悉的家乡入手；说进行引导（本意是让学生认真发现家乡的美，家乡的文化，发现它，喜欢它，爱上它。';
 	
 	newPost.access_count = i+5;
-	newPost.edit_count = i+1;
+	newPost.edit_count = 4;
 	newPost.download_count = 2;
 	newPost.like_count = 10;
 	
@@ -258,7 +258,7 @@ for (var i=0; i<4; i++)
 	newPost.lesson_summary = '自我评价：这堂课以家乡为主，让学生从自己最熟悉的家乡入手；说起瑶族文化，学生们都很快反应；讨论效果较佳；第二节课的成果展示，很多学生由于准备不足，展示效果不佳；由于时间掌握得不是很好，最后没有进行引导（本意是让学生认真发现家乡的美，家乡的文化，发现它，喜欢它，爱上它。';	
 	
 	newPost.access_count = i+5;
-	newPost.edit_count = i+1;
+	newPost.edit_count = 4;
 	newPost.download_count = 2;
 	newPost.like_count = 20;
 	
@@ -334,7 +334,7 @@ for (var i=0; i<4; i++)
 	newPost.lesson_summary = '让学生从自己最熟悉的家乡入手；学生们都很快反应；讨论效果较佳';	
 	
 	newPost.access_count = i+5;
-	newPost.edit_count = i+1;
+	newPost.edit_count = 4;
 	newPost.download_count = 2;
 	newPost.like_count = 17;
 	
@@ -410,7 +410,7 @@ for (var i=0; i<4; i++)
 	newPost.lesson_summary = '自我评价：最后没有进行引导（本意是让。';	
 	
 	newPost.access_count = i+5;
-	newPost.edit_count = i+1;
+	newPost.edit_count = 4;
 	newPost.download_count = 2;
 	newPost.like_count = 9;
 	
@@ -486,7 +486,7 @@ for (var i=0; i<4; i++)
 	newPost.lesson_summary = '自我评价：最后没有进行引导（本意是让。';	
 	
 	newPost.access_count = i+5;
-	newPost.edit_count = i+1;
+	newPost.edit_count = 4;
 	newPost.download_count = 2;
 	newPost.like_count = 13;
 	

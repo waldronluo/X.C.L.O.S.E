@@ -31,7 +31,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
-										console.log(sendArr[i]);
+										//console.log(sendArr[i]);
 										//date format : 2010.03.09
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
@@ -43,7 +43,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[11] = sortWay;
 							sendArr[12] = page;
 							sendArr[13] = Math.ceil(len/10);
-							console.log(sendArr);
+							//console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
 							db.close();
 						});
@@ -69,7 +69,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
-										console.log(sendArr[i]);
+										//console.log(sendArr[i]);
 										//date format : 2010.03.09
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
@@ -81,7 +81,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[11] = sortWay;
 							sendArr[12] = page;
 							sendArr[13] = Math.ceil(len/10);
-							console.log(sendArr);
+							//console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
 							db.close();
 						});
@@ -107,7 +107,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
-										console.log(sendArr[i]);
+										//console.log(sendArr[i]);
 										//date format : 2010.03.09
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
@@ -119,7 +119,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[11] = sortWay;
 							sendArr[12] = page;
 							sendArr[13] = Math.ceil(len/10);
-							console.log(sendArr);
+							//console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
 							db.close();
 						});
@@ -145,7 +145,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 										break;
 									else {
 										sendArr[i] = arr[(page-1)*10+i];
-										console.log(sendArr[i]);
+										//console.log(sendArr[i]);
 										//date format : 2010.03.09
 										sendArr[i].post_createTime = dateFormat(sendArr[i].post_createTime);
 										sendArr[i].origin_createTime = dateFormat(sendArr[i].origin_createTime);
@@ -157,7 +157,7 @@ exports.mongoDbSearchPost = function(socket, searchStr, sortWay, page){
 							sendArr[11] = sortWay;
 							sendArr[12] = page;
 							sendArr[13] = Math.ceil(len/10);
-							console.log(sendArr);
+							//console.log(sendArr);
 							socket.emit('searchPostReply', sendArr);
 							db.close();
 						});
@@ -180,7 +180,7 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 				result.toArray(function(err, arr){
 					var sendArr = new Array();
 					console.log('get one post:' + post_id);
-					console.log(arr);
+					//console.log(arr);
 					if (arr.length != 0){
 						arr[0].origin_createTime = dateFormat(arr[0].origin_createTime);
 						arr[0].post_createTime = dateFormat(arr[0].post_createTime);
@@ -225,7 +225,7 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 								{'most_recent':arr[0].most_recent},
 								{'post_id':arr[0].post_id}
 								];				
-						console.log(sendArr);
+						//console.log(sendArr);
 						// add access count
 						collection.update({'post_id':post_id}, {'$inc':{'access_count':1}}, function(err){
 							console.log(post_id + ': access_count + 1');
@@ -297,7 +297,7 @@ exports.downloadOnePostXML = function(post_id, res){
 		db.collection('postlist', function (err, collection) {
 			collection.find({'post_id':post_id},function (err,result){
 				result.toArray(function(err, arr){
-					console.log(arr);
+					//console.log(arr);
 					if (arr.length != 0){
 						arr[0].origin_createTime = dateFormat(arr[0].origin_createTime);
 						arr[0].post_createTime = dateFormat(arr[0].post_createTime);
@@ -398,7 +398,7 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 				if (counter >= 27)
 					temp_tags[counter-27] = item;
 			}
-			console.log(temp_tags);
+			
 			// change
 			collection.find({'post_id':post_id}, 
 							{'name':1, 'origin_createTime':1, 'post_createFrom_id':1, 'post_id':1, 'edit_count':1},function(err,result){
@@ -451,8 +451,11 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 												console.log('-- REconstruct post_id');		// only the new post can be found
 												console.log(arr);
 												if (arr.length != 0){
-													collection.update({'_id':arr[0]._id},{$set:{'post_id':arr[0]._id.toString()}},
+													collection.update({'_id':arr[0]._id},{'$set':{'post_id':arr[0]._id.toString()}},
 																	function(){
+														collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
+															console.log(arr[0]._id + ': edit_count + 1');
+														});
 														// return teach-plan after update
 														res.writeHead(200, {
 															"Set-Cookie": [ "post_id=" + arr[0]._id.toString()],
@@ -460,9 +463,6 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 														});
 														res.write(fs.readFileSync(__dirname + '/../static/teach-plan.html', 'utf-8'));
 														res.end();
-														collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
-															console.log(arr[0]._id + ': edit_count + 1');
-														});
 													});
 												}
 												else {
@@ -517,8 +517,11 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 												console.log('-- REconstruct post_id');		// only the new post can be found
 												console.log(arr);
 												if (arr.length != 0){
-													collection.update({'_id':arr[0]._id},{$set:{'post_id':arr[0]._id.toString()}},
+													collection.update({'_id':arr[0]._id},{'$set':{'post_id':arr[0]._id.toString()}},
 																	function(){
+														collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
+															console.log(arr[0]._id + ': edit_count + 1');
+														});
 														// return teach-plan after update
 														res.writeHead(200, {
 															"Set-Cookie": [ "post_id=" + arr[0]._id.toString()],
@@ -526,9 +529,6 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 														});
 														res.write(fs.readFileSync(__dirname + '/../static/teach-plan.html', 'utf-8'));
 														res.end();
-														collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
-															console.log(arr[0]._id + ': edit_count + 1');
-														});
 													});
 												}
 												else {
