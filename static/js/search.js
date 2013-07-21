@@ -34,6 +34,7 @@ function changeSortWay (sortWay) {
     GLOBAL.socket.emit( "searchPost",[getCookie("searchStr"), sortWay, getCookie("page")] );
 }
 function changePage (page) {
+    console.log('page' + page);
     GLOBAL.socket.emit( "searchPost",[getCookie("searchStr"), getCookie("sortWay"), page] );
 }
 
@@ -52,7 +53,7 @@ function refreshPageCount (pageCounter) {
             a.innerHTML = counter;
             a.href="#";
             //a.onclick="";
-            a.onclick = function() {changePage(a.innerHTML);};
+            a.onclick = function() {changePage(this.innerHTML);};
             page.appendChild(a);
             //今晚写博客
         }
