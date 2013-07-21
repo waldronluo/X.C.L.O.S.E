@@ -266,7 +266,7 @@ app.use(function(req, res){
 	else if (pathname == "/teach-plan-save"){
 		//	url sample:		http://127.0.0.1:8089/teach-plan-save      teach-plan-id=123
 		firstPathname = "/teach-plan";			//use for show teach-plan after save
-		var username = getReqCookie(req, 'searchStr');
+		var username = getReqCookie(req, 'name');
 		var post_id = req.body['teach-plan-id'];
 		
 		console.log(userArray);
