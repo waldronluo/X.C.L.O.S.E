@@ -64,7 +64,8 @@
           </div>
         </div>
         <div class="teach-plan-self">
-          <form class="teach-plan-self-form">
+          <form class="teach-plan-self-form" method="post" action="/teach-plan-save">
+            <input name="teach-plan-id" id="teach-plan-id" type="hidden"></input>
             <table class="teach-plan-self-tb-1" border="4">
               <tr>
                 <th  class="wd100" >课程名称</th>
@@ -151,11 +152,19 @@
                 <td id="teach-plan-description-requirement" class="wd250"> </td>
               </tr>
             </table>
-            <table class="teach-plan-self-tb-3" id="teach-plan-label-select-table" border="1">
+            <table class="teach-plan-self-tb-3" id="teach-plan-self-tb-3" border="1">
+              <tr>
+                <th class="wd100">所属标签</th>
+                <td class="wd1100" id="teach-plan-label-select-table">
+                </td>
+              </tr>
             </table>
+            <section class="teach-plan-submit-section">
+            <button type="submit" class="teach-plan-submit aButton" id="teach-plan-submit">提交教案</button>
+            </section>
           </form>
-          <a href="#" onclick="editTeachingPlan()" class="aButton teach-plan-right">修改教案</a>
-          <a href="#" onclick="" class="aButton teach-plan-right">下载教案</a>
+          <a href="#" onclick="editTeachingPlan()" class="aButton teach-plan-right" id="teach-plan-edit">修改教案</a>
+          <a href="#" onclick="" class="aButton teach-plan-right" id="teach-plan-download">下载教案</a>
         </div>
       </div>
     </div>

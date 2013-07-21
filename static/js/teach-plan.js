@@ -3,10 +3,8 @@ var GLOBAL =[];
 GLOBAL.socket = io.connect('http://127.0.0.1:8089');
 
 function editTeachingPlan () {
-    document.getElementById("teach-plan-title").style.visibility = "hidden";
-    document.getElementById("teach-plan-title").innerHTML = "";
-    document.getElementById("teach-plan-info").style.visibility = "hidden";
-    document.getElementById("teach-plan-info").innerHTML = "";
+    document.getElementById("teach-plan-title").style.display = "none";
+    document.getElementById("teach-plan-info").style.display = "none";
 
     quickAddTextArea ("teach-plan-coursename", 54, 1);
     quickAddTextArea ("teach-plan-template", 54, 1);
@@ -35,10 +33,63 @@ function editTeachingPlan () {
     quickAddTextArea ("teach-plan-description-requirement", 29, 10);
     GLOBAL.socket.emit("labels");
     GLOBAL.socket.on ("labelsReply", function (TagsArr) {
+        var labelTable = document.getElementById("teach-plan-label-select-table");
+        var existingLabel = document.getElementById("teach-plan-label-group-tb").getElementsByTagName('a');
+        labelTable.innerHTML = "";
+        if (TagsArr.length == "undefined") return;
+
+        for (var i=0 ; i<TagsArr.length; i++) {
+            var labelTitle = TagsArr[i][0];
+            var labelGroup = TagsArr[i][1];
+            var teach_plan_label_group = document.createElement('div');
+            teach_plan_label_group.className = "teach-plan-label-select-group";
+
+            (function() {
+                var teach_plan_label_leader = document.createElement('div');
+                teach_plan_label_leader.className = "teach-plan-label-leader";
+                teach_plan_label_leader.innerHTML = labelTitle;
+
+                var teach_plan_label_select_cloud = document.createElement('div');
+                teach_plan_label_select_cloud.className = "teach-plan-label-select-cloud";
+                for (var j=0 ; j<labelGroup.length; j++ ) {
+                    var teach_plan_label_select_pair = document.createElement('div');
+                    teach_plan_label_select_pair.className = "teach-plan-label-select-pair";
+
+                    var teach_plan_label_select = document.createElement('input');
+                    teach_plan_label_select.type = "checkbox";
+                    teach_plan_label_select.name = labelGroup[j];
+                    if (isExist (existingLabel, labelGroup[j]))
+                        teach_plan_label_select.checked = "checked";
+                    teach_plan_label_select_pair.appendChild (teach_plan_label_select);
+
+                    var teach_plan_label_select_l = document.createElement('a');
+                    teach_plan_label_select_l.className = "teach-plan-label-select-l";
+                    teach_plan_label_select_l.innerHTML = labelGroup[j];
+                    teach_plan_label_select_pair.appendChild (teach_plan_label_select_l);
+
+                    teach_plan_label_select_cloud.appendChild (teach_plan_label_select_pair);
+                }
+
+                teach_plan_label_group.appendChild(teach_plan_label_leader);
+                teach_plan_label_group.appendChild(teach_plan_label_select_cloud);
+            })();
+            labelTable.appendChild(teach_plan_label_group);
+        }
+        
+        document.getElementById("teach-plan-self-tb-3").style.display = "block";
+        document.getElementById("teach-plan-submit").style.display = "block";
+        document.getElementById("teach-plan-edit").style.display = "none";
+        document.getElementById("teach-plan-download").style.display = "none";
         console.log(TagsArr);
+
     });
 }
-
+function isExist ( elabelsElements, labelName) {
+    for (var i=0 ; i < elabelsElements.length; i++ )
+        if (elabelsElements[i].innerHTML == labelName)
+            return true;
+    return false;
+}
 function quickAddTextArea (elementId, cols, rows) {
     addTextArea ( document.getElementById(elementId),cols,rows,elementId);
 }
@@ -60,6 +111,7 @@ function addTextArea (element, cols, rows, name) {
     GLOBAL.socket.emit("getOnePost", id);    
     GLOBAL.socket.on("getOnePostReply", function(teachPlan) {
         console.log(teachPlan);
+        document.getElementById ("teach-plan-id").value = teachPlan[36]["post_id"];
         document.getElementById ("teach-plan-title").innerHTML = teachPlan[0]['teach-plan-title'];
         document.getElementById ("teach-plan-edit-counter").innerHTML = teachPlan[4]['teach-plan-edit-counter'];
         document.getElementById ("teach-plan-read-counter").innerHTML = teachPlan[3]['teach-plan-read-counter'];
@@ -67,7 +119,7 @@ function addTextArea (element, cols, rows, name) {
         document.getElementById ("teach-plan-download-counter").innerHTML = teachPlan[6]['teach-plan-download-counter'];
         document.getElementById ("teach-plan-update-date").innerHTML = teachPlan[2]['teach-plan-update-date'];
         document.getElementById ('teach-plan-creater').innerHTML = teachPlan[1]['teach-plan-creater'];
-        
+
         var table = document.getElementById("teach-plan-label-group-tb");
         table.innerHTML = "";
         var captain = document.createElement("captain");
@@ -83,6 +135,7 @@ function addTextArea (element, cols, rows, name) {
                 a = document.createElement("a");
                 a.className = "teach-plan-label";
                 a.innerHTML = teachPlan[7]['teach-plan-label-group'][i+j];
+                a.href = "/search?searchStr="+a.innerHTML+"&sortWay=LastChange&page=1";
                 td.appendChild(a);
                 tr.appendChild(td);
             }
@@ -90,7 +143,7 @@ function addTextArea (element, cols, rows, name) {
 
         }
         /*!!!!!!!!!!!!!!!!!!!Here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-        
+
         document.getElementById ("teach-plan-coursename").innerHTML = teachPlan[8]['teach-plan-coursename'];
         document.getElementById ("teach-plan-template").innerHTML = teachPlan[9]['teach-plan-template'];
         document.getElementById ("teach-plan-course").innerHTML = teachPlan[10]['teach-plan-course'];
@@ -116,9 +169,9 @@ function addTextArea (element, cols, rows, name) {
         document.getElementById ("teach-plan-description-time").innerHTML = teachPlan[30]['teach-plan-description-time'];
         document.getElementById ("teach-plan-description-content").innerHTML = teachPlan[31]['teach-plan-description-content'];
         document.getElementById ("teach-plan-description-requirement").innerHTML = teachPlan[32]['teach-plan-description-requirement'];
-    
-        });
+
+    });
 
 
 
-    })();
+})();

@@ -11,7 +11,11 @@
 }
 
 .content .teach-plan-info .teach-plan-captain {
+  margin: 0px 0px 5px 0px;
+  margin-left: auto;
+  margin-right: auto;
   color: #1111aa;
+  text-align: center;
 }
 .content .teach-plan-info .teach-plan-data {
   float: left;
@@ -23,18 +27,12 @@
   display: inline-block;
 }
 
-.content .teach-plan-info .teach-plan-captain {
-  margin: 0px 0px 5px 0px;
-}
-
-.content .teach-plan-info .teach-plan-label-group .teach-plan-label-group-tb {
-}
-
 .content .teach-plan-info .teach-plan-label-group .teach-plan-label {
   margin: 0px 10px 20px 10px;
   padding:5px 10px 5px 10px;
   background-color: rgb(248,250,255);
   border: 1px solid #000000;
+  text-decoration: none;
 }
 
 .content .teach-plan-self .teach-plan-self-tb-1 {
@@ -60,8 +58,13 @@
   margin: 10px 20px 20px 10px;
 }
 
-#teach-plan-label-select-table {
-  display: hidden;
+.teach-plan-self-tb-3 {
+  display: none;
+}
+
+.teach-plan-label-select-cloud {
+  display: inline-block;
+  margin: 2px 10px 2px 10px;
 }
 
 .teach-plan-label-select-pair {
@@ -77,4 +80,13 @@
 
 .teach-plan-label-select-group {
   display: block;
+}
+
+.teach-plan-submit-section{
+  background:rgb(218,226,228);
+}
+
+.teach-plan-submit {
+  display: none;
+  float: right;
 }
