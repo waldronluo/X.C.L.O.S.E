@@ -36,7 +36,7 @@ function signin() {
     }
     else {
         if (GLOBAL.socket != "undefined") {
-            GLOBAL.socket.emit ([name.value, password.value, email.value]);
+            GLOBAL.socket.emit ("register",[name.value, password.value, email.value]);
             GLOBAL.socket.on ("registerReply", function (ifsignin) {
                 console.log("kk");
                 if (ifsignin == "false"){
