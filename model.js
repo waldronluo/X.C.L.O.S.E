@@ -696,6 +696,61 @@ exports.mongoDbAddLikeCount = function(post_id){
 
 //--------------------------------------------------test unfinished
 
+// new user: return success or failed
+// return: T/F 
+exports.mongoDbNewUser = function(name, password, email){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	  
+	mgconnect.open(function (err, db) {	  
+		db.collection('userlist', function (err, collection) {
+			collection.find({'name':name, 'password':password},{'name':1,'_id':0},function(err,result){
+				result.toArray(function(err, arr){
+					console.log(arr.length);
+					if (arr.length !== 0){
+						console.log('already have a user');
+						db.close();
+						return false;
+					}
+					else {
+						collection.save({'name':name, 'password':password, 'email':email}, function(){
+							db.close();
+						});
+						console.log('user register success');
+						return true;
+					}
+				});
+			});
+		});
+	});
+}
+
+// check user: return success or failed
+// return: T/F 
+exports.mongoDbCheckUser = function(name, password){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	  
+	mgconnect.open(function (err, db) {	  
+		db.collection('userlist', function (err, collection) {
+			collection.find({'name':name, 'password':password},{'name':1,'_id':0},function(err,result){
+				result.toArray(function(err, arr){
+					console.log(arr.length);
+					if (arr.length == 1){
+						console.log('user login: '+arr[0]);
+						db.close();
+						return true;
+					} else if (arr.length == 0){
+						console.log('login info error');
+						db.close();
+						return false;
+					}
+				});
+			});
+		});
+	});
+}
+
 // new post -- newPostArr from
 exports.mongoDbNewPost = function(newPostArr){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
@@ -758,61 +813,6 @@ exports.mongoDbNewPost = function(newPostArr){
 		});
 	});
 };
-
-// new user: return success or failed
-// return: T/F 
-exports.mongoDbNewUser = function(name, password, email){
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	  
-	mgconnect.open(function (err, db) {	  
-		db.collection('userlist', function (err, collection) {
-			collection.find({'name':name, 'password':password},{'name':1,'_id':0},function(err,result){
-				result.toArray(function(err, arr){
-					console.log(arr.length);
-					if (arr.length !== 0){
-						console.log('already have a user');
-						db.close();
-						return false;
-					}
-					else {
-						collection.save({'name':name, 'password':password, 'email':email}, function(){
-							db.close();
-						});
-						console.log('user register success');
-						return true;
-					}
-				});
-			});
-		});
-	});
-}
-
-// check user: return success or failed
-// return: T/F 
-exports.mongoDbCheckUser = function(name, password){
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	  
-	mgconnect.open(function (err, db) {	  
-		db.collection('userlist', function (err, collection) {
-			collection.find({'name':name, 'password':password},{'name':1,'_id':0},function(err,result){
-				result.toArray(function(err, arr){
-					console.log(arr.length);
-					if (arr.length == 1){
-						console.log('user login: '+arr[0]);
-						db.close();
-						return true;
-					} else if (arr.length == 0){
-						console.log('login info error');
-						db.close();
-						return false;
-					}
-				});
-			});
-		});
-	});
-}
 
 // update Comments -------
 
