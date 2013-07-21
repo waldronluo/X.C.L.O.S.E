@@ -90,8 +90,8 @@ function refreshContent (teachPlanList) {
         postDate.innerHTML = "发布时间：" + teachPlanList[i]['origin_createTime'];
 
         var lastEditDate = document.createElement("p");
-        postDate.className = "resultDate lastEditDate";
-        postDate.innerHTML = "发布时间：" + teachPlanList[i]['post_createTime'];
+        lastEditDate.className = "resultDate lastEditDate";
+        lastEditDate.innerHTML = "最后修改时间：" + teachPlanList[i]['post_createTime'];
 
         dateGroup.appendChild(postDate);
         dateGroup.appendChild(lastEditDate);
