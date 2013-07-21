@@ -38,8 +38,7 @@ function signin() {
         if (GLOBAL.socket != "undefined") {
             GLOBAL.socket.emit ("register",[name.value, password.value, email.value]);
             GLOBAL.socket.on ("registerReply", function (ifsignin) {
-                console.log("kk");
-                if (ifsignin == "false"){
+                if (ifsignin == false){
                     var p = document.createElement ("p");
                     p.style.color = "#FF3311";
                     p.innerHTML = "这个名字已经有人用了。。。";
