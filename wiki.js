@@ -3,11 +3,14 @@
 var http = require("http");
 var connect = require("connect");
 var socketio = require("socket.io");
-var model = require('./model');
-
 var querystring = require("querystring");
 var url = require("url");
 var fs = require("fs");
+
+// js file
+var Posts = require('./Posts');
+var Tags = require('./Tags');
+var Users = require('./Users');
 
 // Defaults
 var portNumberDefault = process.env.PORT || 8089;
@@ -41,7 +44,7 @@ iolisten.sockets.on('connection', function (socket){
 	
 	if (firstPathname == "/search"){
 		console.log('search start');
-		model.mongoDbSearchPost(socket,
+		Posts.mongoDbSearchPost(socket,
 						queryStrArray['searchStr'],
 						queryStrArray['sortWay'],
 						queryStrArray['page'] );
@@ -49,7 +52,7 @@ iolisten.sockets.on('connection', function (socket){
 	else if (firstPathname == "/teach-plan"){
 	}
 	else if (firstPathname == "/teach-plan-edit"){
-		model.mongoDbGetTagsForEdit(socket);
+		Tags.mongoDbGetTagsForEdit(socket);
 	}
 	else if (firstPathname == "/teach-plan-save"){
 	}
@@ -57,13 +60,13 @@ iolisten.sockets.on('connection', function (socket){
 		console.log('history start');
 		console.log(queryStrArray['post_id']);
 		var post_id = queryStrArray['post_id'];			// string
-		model.mongoDbHistoryData(socket, post_id);
+		Posts.mongoDbHistoryData(socket, post_id);
 	}
 	
 	// index -- get labels
 	console.log('start socket on labels');
 	socket.on('labels',function(){
-		model.mongoDbGetTags(socket);	
+		Tags.mongoDbGetTags(socket);	
 	});
 	
 	// search -- searchPost;
@@ -81,7 +84,7 @@ iolisten.sockets.on('connection', function (socket){
 			console.log('--- searchStr undefined');
 			searchArr[0] = "";
 		}
-		model.mongoDbSearchPost(socket,
+		Posts.mongoDbSearchPost(socket,
 						searchArr[0],
 						searchArr[1],
 						searchArr[2] );
@@ -90,12 +93,12 @@ iolisten.sockets.on('connection', function (socket){
 	// search -- getOnePost  /teach-plan
 	console.log('start socket on searchPost');
 	socket.on('getOnePost',function(post_id){
-		model.mongoDbGetOnePost(socket, post_id);
+		Posts.mongoDbGetOnePost(socket, post_id);
 	});
 		
 	// --------------------------------------------------------------
 	// teach-plan-edit -- newPost  /teach-plan-save
-	console.log('start socket on newPost');
+	/*console.log('start socket on newPost');
 	socket.on('newPost',function(postArr, userName){
 		// var isLogin = false;
 		// for (var i=0; i<userArray.length; i++){
@@ -108,12 +111,12 @@ iolisten.sockets.on('connection', function (socket){
 		if (true){			// 'true' for function test
 			console.log('New teaching plan -- start');
 			postArr['post_author'] = userName;
-			mongoDbNewPost(postArr);
+			Posts.mongoDbNewPost(postArr);
 		}
 		else {
 			console.log('New teaching plan -- not login');
 		}
-	});
+	});*/
 	
 	// teach-plan-edit -- changePost	/
 	console.log('start socket on changePost');
@@ -127,7 +130,7 @@ iolisten.sockets.on('connection', function (socket){
 		}
 		if (isLogin){
 			console.log('Change teaching plan -- start');
-			mongoDbChangePost(postArr, post_id);
+			Posts.mongoDbChangePost(postArr, post_id);
 		}
 		else {
 			console.log('Change teaching plan -- not login');
@@ -138,7 +141,7 @@ iolisten.sockets.on('connection', function (socket){
 	console.log('start socket on findHistoryPost');
 	socket.on('findHistoryPost',function(post_id){
 		post_id = parseInt(post_id);
-		model.mongoDbHistoryData(socket, post_id);
+		Posts.mongoDbHistoryData(socket, post_id);
 	});
 	
 	// public -- login
@@ -146,7 +149,7 @@ iolisten.sockets.on('connection', function (socket){
 	socket.on('login',function(user){	
 		// message struct : user = ['name','password']
 		console.log(user);
-		model.mongoDbLoginUser(socket, userArray, user[0], user[1]);
+		Users.mongoDbLoginUser(socket, userArray, user[0], user[1]);
 	});	
 	
 	// public -- logout
@@ -173,7 +176,7 @@ iolisten.sockets.on('connection', function (socket){
 	socket.on('register',function(user){
 		// message struct : userArr = [name, password, passwordCon, email]
 		if (user[1] == user[2]) {
-			model.mongoDbNewUser(socket, userArray, 
+			Users.mongoDbNewUser(socket, userArray, 
 								user[0], user[1], user[3]);
 		}
 		else {
@@ -271,13 +274,29 @@ app.use(function(req, res){
 	else if (pathname == "/teach-plan-save"){
 		//	url sample:		http://127.0.0.1:8089/teach-plan-save      teach-plan-id=123
 		firstPathname = "/teach-plan";			//use for show teach-plan after save
-		console.log('save start');
+		var username = getReqCookie(req, 'searchStr');
 		var post_id = req.body['teach-plan-id'];
-		console.log(req.body);
-		console.log(post_id);
-		var username = "default";
 		
-		model.mongoDbChangePost(req, res, post_id, username);
+		console.log(userArray);
+		console.log(username);
+		console.log(post_id);
+		
+		var hasUser = false;
+		for (var i=0; i<userArray.length; i++){
+			if (userArray[i] == username){
+				hasUser = true;
+				break;
+			}
+		}
+		if (hasUser){
+			console.log('Pass - save start');
+			Posts.mongoDbChangePost(req, res, post_id, username);
+		}else {
+			console.log('Stop - can\'t save');
+			res.writeHead(200, {"Content-Type": "text/html"});
+			res.write(fs.readFileSync(__dirname + '/static/teach-plan.html', 'utf-8'));
+			res.end();
+		}
 	}
 	else if (pathname == "/teach-plan-download"){
 		//	url sample:		http://127.0.0.1:8089/teach-plan-download?post_id=123
@@ -286,7 +305,7 @@ app.use(function(req, res){
 		queryStrArray['post_id'] = querystring.parse(url.parse(req.url).query)['post_id'];		
 		console.log(queryStrArray);
 		
-		model.downloadOnePostXML(queryStrArray['post_id'], res);
+		Posts.downloadOnePostXML(queryStrArray['post_id'], res);
 	}
 	
 	else if (pathname == "/favicon.ico"){
@@ -300,3 +319,18 @@ app.use(function(req, res){
 	}
 });
 
+
+//------cookies operation
+function getReqCookie(req, c_name) {
+	if (req.headers.cookie.length > 0) {
+		c_start = req.headers.cookie.indexOf(c_name + "=");
+		if (c_start != -1) {
+			c_start = c_start + c_name.length + 1;
+			c_end = req.headers.cookie.indexOf(";", c_start);
+			if (c_end == -1) 
+				c_end = req.headers.cookie.length;
+			return unescape(req.headers.cookie.substring(c_start, c_end));
+		}
+	}
+	return "";
+}
