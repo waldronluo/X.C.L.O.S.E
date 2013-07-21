@@ -195,9 +195,15 @@
 .wd450 {
   width: 450px;
 }
-
+.wd500{
+  width: 500px;
+}
 .wd700 {
   width: 700px;
+}
+
+.wd900 {
+  width: 900px;
 }
 
 .wd1000{

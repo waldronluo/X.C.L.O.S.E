@@ -1,0 +1,135 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/>
+    <link href="css/base.css" rel='stylesheet' type="text/css"/>
+    <link href="css/history.css" rel='stylesheet' type="text/css"/>
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <div class="header">
+        <div class="userlog">
+          <a class="login" href="#" onclick="login()" >登录</a>
+          <a class="signin" href="#" onclick="signin()">注册</a>
+        </div>
+
+        <div class="header-content">
+          <h1 class="title"> 灯塔教案分享平台</h1>
+          <div class="search"/>
+            <input class="searchInput"/>
+            <a class="aButton" href="#">Go</a>
+          </div>
+        </div>
+
+        <div class="dark-blue-filter">
+          <!-- Use for dark blue filter"-->
+        </div>
+      </div>
+
+      <div class="content">
+        <table class="historyTable wd1000" >
+          <caption class="historyCaption"> 家乡大发现 </caption>
+          <tr class="historyHead">
+            <th class="updateTimeHead wd200"> 更新时间 </td>	
+            <th class="versionHead wd100"> 版本 </td>
+            <th class="greatCountHead wd100"> 点赞数 </td>
+            <th class="edictorHead wd100"> 修改者 </td>
+            <th class="edictReasonHead wd500"> 修改原因 </td>
+          </tr>
+          <tr class="historyEnvent">
+            <td class="updateTime"> 2013-11-11 19:11:11 </td>
+            <td class="version"> <a href="#" >查看</a> </td>
+            <td class="greatCount"> 23次 </td>
+            <td class="editor"> WeiKent </td>
+            <td class="edictReason"></td>
+          </tr>
+          <tr class="historyEnvent">
+            <td class="updateTime"> 2013-11-11 19:11:11 </td>
+            <td class="version"> <a href="#">查看</a> </td>
+            <td class="greatCount"> 23次 </td>
+            <td class="editor"> WeiKent </td>
+            <td class="edictReason">
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+              fuck a duck with some dick.
+            </td>
+          </tr>
+
+        </table>
+        <!-- popup popup signin!!!-->
+        <div id="login">
+          <div class="light-blue-bar">
+            <section class="light-blue-bar-word">登录</section>
+            <a class="light-blue-bar-X" onclick="X()">X</a>
+
+          </div>
+          <form class="popup-form">
+            <div class="input-pair">
+              <label class="popup-label">帐号</label>
+              <input class="popup-input" name="username"></input>
+            </div>
+            <div class="input-pair">
+              <label class="popup-label">密码</label>
+              <input class="popup-input" name="password" type="password"></input>
+            </div>
+            <button class="aButton blockButton">登录</button>
+          </form>
+          <div class="dark-blue-filter small"></div>
+          <p class="pNoAccount" > 还没有帐号咩？<a href="#">注册注册！</a></p>
+        </div>
+        <!-- popup form -->
+        <!-- popup popup login!!!-->
+        <div id="signin">
+          <div class="light-blue-bar">
+            <section class="light-blue-bar-word">注册</section>
+            <a class="light-blue-bar-X" onclick="X()">X</a>
+          </div>
+          <form class="popup-form">
+            <table>
+              <tr class="hd35">
+                <td class="wd50">用户名</td>
+                <td class="wd100"><input name="username"/></td>
+              </tr>
+              <tr class="hd35">
+                <td class="wd50">密码</td>
+                <td class="wd100"><input name="password" type="password"/></td>
+              </tr>
+              <tr class="hd35">
+                <td class="wd50">再输入</td>
+                <td class="wd100"><input name="password2" type="password"/></td>
+              </tr>
+              <tr class="hd35">
+                <td class="wd50">邮箱</td>
+                <td class="wd100"><input name="email"/></td>
+              </tr>
+            </table>
+            <button class="aButton blockButton" >登录</button>
+          </form>
+        </div>
+        <!-- popup form -->
+        <!-- block everything -->
+        <div id="blockEverything"></div>
+        <!-- block everything -->
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/cookie.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/base.js"></script>
+      </body>
+    </html>

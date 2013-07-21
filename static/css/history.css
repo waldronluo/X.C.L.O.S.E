@@ -1,0 +1,22 @@
+.content .historyTable {
+  margin: 20px 100px 20px 100px;
+}
+
+.content .historyTable .historyCaption {
+  text-align: center;
+  font-size: 25px;
+  margin: 0px 0px 10px 0px ;
+}
+
+th {
+  border-collapse: collapse;
+  border: 1px solid #888888;
+}
+
+td {
+  text-align: center;
+  height: 25px;
+  border: 1px solid #aaaaaa;
+  border-collapse: collapse;
+}
+
