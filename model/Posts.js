@@ -458,19 +458,19 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 															"Set-Cookie": [ "post_id=" + arr[0]._id.toString()],
 															"Content-Type": "text/html"
 														});
-														res.write(fs.readFileSync(__dirname + '/static/teach-plan.html', 'utf-8'));
+														res.write(fs.readFileSync(__dirname + '/../static/teach-plan.html', 'utf-8'));
 														res.end();
 													});
 												}
 												else {
 													// return index after err
 													res.writeHead(200, {"Content-Type": "text/html"});
-													res.write(fs.readFileSync(__dirname + '/static/index.html', 'utf-8'));
+													res.write(fs.readFileSync(__dirname + '/../static/index.html', 'utf-8'));
 													res.end();
 												}
 											});
 											collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
-												console.log(post_id + ': edit_count + 1');
+												console.log(arr[0]._id + ': edit_count + 1');
 											});
 										});
 									});
@@ -524,19 +524,19 @@ exports.mongoDbChangePost = function(req, res, post_id, username){
 															"Set-Cookie": [ "post_id=" + arr[0]._id.toString()],
 															"Content-Type": "text/html"
 														});
-														res.write(fs.readFileSync(__dirname + '/static/teach-plan.html', 'utf-8'));
+														res.write(fs.readFileSync(__dirname + '/../static/teach-plan.html', 'utf-8'));
 														res.end();
 													});
 												}
 												else {
 													// return index after err
 													res.writeHead(200, {"Content-Type": "text/html"});
-													res.write(fs.readFileSync(__dirname + '/static/index.html', 'utf-8'));
+													res.write(fs.readFileSync(__dirname + '/../static/index.html', 'utf-8'));
 													res.end();
 												}
 											});
 											collection.update({'_id':arr[0]._id}, {'$inc':{'edit_count':1}}, function(err){
-												console.log(post_id + ': edit_count + 1');
+												console.log(arr[0]._id + ': edit_count + 1');
 											});
 										});
 									});
