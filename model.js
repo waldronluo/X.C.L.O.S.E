@@ -275,7 +275,7 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 								{'teach-plan-update-date':arr[0].post_createTime},
 								{'teach-plan-read-counter':arr[0].access_count},
 								{'teach-plan-edit-counter':arr[0].edit_count},
-								{'teach-plan-like-counter':0},
+								{'teach-plan-like-counter':arr[0].like_count},
 								{'teach-plan-download-counter':arr[0].download_count},
 								{'teach-plan-label-group':arr[0].tags},			//tags? teach-plan-label-group
 								
@@ -319,50 +319,6 @@ exports.mongoDbGetOnePost = function(socket, post_id){
 		});
 	});
 }
-
-// Add post access_count
-exports.mongoDbAddAccessCount = function(post_id){
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	
-	mgconnect.open(function (err, db) {	  
-		db.collection('postlist', function (err, collection) {
-			collection.update({'post_id':post_id}, {'$inc':{'access_count':1}}, function(err){
-				console.log(post_id + ': access_count + 1');
-			});
-		});
-	});
-};
-
-// Add post edit_count
-exports.mongoDbAddEditCount = function(post_id){
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	
-	mgconnect.open(function (err, db) {	  
-		db.collection('postlist', function (err, collection) {
-			collection.update({'post_id':post_id}, {'$inc':{'edit_count':1}}, function(err){
-				console.log(post_id + ': edit_count + 1');
-				db.close();
-			});
-		});
-	});
-};
-
-// Add post download_count
-exports.mongoDbAddDownloadCount = function(post_id){
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	
-	mgconnect.open(function (err, db) {	  
-		db.collection('postlist', function (err, collection) {
-			collection.update({'post_id':post_id}, {'$inc':{'download_count':1}}, function(err){
-				console.log(post_id + ': download_count + 1');
-				db.close();
-			});
-		});
-	});
-};
 
 // function for date format :  Date() --> 2010.03.09
 function dateFormat(date){
@@ -492,72 +448,6 @@ exports.downloadOnePostXML = function(post_id, res){
 		});
 	});
 }
-
-
-
-//------------------testing
-// new post -- newPostArr from
-exports.mongoDbNewPost = function(newPostArr){
-	var mgserver = new mongodb.Server('127.0.0.1',27017);
-	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
-	
-	mgconnect.open(function (err, db) {	  
-		db.collection('postlist', function (err, collection) {
-			// new post Init
-			var temp_post_createFrom_id = -1;
-			var temp_origin_createTime = new Date();
-			var temp_post_createTime = new Date();
-			var temp_access_count = 0;
-			var temp_edit_count = 0;
-			var temp_download_count = 0;
-			var temp_most_recent = 1;
-			// save
-			collection.save({'course_title':newPostArr['teach-plan-coursename'], 
-						'template_title':newPostArr['teach-plan-template'], 
-						'topic':newPostArr['teach-plan-course'], 
-						'course_time':newPostArr['teach-plan-course-last'], 
-						'volunteer':newPostArr['teach-plan-processing-staff'], 
-						'course_class':newPostArr['teach-plan-processing-grade'], 
-						'background':newPostArr['teach-plan-background'], 
-						'course_prepare':newPostArr['teach-plan-prepare-class'], 
-						'teaching_resource':newPostArr['teach-plan-resources'], 
-						'teaching_goal':newPostArr['teach-plan-target'], 
-						'lesson_starting_time':newPostArr['teach-plan-leading-time'], 
-						'lesson_starting_content':newPostArr['teach-plan-leading-content'], 
-						'lesson_starting_pattern':newPostArr['teach-plan-leading-requirement'], 
-						'lesson_main_time':newPostArr['teach-plan-ongoing-time'], 
-						'lesson_main_content':newPostArr['teach-plan-ongoing-content'], 
-						'lesson_main_pattern':newPostArr['teach-plan-ongoing-requirement'], 
-						'lesson_ending_time':newPostArr['teach-plan-ending-time'], 
-						'lesson_ending_content':newPostArr['teach-plan-ending-content'], 
-						'lesson_ending_pattern':newPostArr['teach-plan-ending-requirement'], 
-						'lesson_summary':newPostArr['teach-plan-conclusion-content'], 
-						'lesson_comment':newPostArr['teach-plan-description-content'], 
-						'tags':newPostArr['teach-plan-label-group'], 	//tags? teach-plan-label-group
-						
-						'post_createFrom_id':temp_post_createFrom_id.toString(), 
-						'access_count':temp_access_count,
-						'edit_count':temp_edit_count,
-						'download_count':temp_download_count,
-						'post_createTime':temp_post_createTime, 
-						'origin_createTime':temp_origin_createTime, 
-						'most_recent':temp_most_recent,
-						'post_id':'-1'
-						}, function(){
-							collection.find({'post_id':'-1'},{'_id':1},function(err,result){
-								result.toArray(function(err,arr){
-									console.log('-- construct post_id');
-									console.log(arr);
-									for (var i=0; i<arr.length; i++){
-										collection.update({'_id':arr[i]._id},{$set:{'post_id':arr[i]._id.toString()}});
-									}
-								});
-							});
-						});
-			console.log(newPostArr);
-		});
-	});
-};
 
 // change post --- changePostArr, post_id
 exports.mongoDbChangePost = function(req, post_id, username){
@@ -695,8 +585,132 @@ exports.mongoDbChangePost = function(req, post_id, username){
 	});
 };
 
+// Add post access_count
+exports.mongoDbAddAccessCount = function(post_id){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.update({'post_id':post_id}, {'$inc':{'access_count':1}}, function(err){
+				console.log(post_id + ': access_count + 1');
+			});
+		});
+	});
+};
+
+// Add post edit_count
+exports.mongoDbAddEditCount = function(post_id){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.update({'post_id':post_id}, {'$inc':{'edit_count':1}}, function(err){
+				console.log(post_id + ': edit_count + 1');
+				db.close();
+			});
+		});
+	});
+};
+
+// Add post download_count
+exports.mongoDbAddDownloadCount = function(post_id){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.update({'post_id':post_id}, {'$inc':{'download_count':1}}, function(err){
+				console.log(post_id + ': download_count + 1');
+				db.close();
+			});
+		});
+	});
+};
+
+// Add post like_count
+exports.mongoDbAddLikeCount = function(post_id){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			collection.update({'post_id':post_id}, {'$inc':{'like_count':1}}, function(err){
+				console.log(post_id + ': like_count + 1');
+				db.close();
+			});
+		});
+	});
+};
+
+
 
 //--------------------------------------------------test unfinished
+
+// new post -- newPostArr from
+exports.mongoDbNewPost = function(newPostArr){
+	var mgserver = new mongodb.Server('127.0.0.1',27017);
+	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
+	
+	mgconnect.open(function (err, db) {	  
+		db.collection('postlist', function (err, collection) {
+			// new post Init
+			var temp_post_createFrom_id = -1;
+			var temp_origin_createTime = new Date();
+			var temp_post_createTime = new Date();
+			var temp_access_count = 0;
+			var temp_edit_count = 0;
+			var temp_download_count = 0;
+			var temp_most_recent = 1;
+			// save
+			collection.save({'course_title':newPostArr['teach-plan-coursename'], 
+						'template_title':newPostArr['teach-plan-template'], 
+						'topic':newPostArr['teach-plan-course'], 
+						'course_time':newPostArr['teach-plan-course-last'], 
+						'volunteer':newPostArr['teach-plan-processing-staff'], 
+						'course_class':newPostArr['teach-plan-processing-grade'], 
+						'background':newPostArr['teach-plan-background'], 
+						'course_prepare':newPostArr['teach-plan-prepare-class'], 
+						'teaching_resource':newPostArr['teach-plan-resources'], 
+						'teaching_goal':newPostArr['teach-plan-target'], 
+						'lesson_starting_time':newPostArr['teach-plan-leading-time'], 
+						'lesson_starting_content':newPostArr['teach-plan-leading-content'], 
+						'lesson_starting_pattern':newPostArr['teach-plan-leading-requirement'], 
+						'lesson_main_time':newPostArr['teach-plan-ongoing-time'], 
+						'lesson_main_content':newPostArr['teach-plan-ongoing-content'], 
+						'lesson_main_pattern':newPostArr['teach-plan-ongoing-requirement'], 
+						'lesson_ending_time':newPostArr['teach-plan-ending-time'], 
+						'lesson_ending_content':newPostArr['teach-plan-ending-content'], 
+						'lesson_ending_pattern':newPostArr['teach-plan-ending-requirement'], 
+						'lesson_summary':newPostArr['teach-plan-conclusion-content'], 
+						'lesson_comment':newPostArr['teach-plan-description-content'], 
+						'tags':newPostArr['teach-plan-label-group'], 	//tags? teach-plan-label-group
+						
+						'post_createFrom_id':temp_post_createFrom_id.toString(), 
+						'access_count':temp_access_count,
+						'edit_count':temp_edit_count,
+						'download_count':temp_download_count,
+						'post_createTime':temp_post_createTime, 
+						'origin_createTime':temp_origin_createTime, 
+						'most_recent':temp_most_recent,
+						'post_id':'-1'
+						}, function(){
+							collection.find({'post_id':'-1'},{'_id':1},function(err,result){
+								result.toArray(function(err,arr){
+									console.log('-- construct post_id');
+									console.log(arr);
+									for (var i=0; i<arr.length; i++){
+										collection.update({'_id':arr[i]._id},{$set:{'post_id':arr[i]._id.toString()}});
+									}
+								});
+							});
+						});
+			console.log(newPostArr);
+		});
+	});
+};
+
 // new user: return success or failed
 // return: T/F 
 exports.mongoDbNewUser = function(name, password, email){
@@ -752,11 +766,10 @@ exports.mongoDbCheckUser = function(name, password){
 	});
 }
 
-// update Tags ------
-
 // update Comments -------
 
-/*
+/* ALL Main Structure
+
 // User struct -- for user construct
 User = function(){
 	this.name = "";				//key

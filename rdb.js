@@ -47,6 +47,8 @@ Post = function(){
 	this.edit_count = 0;
 	// download post count
 	this.download_count = 0;
+	// like post count
+	this.like_count = 0;
 	
 	// post ID									Only ID for One saved Post
 	this.post_id = 0;		//key--: post_id
@@ -182,6 +184,7 @@ for (var i=0; i<4; i++)
 	newPost.access_count = i+5;
 	newPost.edit_count = i+1;
 	newPost.download_count = 2;
+	newPost.like_count = 10;
 	
 	collection.save({'course_title':newPost.course_title, 
 					'template_title':newPost.template_title, 
@@ -211,6 +214,7 @@ for (var i=0; i<4; i++)
 					'post_id':newPost.post_id.toString(),
 					'access_count':newPost.access_count,
 					'edit_count':newPost.edit_count,
+					'like_count':newPost.like_count,
 					'download_count':newPost.download_count,
 					'post_createTime':newPost.post_createTime, 
 					'origin_createTime':newPost.origin_createTime, 
@@ -256,6 +260,7 @@ for (var i=0; i<4; i++)
 	newPost.access_count = i+5;
 	newPost.edit_count = i+1;
 	newPost.download_count = 2;
+	newPost.like_count = 20;
 	
 	collection.save({'course_title':newPost.course_title, 
 					'template_title':newPost.template_title, 
@@ -285,6 +290,7 @@ for (var i=0; i<4; i++)
 					'post_id':newPost.post_id.toString(),
 					'access_count':newPost.access_count,
 					'edit_count':newPost.edit_count,
+					'like_count':newPost.like_count,
 					'download_count':newPost.download_count,
 					'post_createTime':newPost.post_createTime, 
 					'origin_createTime':newPost.origin_createTime, 
@@ -330,6 +336,7 @@ for (var i=0; i<4; i++)
 	newPost.access_count = i+5;
 	newPost.edit_count = i+1;
 	newPost.download_count = 2;
+	newPost.like_count = 17;
 	
 	collection.save({'course_title':newPost.course_title, 
 					'template_title':newPost.template_title, 
@@ -359,6 +366,7 @@ for (var i=0; i<4; i++)
 					'post_id':newPost.post_id.toString(),
 					'access_count':newPost.access_count,
 					'edit_count':newPost.edit_count,
+					'like_count':newPost.like_count,
 					'download_count':newPost.download_count,
 					'post_createTime':newPost.post_createTime, 
 					'origin_createTime':newPost.origin_createTime, 
@@ -404,6 +412,7 @@ for (var i=0; i<4; i++)
 	newPost.access_count = i+5;
 	newPost.edit_count = i+1;
 	newPost.download_count = 2;
+	newPost.like_count = 9;
 	
 	collection.save({'course_title':newPost.course_title, 
 					'template_title':newPost.template_title, 
@@ -433,6 +442,7 @@ for (var i=0; i<4; i++)
 					'post_id':newPost.post_id.toString(),
 					'access_count':newPost.access_count,
 					'edit_count':newPost.edit_count,
+					'like_count':newPost.like_count,
 					'download_count':newPost.download_count,
 					'post_createTime':newPost.post_createTime, 
 					'origin_createTime':newPost.origin_createTime, 
@@ -478,6 +488,7 @@ for (var i=0; i<4; i++)
 	newPost.access_count = i+5;
 	newPost.edit_count = i+1;
 	newPost.download_count = 2;
+	newPost.like_count = 13;
 	
 	collection.save({'course_title':newPost.course_title, 
 					'template_title':newPost.template_title, 
@@ -507,6 +518,7 @@ for (var i=0; i<4; i++)
 					'post_id':newPost.post_id.toString(),
 					'access_count':newPost.access_count,
 					'edit_count':newPost.edit_count,
+					'like_count':newPost.like_count,
 					'download_count':newPost.download_count,
 					'post_createTime':newPost.post_createTime, 
 					'origin_createTime':newPost.origin_createTime, 

@@ -284,13 +284,13 @@ app.use(function(req, res){
 		//	url sample:		http://127.0.0.1:8089/teach-plan-save      teach-plan-id=123
 		firstPathname = "/teach-plan-save";
 		console.log('save start');
-		var id = req.body['teach-plan-id'];
+		var post_id = req.body['teach-plan-id'];
 		console.log(req.body);
-		console.log(id);
+		console.log(post_id);
 		var username = "default";
 		
-		model.mongoDbChangePost(req, id, username);
-		//model.mongoDbChangePost(temparr, temparr['teach-plan-id']);
+		model.mongoDbChangePost(req, post_id, username);
+		model.mongoDbAddEditCount(post_id)
 		res.end();
 	}
 	else if (pathname == "/teach-plan-download"){
@@ -300,9 +300,8 @@ app.use(function(req, res){
 		queryStrArray['post_id'] = querystring.parse(url.parse(req.url).query)['post_id'];		
 		console.log(queryStrArray);
 		
-		var temp_id = parseInt(queryStrArray['post_id']);
-		model.downloadOnePostXML(temp_id, res);
-		model.mongoDbAddDownloadCount(temp_id);
+		model.downloadOnePostXML(queryStrArray['post_id'], res);
+		model.mongoDbAddDownloadCount(queryStrArray['post_id']);
 	}
 	
 	else if (pathname == "/favicon.ico"){
