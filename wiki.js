@@ -1,5 +1,4 @@
-﻿//back + DB
-
+﻿// Basic module
 var http = require("http");
 var connect = require("connect");
 var socketio = require("socket.io");
@@ -8,9 +7,9 @@ var url = require("url");
 var fs = require("fs");
 
 // js file
-var Posts = require('./Posts');
-var Tags = require('./Tags');
-var Users = require('./Users');
+var Posts = require('./model/Posts');
+var Tags = require('./model/Tags');
+var Users = require('./model/Users');
 
 // Defaults
 var portNumberDefault = process.env.PORT || 8089;
@@ -95,10 +94,10 @@ iolisten.sockets.on('connection', function (socket){
 	socket.on('getOnePost',function(post_id){
 		Posts.mongoDbGetOnePost(socket, post_id);
 	});
-		
+	/*	
 	// --------------------------------------------------------------
 	// teach-plan-edit -- newPost  /teach-plan-save
-	/*console.log('start socket on newPost');
+	console.log('start socket on newPost');
 	socket.on('newPost',function(postArr, userName){
 		// var isLogin = false;
 		// for (var i=0; i<userArray.length; i++){
@@ -116,7 +115,7 @@ iolisten.sockets.on('connection', function (socket){
 		else {
 			console.log('New teaching plan -- not login');
 		}
-	});*/
+	});
 	
 	// teach-plan-edit -- changePost	/
 	console.log('start socket on changePost');
@@ -135,12 +134,11 @@ iolisten.sockets.on('connection', function (socket){
 		else {
 			console.log('Change teaching plan -- not login');
 		}
-	});
+	});*/
 	
 	// teach-plan-history -- findHistoryPost
 	console.log('start socket on findHistoryPost');
 	socket.on('findHistoryPost',function(post_id){
-		post_id = parseInt(post_id);
 		Posts.mongoDbHistoryData(socket, post_id);
 	});
 	
@@ -174,15 +172,9 @@ iolisten.sockets.on('connection', function (socket){
 	// public -- register
 	console.log('start socket on register');	
 	socket.on('register',function(user){
-		// message struct : userArr = [name, password, passwordCon, email]
-		if (user[1] == user[2]) {
-			Users.mongoDbNewUser(socket, userArray, 
-								user[0], user[1], user[3]);
-		}
-		else {
-			socket.emit('registerReply',false);
-		}
-		console.log(userArray);
+		// message struct : userArr = [name, password, email]
+		console.log(user);
+		Users.mongoDbNewUser(socket, userArray, user[0], user[1], user[2]);
 	});
 	//------------------------------------------------------------------
 });
