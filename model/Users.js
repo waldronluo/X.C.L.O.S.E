@@ -1,7 +1,7 @@
 var mongodb = require('mongodb');	
 
 // new user: return success or failed
-exports.mongoDbNewUser = function(name, password, email){
+exports.mongoDbNewUser = function(socket, userArray, name, password, email){
 	var mgserver = new mongodb.Server('127.0.0.1',27017);
 	var mgconnect = new mongodb.Db('test',mgserver,{safe:false});
 	  
