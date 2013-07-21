@@ -112,6 +112,7 @@ function addTextArea (element, cols, rows, name) {
     GLOBAL.socket.on("getOnePostReply", function(teachPlan) {
         console.log(teachPlan);
         document.getElementById ("teach-plan-id").value = teachPlan[36]["post_id"];
+        document.getElementById ("teach-plan-download").href = "/teach-plan-download?post_id="+teachPlan[36]["post_id"];
         document.getElementById ("teach-plan-title").innerHTML = teachPlan[0]['teach-plan-title'];
         document.getElementById ("teach-plan-edit-counter").innerHTML = teachPlan[4]['teach-plan-edit-counter'];
         document.getElementById ("teach-plan-read-counter").innerHTML = teachPlan[3]['teach-plan-read-counter'];
